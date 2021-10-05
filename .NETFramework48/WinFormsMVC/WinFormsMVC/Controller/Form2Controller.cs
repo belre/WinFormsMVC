@@ -24,14 +24,19 @@ namespace WinFormsMVC.Controller
             _manager.LaunchForm(self_view, new Form3());
         }
 
-        public void SendMessageToForm3(Command command) 
+        public void LaunchForm4(Form2 self_view)
         {
-            _manager.Operate<Form3>(command);
+            _manager.LaunchForm(self_view, new Form4());
         }
 
-        public void RedoAtForm3() 
+        public void SendMessage<TargetForm>(AbstractCommand abstractCommand) where TargetForm : BaseForm
         {
-            _manager.OperatePrevious<Form3>();
+            _manager.Operate<TargetForm>(abstractCommand);
+        }
+
+        public void Redo()
+        {
+            _manager.OperatePrevious();
         }
     }
 }

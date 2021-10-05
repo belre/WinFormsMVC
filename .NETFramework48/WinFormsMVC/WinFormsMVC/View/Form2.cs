@@ -29,8 +29,8 @@ namespace WinFormsMVC
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageToForm3(new Command {
-                    Invoker=this, 
+                controller.SendMessage<Form3>(new Command<Form3> {
+                    Invoker=this,
                     InitOperation = (command, form3) =>
                     {
                         command.PrevTemporary = ((Form3)form3).Message;
@@ -44,7 +44,28 @@ namespace WinFormsMVC
                     },
                     NextOperation = (command, form3) =>
                     {
-                        ((Form3) form3).Message = command.NextTemporary;
+                        ((Form3)form3).Message = command.NextTemporary;
+                    }
+                });
+
+
+                controller.SendMessage<Form4>(new Command<Form4>()
+                {
+                    Invoker = this,
+                    InitOperation = (command, form4) =>
+                    {
+                        command.PrevTemporary = ((Form4)form4).Message;
+                        command.NextTemporary = textBox1.Text;
+                        return true;
+                    },
+                    PrevOperation = (command, form4) =>
+                    {
+                        ((Form4)form4).Message = command.PrevTemporary;
+                        textBox1.Text = command.PrevTemporary;
+                    },
+                    NextOperation = (command, form4) =>
+                    {
+                        ((Form4)form4).Message = command.NextTemporary;
                     }
                 });
             }
@@ -52,7 +73,13 @@ namespace WinFormsMVC
             private void button3_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.RedoAtForm3();
+                controller.Redo();
+            }
+
+            private void button4_Click(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form2Controller>(this);
+                controller.LaunchForm4(this);
             }
         }
     }

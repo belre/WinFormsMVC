@@ -7,7 +7,7 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Model.Command
 {
-    public class Command
+    public class Command<TargetForm> : AbstractCommand where TargetForm : BaseForm
     {
         public string NextTemporary
         {
@@ -21,18 +21,70 @@ namespace WinFormsMVC.Model.Command
             set;
         }
 
-        public BaseForm Invoker { get; set; }
+        public override Type FormType
+        {
+            get
+            {
+                return typeof(TargetForm);
+            }
+        }
 
-        public Func<Command, BaseForm, bool> InitOperation { get; set; }
+        public Func<Command<TargetForm>, BaseForm, bool> InitOperation { get; set; }
 
-        public Action<Command, BaseForm> NextOperation { get; set; }
+        public Action<Command<TargetForm>, BaseForm> NextOperation { get; set; }
+
+        public Action<Command<TargetForm>, BaseForm> PrevOperation { get; set; }
+
+        public Action<Command<TargetForm>, BaseForm> FinalOperation { get; set; }
+
+        public Action<Command<TargetForm>, BaseForm> ErrorOperation { get; set; }
 
 
-        public Action<Command, BaseForm> PrevOperation { get; set; }
+        public override bool Initialize(BaseForm form)
+        {
+            if (InitOperation != null)
+            {
+                return InitOperation(this, form);
+            }
+            else
+            {
+                return true;
+            }
+        }
 
-        public Action<Command, BaseForm> FinalOperation { get; set; }
+        public override void Prev(BaseForm form)
+        {
+            if (PrevOperation != null)
+            {
+                PrevOperation(this, form);
+            }
+        }
 
-        public Action<Command, BaseForm> ErrorOperation { get; set; }
+        public override void Next(BaseForm form)
+        {
+            if (NextOperation != null)
+            {
+                NextOperation(this, form);
+            }
+        }
+
+        public override void Finalize(BaseForm form)
+        {
+            if (FinalOperation != null)
+            {
+                FinalOperation(this, form);
+            }
+        }
+
+        public override void HandleInitError(BaseForm form)
+        {
+            if (ErrorOperation != null)
+            {
+                ErrorOperation(this, form);
+            }
+        }
+
+
+
     }
-
 }

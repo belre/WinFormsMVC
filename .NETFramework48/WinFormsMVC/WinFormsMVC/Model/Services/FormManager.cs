@@ -37,13 +37,13 @@ namespace WinFormsMVC.Model.Services
             target.Show();
         }
 
-        public void Operate<TargetForm>(Command.Command command)
+        public void Operate<TargetForm>(Command.AbstractCommand abstractCommand)
             where TargetForm : BaseForm
         {
             var target_forms = new List<BaseForm>();
             foreach (var form in _managed_baseform)
             {
-                if (form.Invoker == command.Invoker && form.GetType() == typeof(TargetForm))
+                if (form.Invoker == abstractCommand.Invoker && form.GetType() == typeof(TargetForm))
                 {
                     target_forms.Add((TargetForm) form);
                 }
@@ -52,9 +52,9 @@ namespace WinFormsMVC.Model.Services
             bool was_done = true;
             foreach (var target in target_forms)
             {
-                if (command.InitOperation(command, target))
+                if (abstractCommand.Initialize(target))
                 {
-                    command.NextOperation(command, target);
+                    abstractCommand.Next(target);
                 }
                 else
                 {
@@ -67,29 +67,25 @@ namespace WinFormsMVC.Model.Services
             {
                 foreach (var target in target_forms)
                 {
-                    if (command.ErrorOperation != null)
-                    {
-                        command.ErrorOperation(command, target);
-                    }
+                    abstractCommand.HandleInitError(target);
                 }
             }
 
-            _mement_manager.PushCommand(command);
+            _mement_manager.PushCommand(abstractCommand);
         }
 
         public void OperateFromInit(BaseForm target)
         {
-            foreach (var operation in _mement_manager.MememtoCommand)
+            foreach (var command in _mement_manager.MememtoCommand)
             {
-                if (target.Invoker == operation.Invoker)
+                if (target.Invoker == command.Invoker && target.GetType() == command.FormType)
                 {
-                    operation.NextOperation(operation, target);
+                    command.Next(target);
                 }
             }
         }
 
-        public void OperatePrevious<TargetForm>()
-            where TargetForm : BaseForm
+        public void OperatePrevious()
         {
             var command = _mement_manager.PopCommand();
 
@@ -100,14 +96,10 @@ namespace WinFormsMVC.Model.Services
 
             foreach (var form in _managed_baseform)
             {
-                if (form.Invoker == command.Invoker && form.GetType() == typeof(TargetForm))
+                if (form.Invoker == command.Invoker && form.GetType() == command.FormType)
                 {
-                    command.PrevOperation(command, form);
-
-                    if (command.FinalOperation != null)
-                    {
-                        command.FinalOperation(command, form);
-                    }
+                    command.Prev(form);
+                    command.Finalize(form);
                 }
             }
         }

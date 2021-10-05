@@ -51,6 +51,7 @@
     <Compile Include="Controller\Form2Controller.cs" />
     <Compile Include="Controller\Form3Controller.cs" />
     <Compile Include="Facade\ViewFacade.cs" />
+    <Compile Include="Model\Command\AbstractCommand.cs" />
     <Compile Include="Model\Command\Command.cs" />
     <Compile Include="Model\Services\FormManager.cs" />
     <Compile Include="Model\Services\MementoManager.cs" />
@@ -81,6 +82,12 @@
     <Compile Include="View\Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Form4.Designer.cs">
+      <DependentUpon>Form4.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -101,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Form4.resx">
+      <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -9,19 +9,19 @@ namespace WinFormsMVC.Model.Services
 {
     public class MementoManager
     {
-        public List<Command.Command> MememtoCommand { get; }
+        public List<Command.AbstractCommand> MememtoCommand { get; }
 
         public MementoManager()
         {
-            MememtoCommand = new List<Command.Command>();
+            MememtoCommand = new List<Command.AbstractCommand>();
         }
 
-        public void PushCommand(Command.Command command)
+        public void PushCommand(Command.AbstractCommand abstractCommand)
         {
-            MememtoCommand.Add(command);
+            MememtoCommand.Add(abstractCommand);
         }
 
-        public Command.Command PopCommand()
+        public Command.AbstractCommand PopCommand()
         {
             if (MememtoCommand.Count != 0)
             {
