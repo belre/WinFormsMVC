@@ -39,12 +39,17 @@ namespace WinFormsMVC
                     },
                     PrevOperation = (command, form3) =>
                     {
-                        ((Form3)form3).Message = command.PrevTemporary;
-                        textBox1.Text = command.PrevTemporary;
+                        if (command.PrevTemporary != null)
+                        {
+                            ((Form3)form3).Message = command.PrevTemporary;
+                        }
                     },
                     NextOperation = (command, form3) =>
                     {
-                        ((Form3)form3).Message = command.NextTemporary;
+                        if (command.NextTemporary != null)
+                        {
+                            ((Form3)form3).Message = command.NextTemporary;
+                        }
                     }
                 });
 
@@ -60,12 +65,17 @@ namespace WinFormsMVC
                     },
                     PrevOperation = (command, form4) =>
                     {
-                        ((Form4)form4).Message = command.PrevTemporary;
-                        textBox1.Text = command.PrevTemporary;
+                        if (command.PrevTemporary != null)
+                        {
+                            ((Form4)form4).Message = command.PrevTemporary;
+                        }
                     },
                     NextOperation = (command, form4) =>
                     {
-                        ((Form4)form4).Message = command.NextTemporary;
+                        if (command.NextTemporary != null)
+                        {
+                            ((Form4) form4).Message = command.NextTemporary;
+                        }
                     }
                 });
             }
