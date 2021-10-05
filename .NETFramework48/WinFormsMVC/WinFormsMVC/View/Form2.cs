@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WinFormsMVC.Controller;
-using WinFormsMVC.Main.Command;
+using WinFormsMVC.Model.Command;
 
 namespace WinFormsMVC
 {
@@ -32,8 +32,8 @@ namespace WinFormsMVC
                 controller.SendMessage(new Command{Invoker=this, 
                     InitOperation = (command, form3) =>
                     {
-                        command.NextTemporary = textBox1.Text;
                         command.PrevTemporary = ((Form3)form3).Message;
+                        command.NextTemporary = textBox1.Text;
                         return true;
                     },
                     PrevOperation = (command, form3) =>

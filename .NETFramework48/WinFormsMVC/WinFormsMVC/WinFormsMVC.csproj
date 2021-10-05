@@ -51,9 +51,9 @@
     <Compile Include="Controller\Form2Controller.cs" />
     <Compile Include="Controller\Form3Controller.cs" />
     <Compile Include="Facade\ViewFacade.cs" />
-    <Compile Include="Main\Command\Command.cs" />
-    <Compile Include="Main\Services\FormManager.cs" />
-    <Compile Include="Main\Services\MementoManager.cs" />
+    <Compile Include="Model\Command\Command.cs" />
+    <Compile Include="Model\Services\FormManager.cs" />
+    <Compile Include="Model\Services\MementoManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserApplicationContext.cs" />
@@ -115,8 +115,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

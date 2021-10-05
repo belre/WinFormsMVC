@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
-using WinFormsMVC.Main.Services;
+using WinFormsMVC.Model.Services;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC

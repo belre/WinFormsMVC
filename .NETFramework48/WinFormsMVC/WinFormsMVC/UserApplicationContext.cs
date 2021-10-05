@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsMVC.Controller;
 using WinFormsMVC.Facade;
-using WinFormsMVC.Main.Services;
+using WinFormsMVC.Model.Services;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC

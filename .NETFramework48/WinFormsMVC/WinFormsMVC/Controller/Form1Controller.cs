@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinFormsMVC.Main.Services;
+using WinFormsMVC.Model.Services;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Controller

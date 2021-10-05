@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WinFormsMVC.Facade;
 using WinFormsMVC.View;
 
-namespace WinFormsMVC.Main.Services
+namespace WinFormsMVC.Model.Services
 {
     public class FormManager
     {

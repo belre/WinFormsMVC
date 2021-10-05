@@ -34,7 +34,7 @@ namespace WinFormsMVC
             private void button1_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form3Controller>(this);
-                controller.Test(this);
+                controller.RenewWindow(this);
             }
         }
     }

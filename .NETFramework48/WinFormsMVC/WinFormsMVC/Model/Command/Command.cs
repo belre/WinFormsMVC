@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.View;
 
-namespace WinFormsMVC.Main.Command
+namespace WinFormsMVC.Model.Command
 {
     public class Command
     {

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using WinFormsMVC.Main.Command;
-using WinFormsMVC.Main.Services;
+using WinFormsMVC.Model.Command;
+using WinFormsMVC.Model.Services;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Controller
@@ -21,8 +21,7 @@ namespace WinFormsMVC.Controller
 
         public void LaunchForm3(Form2 self_view)
         {
-            var forms = new Form3();
-            _manager.LaunchForm(self_view, forms);
+            _manager.LaunchForm(self_view, new Form3());
         }
 
         public void SendMessage(Command command)

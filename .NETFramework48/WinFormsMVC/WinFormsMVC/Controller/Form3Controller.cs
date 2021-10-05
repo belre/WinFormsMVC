@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinFormsMVC.Main.Services;
+using WinFormsMVC.Model.Services;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Controller
@@ -17,7 +17,7 @@ namespace WinFormsMVC.Controller
             _manager = manager;
         }
 
-        public void Test(Form3 form3)
+        public void RenewWindow(Form3 form3)
         {
             _manager.LaunchForm(form3, new Form2());
         }

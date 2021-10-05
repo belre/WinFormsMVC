@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.View;
 
-namespace WinFormsMVC.Main.Services
+namespace WinFormsMVC.Model.Services
 {
     public class MementoManager
     {
