@@ -11,18 +11,16 @@ namespace WinFormsMVC.Controller
     class Form1Controller : Controller
     {
         private FormManager _manager;
-        private MementoManager _mementoManager;
 
-        public Form1Controller(FormManager manager, MementoManager mementoManager)
+        public Form1Controller(FormManager manager)
         {
             _manager = manager;
-            _mementoManager = mementoManager;
         }
 
         public void LaunchForm2(Form1 self_form)
         {
             var forms = new Form2();
-            _manager.LaunchForm(self_form, forms, _mementoManager);
+            _manager.LaunchForm(self_form, forms);
         }
     }
 }

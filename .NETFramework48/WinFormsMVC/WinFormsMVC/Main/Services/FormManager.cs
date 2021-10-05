@@ -12,6 +12,7 @@ namespace WinFormsMVC.Main.Services
     {
         private List<BaseForm> _managed_baseform;
         private ViewFacade _facade;
+        private MementoManager _mement_manager;
 
         public ViewFacade Facade
         {
@@ -22,16 +23,17 @@ namespace WinFormsMVC.Main.Services
         public FormManager()
         {
             _managed_baseform = new List<BaseForm>();
+            _mement_manager = new MementoManager();
         }
 
-        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target, MementoManager mementoes)
+        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target)
             where TargetForm : BaseForm
         {
             _managed_baseform.Add(target);
             target.Invoker = source;
             target.Facade = _facade;
             target.Closed += OnFormClosed;
-            OperateFromInit(target, mementoes);
+            OperateFromInit(target);
             target.Show();
         }
 
@@ -71,11 +73,13 @@ namespace WinFormsMVC.Main.Services
                     }
                 }
             }
+
+            _mement_manager.PushCommand(command);
         }
 
-        public void OperateFromInit(BaseForm target, MementoManager mementoes)
+        public void OperateFromInit(BaseForm target)
         {
-            foreach (var operation in mementoes.MememtoCommand)
+            foreach (var operation in _mement_manager.MememtoCommand)
             {
                 if (target.Invoker == operation.Invoker)
                 {
@@ -84,9 +88,11 @@ namespace WinFormsMVC.Main.Services
             }
         }
 
-        public void OperatePrevious<TargetForm>(Command.Command command)
+        public void OperatePrevious<TargetForm>()
             where TargetForm : BaseForm
         {
+            var command = _mement_manager.PopCommand();
+
             if (command == null)
             {
                 return;

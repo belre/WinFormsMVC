@@ -38,7 +38,7 @@ namespace WinFormsMVC
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 82);
+            this.label1.Location = new System.Drawing.Point(71, 56);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 12);
             this.label1.TabIndex = 0;
@@ -46,18 +46,18 @@ namespace WinFormsMVC
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(274, 230);
+            this.button1.Location = new System.Drawing.Point(73, 99);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(96, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
+            this.button1.Text = "New Window";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(393, 211);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Name = "Form3";

@@ -22,12 +22,9 @@ namespace WinFormsMVC
 
             public FormManager Manager { get; set; }
 
-            public MementoManager Mementoes { get; set; }
-
-            public ViewFacade(FormManager manager, MementoManager mementoes)
+            public ViewFacade(FormManager manager)
             {
                 Manager = manager;
-                Mementoes = mementoes;
             }
 
             public T GetController<T>(BaseForm form) where T : Controller.Controller
@@ -35,7 +32,7 @@ namespace WinFormsMVC
                 var inst = Activator.CreateInstance(typeof(T).Assembly.GetName().Name,
                         typeof(T).FullName, false,
                         BindingFlags.CreateInstance | BindingFlags.SetField, null,
-                        new object[] {Manager, Mementoes}, CultureInfo.CurrentCulture, new object[] { })
+                        new object[] {Manager}, CultureInfo.CurrentCulture, new object[] { })
                     .Unwrap();
 
                 if (inst != null)

@@ -16,12 +16,12 @@ namespace WinFormsMVC.Main.Services
             MememtoCommand = new List<Command.Command>();
         }
 
-        public void PushRedoCommand(Command.Command command)
+        public void PushCommand(Command.Command command)
         {
             MememtoCommand.Add(command);
         }
 
-        public Command.Command PopUndoCommand()
+        public Command.Command PopCommand()
         {
             if (MememtoCommand.Count != 0)
             {
@@ -34,7 +34,5 @@ namespace WinFormsMVC.Main.Services
                 return null;
             }
         }
-
     }
-
 }

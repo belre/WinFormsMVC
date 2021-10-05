@@ -13,30 +13,26 @@ namespace WinFormsMVC.Controller
     public class Form2Controller : Controller
     {
         private FormManager _manager;
-        private MementoManager _mementoManager;
 
-        public Form2Controller(FormManager manager, MementoManager mementoManager)
+        public Form2Controller(FormManager manager)
         {
             _manager = manager;
-            _mementoManager = mementoManager;
         }
 
         public void LaunchForm3(Form2 self_view)
         {
             var forms = new Form3();
-            _manager.LaunchForm(self_view, forms, _mementoManager);
+            _manager.LaunchForm(self_view, forms);
         }
 
         public void SendMessage(Command command)
         {
             _manager.Operate<Form3>(command);
-            _mementoManager.PushRedoCommand(command);
         }
 
         public void Redo()
         {
-            var command = _mementoManager.PopUndoCommand();
-            _manager.OperatePrevious<Form3>(command);
+            _manager.OperatePrevious<Form3>();
         }
     }
 }
