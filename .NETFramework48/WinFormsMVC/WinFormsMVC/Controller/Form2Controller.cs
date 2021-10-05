@@ -24,19 +24,18 @@ namespace WinFormsMVC.Controller
         public void LaunchForm3(Form2 self_view)
         {
             var forms = new Form3();
-            _manager.LaunchForm(self_view, forms);
+            _manager.LaunchForm(self_view, forms, _operation_manager);
         }
 
         public void SendMessage(Command command)
         {
             _manager.Operate<Form3>(command);
-            _operation_manager.MememtoCommand.Push(command);
-
+            _operation_manager.PushRedoCommand(command);
         }
 
         public void Redo()
         {
-            var command = _operation_manager.PopRedoCommand();
+            var command = _operation_manager.PopUndoCommand();
             _manager.OperatePrevious<Form3>(command);
         }
     }

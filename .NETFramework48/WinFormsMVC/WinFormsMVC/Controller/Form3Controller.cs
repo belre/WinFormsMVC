@@ -21,7 +21,7 @@ namespace WinFormsMVC.Controller
 
         public void Test(Form3 form3)
         {
-            _manager.LaunchForm(form3, new Form2());
+            _manager.LaunchForm(form3, new Form2(), _operation_manager);
         }
     }
 }

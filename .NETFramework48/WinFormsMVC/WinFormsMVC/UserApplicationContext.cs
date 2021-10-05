@@ -42,7 +42,7 @@ namespace WinFormsMVC
 
             _root_form = (T)typeof(T).GetConstructor(new Type[0]).Invoke(new object[0]);
             _root_form.Closed += new EventHandler(OnFormClosed);
-            _form_manager.LaunchForm(null, _root_form);
+            _form_manager.LaunchForm(null, _root_form, _operation_manager);
         }
 
         protected void OnFormClosed(object sender, EventArgs e)

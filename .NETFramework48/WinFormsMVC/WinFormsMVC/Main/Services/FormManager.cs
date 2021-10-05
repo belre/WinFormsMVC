@@ -24,12 +24,14 @@ namespace WinFormsMVC.Main.Services
             _managed_baseform = new List<BaseForm>();
         }
 
-        public void LaunchForm(BaseForm source, BaseForm target)
+        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target, OperationManager operations)
+            where TargetForm : BaseForm
         {
             _managed_baseform.Add(target);
             target.Invoker = source;
             target.Facade = _facade;
             target.Closed += OnFormClosed;
+            OperateFromInit(target, operations);
             target.Show();
         }
 
@@ -43,6 +45,17 @@ namespace WinFormsMVC.Main.Services
                 {
                     target_forms.Add((TargetForm) form);
                     command.NextOperation(command, (TargetForm) form);
+                }
+            }
+        }
+
+        public void OperateFromInit(BaseForm target, OperationManager operations)
+        {
+            foreach (var operation in operations.MememtoCommand)
+            {
+                if (target.Invoker == operation.Invoker)
+                {
+                    operation.NextOperation(operation, target);
                 }
             }
         }
@@ -63,6 +76,7 @@ namespace WinFormsMVC.Main.Services
                 }
             }
         }
+
 
         protected void OnFormClosed(object sender, EventArgs e)
         {

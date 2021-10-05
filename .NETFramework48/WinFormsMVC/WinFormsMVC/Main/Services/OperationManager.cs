@@ -9,18 +9,25 @@ namespace WinFormsMVC.Main.Services
 {
     public class OperationManager
     {
-        public Stack<Command.Command> MememtoCommand { get; }
+        public List<Command.Command> MememtoCommand { get; }
 
         public OperationManager()
         {
-            MememtoCommand = new Stack<Command.Command>();
+            MememtoCommand = new List<Command.Command>();
         }
 
-        public Command.Command PopRedoCommand()
+        public void PushRedoCommand(Command.Command command)
+        {
+            MememtoCommand.Add(command);
+        }
+
+        public Command.Command PopUndoCommand()
         {
             if (MememtoCommand.Count != 0)
             {
-                return MememtoCommand.Pop();
+                var target = MememtoCommand.Last();
+                MememtoCommand.Remove(target);
+                return target;
             }
             else
             {

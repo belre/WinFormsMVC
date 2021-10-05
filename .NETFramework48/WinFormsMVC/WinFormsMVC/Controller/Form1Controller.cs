@@ -22,7 +22,7 @@ namespace WinFormsMVC.Controller
         public void LaunchForm2(Form1 self_form)
         {
             var forms = new Form2();
-            _manager.LaunchForm(self_form, forms);
+            _manager.LaunchForm(self_form, forms, _operation_manager);
         }
     }
 }
