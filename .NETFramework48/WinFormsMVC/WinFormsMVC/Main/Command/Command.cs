@@ -9,13 +9,27 @@ namespace WinFormsMVC.Main.Command
 {
     public class Command
     {
-        public string _temporary;
+        public string NextTemporary
+        {
+            get;
+            set;
+        }
+
+        public string PrevTemporary
+        {
+            get;
+            set;
+        }
 
         public BaseForm Invoker { get; set; }
 
-        public Func<Command, BaseForm, bool> NextOperation { get; set; }
+        public Action<Command, BaseForm> InitOperation { get; set; }
 
-        public Func<Command, BaseForm, bool> PrevOperation { get; set; }
+        public Action<Command, BaseForm> FreeOperation { get; set; }
+
+        public Action<Command, BaseForm> NextOperation { get; set; }
+
+        public Action<Command, BaseForm> PrevOperation { get; set; }
     }
 
 }

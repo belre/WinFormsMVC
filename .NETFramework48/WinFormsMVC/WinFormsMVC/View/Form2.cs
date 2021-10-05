@@ -28,20 +28,23 @@ namespace WinFormsMVC
             private void button2_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
+
                 controller.SendMessage(new Command{Invoker=this, 
-                    NextOperation = (command, form3) =>
+                    InitOperation = (command, form3) =>
                     {
-                        command._temporary = ((Form3)form3).Message;
-                        ((Form3)form3).Message = textBox1.Text;
-                        return true;
-                    }, 
+                        command.NextTemporary = textBox1.Text;
+                        command.PrevTemporary = ((Form3)form3).Message;
+                    },
                     PrevOperation = (command, form3) =>
                     {
-                        if (command._temporary != null)
+                        if (command.NextTemporary != null)
                         {
-                            ((Form3)form3).Message = command._temporary;
+                            ((Form3)form3).Message = command.PrevTemporary;
                         }
-                        return true;
+                    },
+                    NextOperation = (command, form3) =>
+                    {
+                        ((Form3) form3).Message = command.NextTemporary;
                     }
                 });
             }

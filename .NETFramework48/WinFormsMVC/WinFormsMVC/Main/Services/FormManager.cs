@@ -44,7 +44,8 @@ namespace WinFormsMVC.Main.Services
                 if (form.Invoker == command.Invoker && form.GetType() == typeof(TargetForm))
                 {
                     target_forms.Add((TargetForm) form);
-                    command.NextOperation(command, (TargetForm) form);
+                    command.InitOperation(command, form);
+                    command.NextOperation(command, form);
                 }
             }
         }
@@ -72,7 +73,12 @@ namespace WinFormsMVC.Main.Services
             {
                 if (form.Invoker == command.Invoker && form.GetType() == typeof(TargetForm))
                 {
-                    command.PrevOperation(command, (TargetForm) form);
+                    command.PrevOperation(command, form);
+
+                    if (command.FreeOperation != null)
+                    {
+                        command.FreeOperation(command, form);
+                    }
                 }
             }
         }
