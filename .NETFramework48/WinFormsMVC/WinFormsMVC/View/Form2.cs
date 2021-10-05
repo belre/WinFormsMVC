@@ -34,6 +34,7 @@ namespace WinFormsMVC
                     {
                         command.NextTemporary = textBox1.Text;
                         command.PrevTemporary = ((Form3)form3).Message;
+                        return true;
                     },
                     PrevOperation = (command, form3) =>
                     {

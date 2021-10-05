@@ -23,13 +23,16 @@ namespace WinFormsMVC.Main.Command
 
         public BaseForm Invoker { get; set; }
 
-        public Action<Command, BaseForm> InitOperation { get; set; }
-
-        public Action<Command, BaseForm> FreeOperation { get; set; }
+        public Func<Command, BaseForm, bool> InitOperation { get; set; }
 
         public Action<Command, BaseForm> NextOperation { get; set; }
 
+
         public Action<Command, BaseForm> PrevOperation { get; set; }
+
+        public Action<Command, BaseForm> FinalOperation { get; set; }
+
+        public Action<Command, BaseForm> ErrorOperation { get; set; }
     }
 
 }

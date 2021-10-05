@@ -14,7 +14,7 @@ namespace WinFormsMVC
     public class UserApplicationContext<T> : ApplicationContext where T : View.BaseForm
     {
         protected FormManager _form_manager;
-        protected OperationManager _operation_manager;
+        protected MementoManager MementoManager;
 
         protected ViewFacade _facade;
         protected T _root_form;
@@ -22,9 +22,9 @@ namespace WinFormsMVC
         public UserApplicationContext()
         {
             _form_manager = new FormManager();
-            _operation_manager = new OperationManager();
+            MementoManager = new MementoManager();
 
-            _facade = new ViewFacade(_form_manager, _operation_manager);
+            _facade = new ViewFacade(_form_manager, MementoManager);
             _form_manager.Facade = _facade;
 
             _facade.Forms = new List<BaseForm>()
@@ -35,14 +35,14 @@ namespace WinFormsMVC
             };
             _facade.Controllers = new List<Controller.Controller>()
             {
-                new Form1Controller(_form_manager, _operation_manager),
-                new Form2Controller(_form_manager, _operation_manager),
-                new Form3Controller(_form_manager, _operation_manager)
+                new Form1Controller(_form_manager, MementoManager),
+                new Form2Controller(_form_manager, MementoManager),
+                new Form3Controller(_form_manager, MementoManager)
             };
 
             _root_form = (T)typeof(T).GetConstructor(new Type[0]).Invoke(new object[0]);
             _root_form.Closed += new EventHandler(OnFormClosed);
-            _form_manager.LaunchForm(null, _root_form, _operation_manager);
+            _form_manager.LaunchForm(null, _root_form, MementoManager);
         }
 
         protected void OnFormClosed(object sender, EventArgs e)

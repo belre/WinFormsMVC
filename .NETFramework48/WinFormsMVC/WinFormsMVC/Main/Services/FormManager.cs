@@ -24,14 +24,14 @@ namespace WinFormsMVC.Main.Services
             _managed_baseform = new List<BaseForm>();
         }
 
-        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target, OperationManager operations)
+        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target, MementoManager mementoes)
             where TargetForm : BaseForm
         {
             _managed_baseform.Add(target);
             target.Invoker = source;
             target.Facade = _facade;
             target.Closed += OnFormClosed;
-            OperateFromInit(target, operations);
+            OperateFromInit(target, mementoes);
             target.Show();
         }
 
@@ -44,15 +44,38 @@ namespace WinFormsMVC.Main.Services
                 if (form.Invoker == command.Invoker && form.GetType() == typeof(TargetForm))
                 {
                     target_forms.Add((TargetForm) form);
-                    command.InitOperation(command, form);
-                    command.NextOperation(command, form);
+                }
+            }
+
+            bool was_done = true;
+            foreach (var target in target_forms)
+            {
+                if (command.InitOperation(command, target))
+                {
+                    command.NextOperation(command, target);
+                }
+                else
+                {
+                    was_done = false;
+                    break;
+                }
+            }
+
+            if (!was_done)
+            {
+                foreach (var target in target_forms)
+                {
+                    if (command.ErrorOperation != null)
+                    {
+                        command.ErrorOperation(command, target);
+                    }
                 }
             }
         }
 
-        public void OperateFromInit(BaseForm target, OperationManager operations)
+        public void OperateFromInit(BaseForm target, MementoManager mementoes)
         {
-            foreach (var operation in operations.MememtoCommand)
+            foreach (var operation in mementoes.MememtoCommand)
             {
                 if (target.Invoker == operation.Invoker)
                 {
@@ -75,9 +98,9 @@ namespace WinFormsMVC.Main.Services
                 {
                     command.PrevOperation(command, form);
 
-                    if (command.FreeOperation != null)
+                    if (command.FinalOperation != null)
                     {
-                        command.FreeOperation(command, form);
+                        command.FinalOperation(command, form);
                     }
                 }
             }

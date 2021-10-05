@@ -7,11 +7,11 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Main.Services
 {
-    public class OperationManager
+    public class MementoManager
     {
         public List<Command.Command> MememtoCommand { get; }
 
-        public OperationManager()
+        public MementoManager()
         {
             MememtoCommand = new List<Command.Command>();
         }
