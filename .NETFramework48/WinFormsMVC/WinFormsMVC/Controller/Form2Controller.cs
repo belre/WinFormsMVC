@@ -19,17 +19,17 @@ namespace WinFormsMVC.Controller
             _manager = manager;
         }
 
-        public void LaunchForm3(Form2 self_view)
+        public void Launch<TargetForm>(Form2 self_view) where TargetForm : Form3
         {
             _manager.LaunchForm(self_view, new Form3());
         }
 
-        public void SendMessage(Command command)
+        public void SendMessage<TargetForm>(Command command) where TargetForm : Form3
         {
             _manager.Operate<Form3>(command);
         }
 
-        public void Redo()
+        public void Redo<TargetForm>() where TargetForm : Form3
         {
             _manager.OperatePrevious<Form3>();
         }

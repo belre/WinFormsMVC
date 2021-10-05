@@ -30,14 +30,13 @@ namespace WinFormsMVC
             public T GetController<T>(BaseForm form) where T : Controller.Controller
             {
                 var inst = Activator.CreateInstance(typeof(T).Assembly.GetName().Name,
-                        typeof(T).FullName, false,
-                        BindingFlags.CreateInstance | BindingFlags.SetField, null,
-                        new object[] {Manager}, CultureInfo.CurrentCulture, new object[] { })
-                    .Unwrap();
+                    typeof(T).FullName, false,
+                    BindingFlags.CreateInstance | BindingFlags.SetField, null,
+                    new object[] {Manager}, CultureInfo.CurrentCulture, null);
 
                 if (inst != null)
                 {
-                    return (T) inst;
+                    return (T) inst.Unwrap();
                 }
                 else
                 {

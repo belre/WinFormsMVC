@@ -22,14 +22,15 @@ namespace WinFormsMVC
             private void button1_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.LaunchForm3(this);
+                controller.Launch<Form3>(this);
             }
 
             private void button2_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessage(new Command{Invoker=this, 
+                controller.SendMessage<Form3>(new Command {
+                    Invoker=this, 
                     InitOperation = (command, form3) =>
                     {
                         command.PrevTemporary = ((Form3)form3).Message;
@@ -41,6 +42,7 @@ namespace WinFormsMVC
                         if (command.NextTemporary != null)
                         {
                             ((Form3)form3).Message = command.PrevTemporary;
+                            textBox1.Text = command.PrevTemporary;
                         }
                     },
                     NextOperation = (command, form3) =>
@@ -53,7 +55,7 @@ namespace WinFormsMVC
             private void button3_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.Redo();
+                controller.Redo<Form3>();
             }
         }
     }
