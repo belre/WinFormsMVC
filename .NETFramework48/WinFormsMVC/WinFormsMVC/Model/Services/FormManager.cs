@@ -37,70 +37,81 @@ namespace WinFormsMVC.Model.Services
             target.Show();
         }
 
-        public void Operate<TargetForm>(Command.AbstractCommand abstractCommand)
-            where TargetForm : BaseForm
+        public void Operate(IEnumerable<Command.AbstractCommand> abstract_command)
         {
-            var target_forms = new List<BaseForm>();
-            foreach (var form in _managed_baseform)
+            foreach (var command in abstract_command)
             {
-                if (form.Invoker == abstractCommand.Invoker && form.GetType() == typeof(TargetForm))
+                var target_forms = new List<BaseForm>();
+                foreach (var form in _managed_baseform)
                 {
-                    target_forms.Add((TargetForm) form);
+                    if (form.Invoker == command.Invoker && form.GetType() == command.FormType)
+                    {
+                        target_forms.Add(form);
+                    }
                 }
-            }
 
-            bool was_done = true;
-            foreach (var target in target_forms)
-            {
-                if (abstractCommand.Initialize(target))
-                {
-                    abstractCommand.Next(target);
-                }
-                else
-                {
-                    was_done = false;
-                    break;
-                }
-            }
-
-            if (!was_done)
-            {
+                bool was_done = true;
                 foreach (var target in target_forms)
                 {
-                    abstractCommand.HandleInitError(target);
+                    if (command.Initialize(target))
+                    {
+                        command.Next(target);
+                    }
+                    else
+                    {
+                        was_done = false;
+                        break;
+                    }
+                }
+
+                if (!was_done)
+                {
+                    foreach (var target in target_forms)
+                    {
+                        command.HandleInitError(target);
+                    }
                 }
             }
 
-            _mement_manager.PushCommand(abstractCommand);
+
+            _mement_manager.PushCommand(abstract_command);
         }
 
         public void OperateFromInit(BaseForm target)
         {
-            foreach (var command in _mement_manager.MememtoCommand)
+            foreach (var recent_commands in _mement_manager.MememtoCommand)
             {
-                if (target.Invoker == command.Invoker && target.GetType() == command.FormType)
+                foreach (var command in recent_commands)
                 {
-                    command.Next(target);
+                    if (target.Invoker == command.Invoker && target.GetType() == command.FormType)
+                    {
+                        command.Next(target);
+                    }
+
                 }
             }
         }
 
         public void OperatePrevious()
         {
-            var command = _mement_manager.PopCommand();
+            var recent_commands = _mement_manager.PopCommand();
 
-            if (command == null)
+            if (recent_commands == null)
             {
                 return;
             }
 
-            foreach (var form in _managed_baseform)
+            foreach (var command in recent_commands)
             {
-                if (form.Invoker == command.Invoker && form.GetType() == command.FormType)
+                foreach (var form in _managed_baseform)
                 {
-                    command.Prev(form);
-                    command.Finalize(form);
+                    if (form.Invoker == command.Invoker && form.GetType() == command.FormType)
+                    {
+                        command.Prev(form);
+                        command.Finalize(form);
+                    }
                 }
+
             }
         }
 

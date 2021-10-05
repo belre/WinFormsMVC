@@ -29,9 +29,9 @@ namespace WinFormsMVC.Controller
             _manager.LaunchForm(self_view, new Form4());
         }
 
-        public void SendMessage<TargetForm>(AbstractCommand abstractCommand) where TargetForm : BaseForm
+        public void SendMessage(AbstractCommand[] abstractCommand) 
         {
-            _manager.Operate<TargetForm>(abstractCommand);
+            _manager.Operate(abstractCommand);
         }
 
         public void Redo()

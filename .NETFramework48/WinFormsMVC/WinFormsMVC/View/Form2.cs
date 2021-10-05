@@ -29,52 +29,51 @@ namespace WinFormsMVC
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessage<Form3>(new Command<Form3> {
-                    Invoker=this,
-                    InitOperation = (command, form3) =>
-                    {
-                        command.PrevTemporary = ((Form3)form3).Message;
-                        command.NextTemporary = textBox1.Text;
-                        return true;
-                    },
-                    PrevOperation = (command, form3) =>
-                    {
-                        if (command.PrevTemporary != null)
+                controller.SendMessage( new AbstractCommand[] {
+                    new Command<Form3> {
+                        Invoker=this,
+                        InitOperation = (command, form3) =>
                         {
-                            ((Form3)form3).Message = command.PrevTemporary;
+                            command.PrevTemporary = ((Form3)form3).Message;
+                            command.NextTemporary = textBox1.Text;
+                            return true;
+                        },
+                        PrevOperation = (command, form3) =>
+                        {
+                            if (command.PrevTemporary != null)
+                            {
+                                ((Form3)form3).Message = command.PrevTemporary;
+                            }
+                        },
+                        NextOperation = (command, form3) =>
+                        {
+                            if (command.NextTemporary != null)
+                            {
+                                ((Form3)form3).Message = command.NextTemporary;
+                            }
                         }
                     },
-                    NextOperation = (command, form3) =>
-                    {
-                        if (command.NextTemporary != null)
+                    new Command<Form4>() {
+                        Invoker = this,
+                        InitOperation = (command, form4) =>
                         {
-                            ((Form3)form3).Message = command.NextTemporary;
-                        }
-                    }
-                });
-
-
-                controller.SendMessage<Form4>(new Command<Form4>()
-                {
-                    Invoker = this,
-                    InitOperation = (command, form4) =>
-                    {
-                        command.PrevTemporary = ((Form4)form4).Message;
-                        command.NextTemporary = textBox1.Text;
-                        return true;
-                    },
-                    PrevOperation = (command, form4) =>
-                    {
-                        if (command.PrevTemporary != null)
+                            command.PrevTemporary = ((Form4)form4).Message;
+                            command.NextTemporary = textBox1.Text;
+                            return true;
+                        },
+                        PrevOperation = (command, form4) =>
                         {
-                            ((Form4)form4).Message = command.PrevTemporary;
-                        }
-                    },
-                    NextOperation = (command, form4) =>
-                    {
-                        if (command.NextTemporary != null)
+                            if (command.PrevTemporary != null)
+                            {
+                                ((Form4)form4).Message = command.PrevTemporary;
+                            }
+                        },
+                        NextOperation = (command, form4) =>
                         {
-                            ((Form4) form4).Message = command.NextTemporary;
+                            if (command.NextTemporary != null)
+                            {
+                                ((Form4) form4).Message = command.NextTemporary;
+                            }
                         }
                     }
                 });
