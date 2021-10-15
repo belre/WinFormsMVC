@@ -1,4 +1,5 @@
 ﻿using WinFormsMVC.Controller;
+using WinFormsMVC.Controller.Attribute;
 using WinFormsMVC.Request;
 using WinFormsMVC.Services;
 using WinFormsMVCSample.View;
@@ -8,6 +9,8 @@ namespace WinFormsMVCSample.Controller
     public class Form2Controller : BaseController
     {
         private FormsManagement _manager;
+
+        [CalledAsController]
 
         public Form2Controller(FormsManagement manager)
         {

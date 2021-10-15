@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using WinFormsMVC.Controller;
 using WinFormsMVC.Services;
 using WinFormsMVC.View;
 
@@ -28,10 +29,23 @@ namespace WinFormsMVC.Facade
 
         public T GetController<T>(BaseForm form) where T : Controller.BaseController
         {
+            // 想定しているクラスの追加
+            var ctor = BaseController.GetRuntimeConstructor(typeof(T));
+            var arguments = new object[ctor.GetParameters().Length];
+            for (int i = 0 ; i < arguments.Length; i ++ )
+            {
+                if (ctor.GetParameters()[i].ParameterType == typeof(FormsManagement))
+                {
+                    arguments[i] = FormManager;
+                }
+            }
+            
+
+            // Controllerを動的に生成
             var inst = Activator.CreateInstance(typeof(T).Assembly.GetName().Name,
                 typeof(T).FullName, false,
                 BindingFlags.CreateInstance | BindingFlags.SetField, null,
-                new object[] { FormManager }, CultureInfo.CurrentCulture, null);
+                arguments, CultureInfo.CurrentCulture, null);
 
             if (inst != null)
             {

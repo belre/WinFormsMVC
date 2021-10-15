@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Attribute\CalledAsController.cs" />
     <Compile Include="Controller\BaseController.cs" />
     <Compile Include="Facade\ViewFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,5 +63,6 @@
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

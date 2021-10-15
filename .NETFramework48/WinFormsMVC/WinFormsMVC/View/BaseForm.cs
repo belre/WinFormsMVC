@@ -10,10 +10,5 @@ namespace WinFormsMVC.View
         public ViewFacade Facade { get; set; }
 
         public BaseForm Invoker { get; set; }
-
-        public BaseForm()
-        {
-            
-        }
     }
 }
