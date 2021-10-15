@@ -13,8 +13,14 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Facade
 {
+    /// <summary>
+    /// Viewから、Controllerの操作を行ないます。
+    /// </summary>
     public class ViewFacade
     {
+        /// <summary>
+        /// 現在管理しているFormの管理オブジェクトを返します。
+        /// </summary>
         public FormsManagement FormManager { get; }
 
         public ViewFacade(FormsManagement form_manager)
@@ -23,6 +29,12 @@ namespace WinFormsMVC.Facade
             FormManager.Facade = this;
         }
 
+        /// <summary>
+        /// コントローラを取得します。
+        /// </summary>
+        /// <typeparam name="T">Controllerの型</typeparam>
+        /// <param name="form">Form(通常は自分自身 *this*などを返す)</param>
+        /// <returns>Controllerのオブジェクト</returns>
         public T GetController<T>(BaseForm form) where T : Controller.BaseController
         {
             // 想定しているクラスの追加

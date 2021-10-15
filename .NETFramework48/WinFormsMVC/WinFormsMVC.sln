@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsMVCSample", "WinFor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsMVC", "WinFormsMVC\WinFormsMVC.csproj", "{30D6C4C2-ACC9-4778-AB8F-5707A863909E}"
 EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "WinFormsMVCHelp", "WinFormsMVCHelp\WinFormsMVCHelp.shfbproj", "{5A2ACDCE-91D7-498E-838A-AFEF03938EA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{30D6C4C2-ACC9-4778-AB8F-5707A863909E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D6C4C2-ACC9-4778-AB8F-5707A863909E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D6C4C2-ACC9-4778-AB8F-5707A863909E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A2ACDCE-91D7-498E-838A-AFEF03938EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A2ACDCE-91D7-498E-838A-AFEF03938EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A2ACDCE-91D7-498E-838A-AFEF03938EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A2ACDCE-91D7-498E-838A-AFEF03938EA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,10 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.Controller.Attribute;
 
+
 namespace WinFormsMVC.Controller
 {
+    /// <summary>
+    /// 全てのControllerクラスのベースクラスを表します。
+    /// </summary>
     public class BaseController
     {
+        /// <summary>
+        /// Controllerのコンストラクタを返します。
+        /// </summary>
+        /// <param name="controller_type">Controllerの型</param>
+        /// <returns>コンストラクタの型</returns>
         public static ConstructorInfo GetRuntimeConstructor(Type controller_type)
         {
             var ctors = controller_type.GetConstructors();
@@ -41,7 +50,9 @@ namespace WinFormsMVC.Controller
             }
         }
 
-
+        /// <summary>
+        /// コンストラクタを表します。
+        /// </summary>
         public BaseController()
         {
             var target_ctor = GetRuntimeConstructor(this.GetType());
