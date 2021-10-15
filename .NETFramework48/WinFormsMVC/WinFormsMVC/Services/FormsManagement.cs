@@ -52,21 +52,7 @@ namespace WinFormsMVC.Services
             {
                 if (command.Validate())
                 {
-                    var target_forms = new List<BaseForm>();
-                    foreach (var form in _managed_baseform)
-                    {
-                        BaseForm invoker = command.IsForSelf ? command.Invoker : form.Invoker;
-
-                        if (invoker == command.Invoker && form.GetType() == command.FormType)
-                        {
-                            target_forms.Add(form);
-                        }
-                    }
-
-                    foreach (var target in target_forms)
-                    {
-                        command.Next(target);
-                    }
+                    ReflectNext(command);
                 }
                 else
                 {
@@ -86,12 +72,29 @@ namespace WinFormsMVC.Services
             {
                 var async_command = new AsyncCommand(command);
 
-                async_command.NotifyingAsync += NotifyAsync;
+                async_command.NotifyingAsync += ReflectNext;
                 Task.Run(async_command.ValidateAsync);
             }
         }
 
-        public void NotifyAsync(AbstractCommand command)
+
+        public void OperateFromInit(BaseForm target)
+        {
+            foreach (var recent_commands in _memento_management.MememtoCommand)
+            {
+                foreach (var command in recent_commands)
+                {
+                    BaseForm invoker = command.IsForSelf ? command.Invoker : target.Invoker;
+
+                    if (invoker == command.Invoker && target.GetType() == command.FormType)
+                    {
+                        command.Next(target);
+                    }
+                }
+            }
+        }
+
+        public void ReflectNext(AbstractCommand command)
         {
             var target_forms = new List<BaseForm>();
             foreach (var form in _managed_baseform)
@@ -110,23 +113,8 @@ namespace WinFormsMVC.Services
             }
         }
 
-        public void OperateFromInit(BaseForm target)
-        {
-            foreach (var recent_commands in _memento_management.MememtoCommand)
-            {
-                foreach (var command in recent_commands)
-                {
-                    BaseForm invoker = command.IsForSelf ? command.Invoker : target.Invoker;
 
-                    if (invoker == command.Invoker && target.GetType() == command.FormType)
-                    {
-                        command.Next(target);
-                    }
-                }
-            }
-        }
-
-        public void OperatePrevious()
+        public void ReflectPrevious()
         {
             var recent_commands = _memento_management.PopCommand();
 

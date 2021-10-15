@@ -59,7 +59,7 @@ namespace WinFormsMVCSample.Controller
 
         public void Redo(NotifyIsAvailableUndo notify_undo_func)
         {
-            _manager.OperatePrevious();
+            _manager.ReflectPrevious();
             ReflectMemento(notify_undo_func);
         }
 
