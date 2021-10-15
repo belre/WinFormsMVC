@@ -9,6 +9,8 @@ namespace WinFormsMVC.Services
 {
     public class CommandMementoManagement
     {
+        public readonly int MAX_MEMEMTO_NUMBER = 10;
+
         public List<IEnumerable<Request.AbstractCommand>> MememtoCommand { get; }
 
         public CommandMementoManagement()
@@ -19,6 +21,11 @@ namespace WinFormsMVC.Services
         public void PushCommand(IEnumerable<Request.AbstractCommand> abstractCommand)
         {
             MememtoCommand.Add(abstractCommand);
+
+            if (MememtoCommand.Count > MAX_MEMEMTO_NUMBER)
+            {
+                MememtoCommand.RemoveRange(0, MememtoCommand.Count - MAX_MEMEMTO_NUMBER);
+            }
         }
 
         public IEnumerable<Request.AbstractCommand> PopCommand()
@@ -33,6 +40,11 @@ namespace WinFormsMVC.Services
             {
                 return null;
             }
+        }
+
+        public bool IsAvalableUndo()
+        {
+            return MememtoCommand.Count != 0;
         }
     }
 }

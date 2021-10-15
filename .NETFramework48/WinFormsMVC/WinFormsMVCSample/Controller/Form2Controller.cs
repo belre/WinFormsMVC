@@ -30,6 +30,11 @@ namespace WinFormsMVCSample.Controller
             _manager.Operate(abstractCommand);
         }
 
+        public void Refresh(AbstractCommand[] abstractCommands)
+        {
+            _manager.Operate(abstractCommands);
+        }
+
         public void Redo()
         {
             _manager.OperatePrevious();

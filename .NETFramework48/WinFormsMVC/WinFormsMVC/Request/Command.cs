@@ -3,18 +3,11 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Request
 {
-    public class Command<TargetForm> : AbstractCommand where TargetForm : BaseForm
+    public class Command<TargetForm, Item> : AbstractCommand where TargetForm : BaseForm where Item : CommandItem
     {
-        public string NextTemporary
+        public Item StoredItem
         {
             get;
-            set;
-        }
-
-        public string PrevTemporary
-        {
-            get;
-            set;
         }
 
         public override Type FormType
@@ -25,22 +18,34 @@ namespace WinFormsMVC.Request
             }
         }
 
-        public Func<Command<TargetForm>, bool> Validation { get; set; }
+        public Command()
+        {
+            var temporary_item = typeof(Item).GetConstructor(new Type[0]);
+            if (temporary_item != null)
+            {
+                StoredItem = (Item)temporary_item.Invoke(new object[0]);
+            }
+            else
+            {
+                throw new TypeInitializationException(typeof(Item).Name, new Exception("コマンドアイテムが異常です"));
+            }
+        }
 
-        public Action<Command<TargetForm>, TargetForm> NextOperation { get; set; }
+        public Func<Command<TargetForm, Item>, Item, bool> Validation { get; set; }
 
-        public Action<Command<TargetForm>, TargetForm> PrevOperation { get; set; }
+        public Action<Command<TargetForm, Item>, Item, TargetForm> NextOperation { get; set; }
 
-        public Action<Command<TargetForm>, TargetForm> FinalOperation { get; set; }
+        public Action<Command<TargetForm, Item>, Item, TargetForm> PrevOperation { get; set; }
 
-        public Action<Command<TargetForm>> ErrorOperation { get; set; }
+        public Action<Command<TargetForm, Item>, Item, TargetForm> FinalOperation { get; set; }
 
+        public Action<Command<TargetForm, Item>, Item>  ErrorOperation { get; set; }
 
         public override bool Validate()
         {
             if (Validation != null)
             {
-                return Validation(this);
+                return Validation(this, StoredItem);
             }
             else
             {
@@ -52,7 +57,7 @@ namespace WinFormsMVC.Request
         {
             if (PrevOperation != null)
             {
-                PrevOperation(this, (TargetForm)form);
+                PrevOperation(this, StoredItem, (TargetForm)form);
             }
         }
 
@@ -60,7 +65,7 @@ namespace WinFormsMVC.Request
         {
             if (NextOperation != null)
             {
-                NextOperation(this, (TargetForm)form);
+                NextOperation(this, StoredItem, (TargetForm)form);
             }
         }
 
@@ -68,7 +73,7 @@ namespace WinFormsMVC.Request
         {
             if (FinalOperation != null)
             {
-                FinalOperation(this, (TargetForm)form);
+                FinalOperation(this, StoredItem, (TargetForm)form);
             }
         }
 
@@ -76,7 +81,7 @@ namespace WinFormsMVC.Request
         {
             if (ErrorOperation != null)
             {
-                ErrorOperation(this);
+                ErrorOperation(this, StoredItem);
             }
         }
     }

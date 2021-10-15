@@ -13,6 +13,8 @@ namespace WinFormsMVC.Request
             get;
         }
 
+        public bool IsForSelf { get; set; }
+
         public abstract bool Validate();
 
         public abstract void Prev(BaseForm form);

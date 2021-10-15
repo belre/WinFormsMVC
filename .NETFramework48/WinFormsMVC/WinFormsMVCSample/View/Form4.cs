@@ -25,9 +25,25 @@ namespace WinFormsMVCSample.View
                 label1.Text = value;
             }
         }
+
+        public Image DisplayedImage
+        {
+            get
+            {
+                return pictureBox1.Image;
+            }
+            set
+            {
+                pictureBox1.Image = value;
+                pictureBox1.Invalidate();
+            }
+        }
+
         public Form4()
         {
             InitializeComponent();
+
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
         }
     }
 }

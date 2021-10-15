@@ -46,7 +46,9 @@ namespace WinFormsMVC.Services
                     var target_forms = new List<BaseForm>();
                     foreach (var form in _managed_baseform)
                     {
-                        if (form.Invoker == command.Invoker && form.GetType() == command.FormType)
+                        BaseForm invoker = command.IsForSelf ? command.Invoker : form.Invoker;
+
+                        if (invoker == command.Invoker && form.GetType() == command.FormType)
                         {
                             target_forms.Add(form);
                         }
@@ -73,7 +75,9 @@ namespace WinFormsMVC.Services
             {
                 foreach (var command in recent_commands)
                 {
-                    if (target.Invoker == command.Invoker && target.GetType() == command.FormType)
+                    BaseForm invoker = command.IsForSelf ? command.Invoker : target.Invoker;
+
+                    if (invoker == command.Invoker && target.GetType() == command.FormType)
                     {
                         command.Next(target);
                     }
@@ -94,7 +98,9 @@ namespace WinFormsMVC.Services
             {
                 foreach (var form in _managed_baseform)
                 {
-                    if (form.Invoker == command.Invoker && form.GetType() == command.FormType)
+                    BaseForm invoker = command.IsForSelf ? command.Invoker : form.Invoker;
+
+                    if (invoker == command.Invoker && form.GetType() == command.FormType)
                     {
                         command.Prev(form);
                         command.Finalize(form);
