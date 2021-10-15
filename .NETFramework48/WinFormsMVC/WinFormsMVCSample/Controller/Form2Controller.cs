@@ -10,8 +10,6 @@ namespace WinFormsMVCSample.Controller
     {
         private FormsManagement _manager;
 
-        [CalledAsController]
-
         public Form2Controller(FormsManagement manager)
         {
             _manager = manager;

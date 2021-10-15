@@ -25,7 +25,8 @@ namespace WinFormsMVC.Controller
                     target_ctors.Add(ctor);
                 }
             }
-
+            
+            // 抽出したオブジェクト一覧に従ってRuntime用のコンストラクタを出力
             if (target_ctors.Count > 1)
             {
                 return null;
@@ -47,7 +48,7 @@ namespace WinFormsMVC.Controller
 
             if (target_ctor == null)
             {
-                throw new TypeInitializationException(this.GetType().Name, new Exception("Controllerの型指定異常です"));
+                throw new TypeInitializationException(this.GetType().Name, new Exception("Controllerの型指定が異常です."));
             }
         }   
     }

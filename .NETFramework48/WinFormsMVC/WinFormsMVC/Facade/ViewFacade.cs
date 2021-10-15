@@ -15,10 +15,6 @@ namespace WinFormsMVC.Facade
 {
     public class ViewFacade
     {
-        public IEnumerable<BaseForm> Forms { get; set; }
-
-        public IEnumerable<Controller.BaseController> Controllers { get; set; }
-
         public FormsManagement FormManager { get; }
 
         public ViewFacade(FormsManagement form_manager)
@@ -40,7 +36,6 @@ namespace WinFormsMVC.Facade
                 }
             }
             
-
             // Controllerを動的に生成
             var inst = Activator.CreateInstance(typeof(T).Assembly.GetName().Name,
                 typeof(T).FullName, false,

@@ -11,16 +11,11 @@ namespace WinFormsMVCSample.Controller
     {
         private FormsManagement _manager;
 
-        [CalledAsController]
         public Form1Controller(FormsManagement manager)
         {
             _manager = manager;
         }
 
-        public Form1Controller()
-        {
-            
-        }
 
         public void LaunchForm2(Form1 self_form)
         {
