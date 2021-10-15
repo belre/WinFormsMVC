@@ -36,7 +36,7 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessage( new AbstractCommand[] {
+                controller.SendMessageWithRecord( new AbstractCommand[] {
                     new Command<Form3, TextItem> {
                         Invoker=this,
                         Validation = (command, item) =>
@@ -83,13 +83,13 @@ namespace WinFormsMVCSample
                             }
                         }
                     }
-                });
+                }, IsUndoEnable);
             }
 
             private void button3_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.Redo();
+                controller.Redo(IsUndoEnable);
             }
 
             private void button4_Click(object sender, EventArgs e)
@@ -115,7 +115,7 @@ namespace WinFormsMVCSample
                     _is_now_drawing = false;
 
                     var controller = Facade.GetController<Form2Controller>(this);
-                    controller.SendMessage( new AbstractCommand[]
+                    controller.SendMessageWithRecord( new AbstractCommand[]
                     {
                         new Command<Form2, ImageItem>()
                         {
@@ -142,7 +142,7 @@ namespace WinFormsMVCSample
                                 }
                             }
                         }
-                    });
+                    }, IsUndoEnable);
                 }
             }
 
@@ -162,7 +162,7 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessage(new AbstractCommand[]
+                controller.SendMessageWithRecord(new AbstractCommand[]
                 {
                     new Command<Form4, ImageItem>()
                     {
@@ -188,7 +188,83 @@ namespace WinFormsMVCSample
                             }
                         }
                     }
-                });
+                }, IsUndoEnable);
+            }
+
+            private void button6_Click(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form2TimestampController>(this);
+                controller.TriggerAsyncTimeStamp(NotifyTimeStamp);
+            }
+
+            private void NotifyTimeStamp(string timestamp)
+            {
+                label1.Text = string.Format("{0}", timestamp);
+            }
+
+
+            private void Form2_Load(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form2Controller>(this);
+                button3.Enabled = controller.IsAvailableUndo;
+            }
+
+            private void IsUndoEnable(bool is_available_undo)
+            {
+                button3.Enabled = is_available_undo;
+            }
+
+            private void button7_Click(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form2Controller>(this);
+
+                controller.SendSimpleMessage(new AbstractCommand[]
+                {
+                    new Command<Form4, ImageItem>()
+                    {
+                        Invoker = this,
+                        Validation = (command, item) =>
+                        {
+                            item.NextImage = (Image)pictureBox1.Image.Clone();
+                            return true;
+                        },
+                        NextOperation = (command, item, form4) =>
+                        {
+                            if (item.NextImage != null)
+                            {
+                                item.PrevImage = (Image)form4.DisplayedImage.Clone();
+                                form4.DisplayedImage = item.NextImage;
+                            }
+                        }
+                    }
+                }, IsUndoEnable);
+            }
+
+            private void button8_Click(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form2Controller>(this);
+
+                controller.SendAsyncMessage(new AbstractCommand[]
+                {
+                    new Command<Form4, ImageItem>()
+                    {
+                        Invoker = this,
+                        Validation = (command, item) =>
+                        {
+                            item.NextImage = (Image)pictureBox1.Image.Clone();
+                            System.Threading.Thread.Sleep(5000);
+                            return true;
+                        },
+                        NextOperation = (command, item, form4) =>
+                        {
+                            if (item.NextImage != null)
+                            {
+                                item.PrevImage = (Image)form4.DisplayedImage.Clone();
+                                form4.DisplayedImage = item.NextImage;
+                            }
+                        }
+                    }
+                }, IsUndoEnable);
             }
         }
     }

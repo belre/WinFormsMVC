@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Request
 {
     public abstract class AbstractCommand
     {
-
-        public BaseForm Invoker { get; set; }
+        public virtual BaseForm Invoker { get; set; }
 
         public abstract Type FormType
         {
@@ -16,6 +16,7 @@ namespace WinFormsMVC.Request
         public bool IsForSelf { get; set; }
 
         public abstract bool Validate();
+
 
         public abstract void Prev(BaseForm form);
 

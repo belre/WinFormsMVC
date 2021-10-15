@@ -48,6 +48,7 @@
     <Compile Include="Facade\ViewFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\AbstractCommand.cs" />
+    <Compile Include="Request\AsyncCommand.cs" />
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\CommandItem.cs" />
     <Compile Include="Request\Item\ImageItem.cs" />

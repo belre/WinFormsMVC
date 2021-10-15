@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Controller\Form1Controller.cs" />
     <Compile Include="Controller\Form2Controller.cs" />
+    <Compile Include="Controller\Form2TimestampController.cs" />
     <Compile Include="Controller\Form3Controller.cs" />
+    <Compile Include="Model\TestComm\TestTimeStampCommunication.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserApplicationContext.cs" />
@@ -112,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Facade\" />
-    <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinFormsMVC\WinFormsMVC.csproj">

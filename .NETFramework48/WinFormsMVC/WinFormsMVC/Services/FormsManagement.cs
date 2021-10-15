@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.Facade;
+using WinFormsMVC.Request;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Services
@@ -12,7 +13,7 @@ namespace WinFormsMVC.Services
     {
         private List<BaseForm> _managed_baseform;
         private ViewFacade _facade;
-        private CommandMementoManagement _mementManagement;
+        private CommandMementoManagement _memento_management;
 
         public ViewFacade Facade
         {
@@ -20,10 +21,18 @@ namespace WinFormsMVC.Services
             set { _facade = value; }
         }
 
+        public CommandMementoManagement MementoManager
+        {
+            get
+            {
+                return _memento_management;
+            }
+        }
+
         public FormsManagement()
         {
             _managed_baseform = new List<BaseForm>();
-            _mementManagement = new CommandMementoManagement();
+            _memento_management = new CommandMementoManagement();
         }
 
         public void LaunchForm<TargetForm>(BaseForm source, TargetForm target)
@@ -37,7 +46,7 @@ namespace WinFormsMVC.Services
             target.Show();
         }
 
-        public void Operate(IEnumerable<Request.AbstractCommand> abstract_command)
+        public void Operate(IEnumerable<Request.AbstractCommand> abstract_command, bool is_record_memento)
         {
             foreach (var command in abstract_command)
             {
@@ -65,13 +74,45 @@ namespace WinFormsMVC.Services
                 }
             }
 
+            if (is_record_memento)
+            {
+                _memento_management.PushCommand(abstract_command);
+            }
+        }
 
-            _mementManagement.PushCommand(abstract_command);
+        public void OperateAsync(IEnumerable<Request.AbstractCommand> abstract_command)
+        {
+            foreach (var command in abstract_command)
+            {
+                var async_command = new AsyncCommand(command);
+
+                async_command.NotifyingAsync += NotifyAsync;
+                Task.Run(async_command.ValidateAsync);
+            }
+        }
+
+        public void NotifyAsync(AbstractCommand command)
+        {
+            var target_forms = new List<BaseForm>();
+            foreach (var form in _managed_baseform)
+            {
+                BaseForm invoker = command.IsForSelf ? command.Invoker : form.Invoker;
+
+                if (invoker == command.Invoker && form.GetType() == command.FormType)
+                {
+                    target_forms.Add(form);
+                }
+            }
+
+            foreach (var target in target_forms)
+            {
+                command.Next(target);
+            }
         }
 
         public void OperateFromInit(BaseForm target)
         {
-            foreach (var recent_commands in _mementManagement.MememtoCommand)
+            foreach (var recent_commands in _memento_management.MememtoCommand)
             {
                 foreach (var command in recent_commands)
                 {
@@ -87,7 +128,7 @@ namespace WinFormsMVC.Services
 
         public void OperatePrevious()
         {
-            var recent_commands = _mementManagement.PopCommand();
+            var recent_commands = _memento_management.PopCommand();
 
             if (recent_commands == null)
             {
