@@ -89,7 +89,7 @@ namespace WinFormsMVCSample
             private void button3_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.Redo(IsUndoEnable);
+                controller.Undo(IsUndoEnable);
             }
 
             private void button4_Click(object sender, EventArgs e)
