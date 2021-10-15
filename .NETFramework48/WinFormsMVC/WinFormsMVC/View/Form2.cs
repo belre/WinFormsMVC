@@ -34,7 +34,7 @@ namespace WinFormsMVC
                         Invoker=this,
                         InitOperation = (command, form3) =>
                         {
-                            command.PrevTemporary = ((Form3)form3).Message;
+                            command.PrevTemporary = form3.Message;
                             command.NextTemporary = textBox1.Text;
                             return true;
                         },
@@ -42,14 +42,14 @@ namespace WinFormsMVC
                         {
                             if (command.PrevTemporary != null)
                             {
-                                ((Form3)form3).Message = command.PrevTemporary;
+                                form3.Message = command.PrevTemporary;
                             }
                         },
                         NextOperation = (command, form3) =>
                         {
                             if (command.NextTemporary != null)
                             {
-                                ((Form3)form3).Message = command.NextTemporary;
+                                form3.Message = command.NextTemporary;
                             }
                         }
                     },
@@ -57,7 +57,7 @@ namespace WinFormsMVC
                         Invoker = this,
                         InitOperation = (command, form4) =>
                         {
-                            command.PrevTemporary = ((Form4)form4).Message;
+                            command.PrevTemporary = form4.Message;
                             command.NextTemporary = textBox1.Text;
                             return true;
                         },
@@ -65,14 +65,14 @@ namespace WinFormsMVC
                         {
                             if (command.PrevTemporary != null)
                             {
-                                ((Form4)form4).Message = command.PrevTemporary;
+                                form4.Message = command.PrevTemporary;
                             }
                         },
                         NextOperation = (command, form4) =>
                         {
                             if (command.NextTemporary != null)
                             {
-                                ((Form4) form4).Message = command.NextTemporary;
+                                form4.Message = command.NextTemporary;
                             }
                         }
                     }

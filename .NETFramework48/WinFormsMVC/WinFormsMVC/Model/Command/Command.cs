@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Model.Command
@@ -29,22 +25,22 @@ namespace WinFormsMVC.Model.Command
             }
         }
 
-        public Func<Command<TargetForm>, BaseForm, bool> InitOperation { get; set; }
+        public Func<Command<TargetForm>, TargetForm, bool> InitOperation { get; set; }
 
-        public Action<Command<TargetForm>, BaseForm> NextOperation { get; set; }
+        public Action<Command<TargetForm>, TargetForm> NextOperation { get; set; }
 
-        public Action<Command<TargetForm>, BaseForm> PrevOperation { get; set; }
+        public Action<Command<TargetForm>, TargetForm> PrevOperation { get; set; }
 
-        public Action<Command<TargetForm>, BaseForm> FinalOperation { get; set; }
+        public Action<Command<TargetForm>, TargetForm> FinalOperation { get; set; }
 
-        public Action<Command<TargetForm>, BaseForm> ErrorOperation { get; set; }
+        public Action<Command<TargetForm>, TargetForm> ErrorOperation { get; set; }
 
 
         public override bool Initialize(BaseForm form)
         {
             if (InitOperation != null)
             {
-                return InitOperation(this, form);
+                return InitOperation(this, (TargetForm)form);
             }
             else
             {
@@ -56,7 +52,7 @@ namespace WinFormsMVC.Model.Command
         {
             if (PrevOperation != null)
             {
-                PrevOperation(this, form);
+                PrevOperation(this, (TargetForm)form);
             }
         }
 
@@ -64,7 +60,7 @@ namespace WinFormsMVC.Model.Command
         {
             if (NextOperation != null)
             {
-                NextOperation(this, form);
+                NextOperation(this, (TargetForm)form);
             }
         }
 
@@ -72,7 +68,7 @@ namespace WinFormsMVC.Model.Command
         {
             if (FinalOperation != null)
             {
-                FinalOperation(this, form);
+                FinalOperation(this, (TargetForm)form);
             }
         }
 
@@ -80,11 +76,8 @@ namespace WinFormsMVC.Model.Command
         {
             if (ErrorOperation != null)
             {
-                ErrorOperation(this, form);
+                ErrorOperation(this, (TargetForm)form);
             }
         }
-
-
-
     }
 }
