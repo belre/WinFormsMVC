@@ -4,13 +4,24 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Request
 {
+    /// <summary>
+    /// コマンドを表します
+    /// </summary>
+    /// <typeparam name="TargetForm">対象とするフォーム</typeparam>
+    /// <typeparam name="Item">何を送信するか(テキスト、画像など)</typeparam>
     public class Command<TargetForm, Item> : AbstractCommand where TargetForm : BaseForm where Item : CommandItem
     {
+        /// <summary>
+        /// 確保されているデータを表します。
+        /// </summary>
         public Item StoredItem
         {
             get;
         }
 
+        /// <summary>
+        /// フォームの型を表します。
+        /// </summary>
         public override Type FormType
         {
             get
@@ -19,6 +30,9 @@ namespace WinFormsMVC.Request
             }
         }
 
+        /// <summary>
+        /// コマンドを生成します。
+        /// </summary>
         public Command()
         {
             var temporary_item = typeof(Item).GetConstructor(new Type[0]);
@@ -32,16 +46,35 @@ namespace WinFormsMVC.Request
             }
         }
 
+        /// <summary>
+        /// データ検証を行うときに実行される処理です。
+        /// </summary>
         public Func<Command<TargetForm, Item>, Item, bool> Validation { get; set; }
 
+        /// <summary>
+        /// 「実行」「やり直し」で行なわれる処理です。
+        /// </summary>
         public Action<Command<TargetForm, Item>, Item, TargetForm> NextOperation { get; set; }
 
+        /// <summary>
+        /// 「元に戻す」で行なわれる処理です。
+        /// </summary>
         public Action<Command<TargetForm, Item>, Item, TargetForm> PrevOperation { get; set; }
 
-        public Action<Command<TargetForm, Item>, Item, TargetForm> FinalOperation { get; set; }
+        /// <summary>
+        /// 「元に戻す」の後に行なわれる処理です。
+        /// </summary>
+        public Action<Command<TargetForm, Item>, Item> FinalOperation { get; set; }
 
+        /// <summary>
+        /// データ検証に失敗したときに実行される処理です。
+        /// </summary>
         public Action<Command<TargetForm, Item>, Item>  ErrorOperation { get; set; }
 
+        /// <summary>
+        /// データ検証を実行します。
+        /// </summary>
+        /// <returns></returns>
         public override bool Validate()
         {
             if (Validation != null)
@@ -54,6 +87,10 @@ namespace WinFormsMVC.Request
             }
         }
 
+        /// <summary>
+        /// 元に戻すを実行します。
+        /// </summary>
+        /// <param name="form"></param>
         public override void Prev(BaseForm form)
         {
             if (PrevOperation != null)
@@ -62,6 +99,10 @@ namespace WinFormsMVC.Request
             }
         }
 
+        /// <summary>
+        /// 実行、やり直しを実行します。
+        /// </summary>
+        /// <param name="form"></param>
         public override void Next(BaseForm form)
         {
             if (NextOperation != null)
@@ -70,14 +111,22 @@ namespace WinFormsMVC.Request
             }
         }
 
-        public override void Finalize(BaseForm form)
+
+        /// <summary>
+        /// 元に戻すの後の処理を表します。
+        /// </summary>
+        /// <param name="form"></param>
+        public override void Finalize()
         {
             if (FinalOperation != null)
             {
-                FinalOperation(this, StoredItem, (TargetForm)form);
+                FinalOperation(this, StoredItem);
             }
         }
 
+        /// <summary>
+        /// データ検証に失敗したときの処理を表します。
+        /// </summary>
         public override void HandleValidationError()
         {
             if (ErrorOperation != null)

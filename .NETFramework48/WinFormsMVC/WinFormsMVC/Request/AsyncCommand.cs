@@ -7,10 +7,22 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Request
 {
+    /// <summary>
+    /// 非同期処理を表すコマンド
+    /// </summary>
     public class AsyncCommand : AbstractCommand
     {
+        /// <summary>
+        /// デリゲート
+        /// 非同期処理通知
+        /// </summary>
+        /// <param name="command"></param>
         public delegate void NotifyAsync(AbstractCommand command);
 
+        /// <summary>
+        /// コマンドを発生させたフォーム
+        /// (※Commandを参照するので、setterは何もしない)
+        /// </summary>
         public override BaseForm Invoker
         {
             get
@@ -19,26 +31,34 @@ namespace WinFormsMVC.Request
             }
             set
             {
-
+                throw new InvalidOperationException("Async Commandでは、元々定義されたInvoker以外使用できません");
             }
         }
 
 
-
+        /// <summary>
+        /// ラップさせたコマンド
+        /// </summary>
         public AbstractCommand Command
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// 非同期処理が終わったら実行される処理
+        /// </summary>
         public NotifyAsync NotifyingAsync { get; set; }
+
 
         public AsyncCommand(AbstractCommand command)
         {
             Command = command;
         }
 
-
+        /// <summary>
+        /// フォームの型
+        /// </summary>
         public override Type FormType
         {
             get
@@ -47,12 +67,18 @@ namespace WinFormsMVC.Request
             }
         }
 
-
+        /// <summary>
+        /// データ検証(Commandと処理同じ)
+        /// </summary>
+        /// <returns></returns>
         public override bool Validate()
         {
             return Command.Validate();
         }
 
+        /// <summary>
+        /// 非同期の処理として実行
+        /// </summary>
         public void ValidateAsync()
         {
             Validate();
@@ -63,21 +89,36 @@ namespace WinFormsMVC.Request
             }
         }
 
+        /// <summary>
+        /// 元に戻す(Commandと処理同じ)
+        /// </summary>
+        /// <param name="form"></param>
         public override void Prev(BaseForm form)
         {
             Command.Prev(form);
         }
 
+        /// <summary>
+        /// やり直し＆実行（Commandと処理同じ)
+        /// </summary>
+        /// <param name="form"></param>
         public override void Next(BaseForm form)
         {
             Command.Next(form);
         }
 
-        public override void Finalize(BaseForm form)
+        /// <summary>
+        /// 元に戻した後に実行される処理(Commandと同じ）
+        /// </summary>
+        /// <param name="form"></param>
+        public override void Finalize()
         {
-            Command.Finalize(form);
+            Command.Finalize();
         }
 
+        /// <summary>
+        /// データ検証に失敗したときに実行(Commandと同じ）
+        /// </summary>
         public override void HandleValidationError()
         {
             Command.HandleValidationError();

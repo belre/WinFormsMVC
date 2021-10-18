@@ -168,7 +168,7 @@ namespace WinFormsMVC.Services
                     if (is_match_invoker && form.GetType() == command.FormType)
                     {
                         command.Prev(form);
-                        command.Finalize(form);
+                        command.Finalize();
                     }
                 }
             }

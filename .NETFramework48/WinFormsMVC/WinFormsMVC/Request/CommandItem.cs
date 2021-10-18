@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WinFormsMVC.Request
 {
+    /// <summary>
+    /// コマンドのアイテムの基本クラスを表します。
+    /// </summary>
     public class CommandItem
     {
     }
