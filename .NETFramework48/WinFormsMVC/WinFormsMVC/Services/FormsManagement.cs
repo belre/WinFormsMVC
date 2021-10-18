@@ -84,7 +84,7 @@ namespace WinFormsMVC.Services
             {
                 foreach (var command in recent_commands)
                 {
-                    BaseForm invoker = command.IsForSelf ? command.Invoker : target.Invoker;
+                    BaseForm invoker = command.IsForSelf ? target : target.Invoker;
 
                     if (invoker == command.Invoker && target.GetType() == command.FormType)
                     {
@@ -99,7 +99,7 @@ namespace WinFormsMVC.Services
             var target_forms = new List<BaseForm>();
             foreach (var form in _managed_baseform)
             {
-                BaseForm invoker = command.IsForSelf ? command.Invoker : form.Invoker;
+                BaseForm invoker = command.IsForSelf ? form: form.Invoker;
 
                 if (invoker == command.Invoker && form.GetType() == command.FormType)
                 {
@@ -127,7 +127,7 @@ namespace WinFormsMVC.Services
             {
                 foreach (var form in _managed_baseform)
                 {
-                    BaseForm invoker = command.IsForSelf ? command.Invoker : form.Invoker;
+                    BaseForm invoker = command.IsForSelf ? form : form.Invoker;
 
                     if (invoker == command.Invoker && form.GetType() == command.FormType)
                     {

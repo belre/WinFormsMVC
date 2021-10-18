@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 
 namespace WinFormsMVC.Request.Item
 {
+    /// <summary>
+    /// ControllerとしてTextを扱うアイテム
+    /// </summary>
     public class TextItem : CommandItem
     {
-
-        public string PrevTemporary
+        /// <summary>
+        /// 前回定義したテキスト
+        /// </summary>
+        public string PrevText
         {
             get;
             set;
         }
 
-        public string NextTemporary
+        /// <summary>
+        /// 今回定義したテキスト
+        /// </summary>
+        public string NextText
         {
             get;
             set;

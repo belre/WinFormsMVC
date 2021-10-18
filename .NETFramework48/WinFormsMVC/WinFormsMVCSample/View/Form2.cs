@@ -41,22 +41,22 @@ namespace WinFormsMVCSample
                         Invoker=this,
                         Validation = (command, item) =>
                         {
-                            item.NextTemporary = textBox1.Text;
+                            item.NextText = textBox1.Text;
                             return true;
                         },
                         PrevOperation = (command, item, form3) =>
                         {
-                            if (item.PrevTemporary != null)
+                            if (item.PrevText != null)
                             {
-                                form3.Message = item.PrevTemporary;
+                                form3.Message = item.PrevText;
                             }
                         },
                         NextOperation = (command, item, form3) =>
                         {
-                            if (item.NextTemporary != null)
+                            if (item.NextText != null)
                             {
-                                item.PrevTemporary = form3.Message;
-                                form3.Message = item.NextTemporary;
+                                item.PrevText = form3.Message;
+                                form3.Message = item.NextText;
                             }
                         }
                     },
@@ -64,22 +64,22 @@ namespace WinFormsMVCSample
                         Invoker = this,
                         Validation = (command, item) =>
                         {
-                            item.NextTemporary = textBox1.Text;
+                            item.NextText = textBox1.Text;
                             return true;
                         },
                         PrevOperation = (command, item, form4) =>
                         {
-                            if (item.PrevTemporary != null)
+                            if (item.PrevText != null)
                             {
-                                form4.Message = item.PrevTemporary;
+                                form4.Message = item.PrevText;
                             }
                         },
                         NextOperation = (command, item, form4) =>
                         {
-                            if (item.NextTemporary != null)
+                            if (item.NextText != null)
                             {
-                                item.PrevTemporary = form4.Message;
-                                form4.Message = item.NextTemporary;
+                                item.PrevText = form4.Message;
+                                form4.Message = item.NextText;
                             }
                         }
                     }
