@@ -38,24 +38,29 @@ namespace WinFormsMVCSample
 
             private void button2_Click_1(object sender, EventArgs e)
             {
-                /*
                 var controller = Facade.GetController<Form1Controller>(this);
-                controller.SendMessageWithRecord( new AbstractCommand[]
+                controller.SendMessageWithRecord( new Command[]
                 {
-                    new Command<Form3, TextItem>()
+                    new GenericCommand<Form3, TextItem>()
                     {
+                        Invoker = this,
+                        IsRetrieved = true,
                         Validation = (command, item) =>
                         {
-                            item.NextText = "Hello World";
+                            item.Next = "Hello World";
                             return true;
+                        },
+                        PrevOperation = (command, item, form3) =>
+                        {
+                            form3.RootMessage = item[form3];
                         },
                         NextOperation = (command, item, form3) =>
                         {
-                            form3.Message = item.NextText;
+                            item[form3] = form3.RootMessage;
+                            form3.RootMessage = item.Next;
                         }
                     }
                 }, null);
-                */
             }
         }
     }
