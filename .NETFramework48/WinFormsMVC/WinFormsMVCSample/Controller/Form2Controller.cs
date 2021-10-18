@@ -6,23 +6,12 @@ using WinFormsMVCSample.View;
 
 namespace WinFormsMVCSample.Controller
 {
-    public class Form2Controller : BaseController
+    public class Form2Controller : CommandController
     {
-        public delegate void NotifyIsAvailableUndo(bool is_enable);
-
-        private FormsManagement _manager;
-
-        public bool IsAvailableUndo
-        {
-            get
-            {
-                return _manager.MementoManager.IsAvalableUndo();
-            }
-        }
 
         public Form2Controller(FormsManagement manager)
+            : base(manager)
         {
-            _manager = manager;
         }
 
         public void LaunchForm3(Form2 self_view)
@@ -34,25 +23,6 @@ namespace WinFormsMVCSample.Controller
         {
             _manager.LaunchForm(self_view, new Form4());
         }
-
-        public void SendMessageWithRecord(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func) 
-        {
-            _manager.Operate(abstractCommand, true);
-            ReflectMemento(notify_undo_func);
-        }
-
-        public void SendSimpleMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
-        {
-            _manager.Operate(abstractCommand, false);
-            ReflectMemento(notify_undo_func);
-        }
-
-        public void SendAsyncMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
-        {
-            _manager.OperateAsync(abstractCommand);
-            ReflectMemento(notify_undo_func);
-        }
-
         public void NotifyAsyncMessage()
         {
 
@@ -62,14 +32,6 @@ namespace WinFormsMVCSample.Controller
         {
             _manager.ReflectPrevious();
             ReflectMemento(notify_undo_func);
-        }
-
-        public void ReflectMemento(NotifyIsAvailableUndo notify_undo_func)
-        {
-            if (notify_undo_func != null)
-            {
-                notify_undo_func(IsAvailableUndo);
-            }
         }
 
     }

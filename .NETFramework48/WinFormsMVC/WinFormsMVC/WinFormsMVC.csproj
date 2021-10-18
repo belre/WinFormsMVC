@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Controller\Attribute\CalledAsController.cs" />
     <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\CommandController.cs" />
     <Compile Include="Facade\ViewFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\Command.cs" />

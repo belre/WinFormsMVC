@@ -5,14 +5,12 @@ using WinFormsMVCSample.View;
 
 namespace WinFormsMVCSample.Controller
 {
-    public class Form3Controller : BaseController
+    public class Form3Controller : CommandController
     {
-        private FormsManagement _manager;
-
-
         public Form3Controller(FormsManagement manager)
+            : base(manager)
         {
-            _manager = manager;
+
         }
 
 
