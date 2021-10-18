@@ -7,10 +7,19 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Services
 {
+    /// <summary>
+    /// Mementoパターンを使用して、コマンドの履歴を参照します。
+    /// </summary>
     public class CommandMementoManagement
     {
+        /// <summary>
+        /// 最大で記録するコマンド数です。
+        /// </summary>
         public readonly int MAX_MEMEMTO_NUMBER = 10;
 
+        /// <summary>
+        /// Mementoのコマンドの一覧を表します。
+        /// </summary>
         public List<IEnumerable<Request.AbstractCommand>> MememtoCommand { get; }
 
         public CommandMementoManagement()
@@ -18,6 +27,10 @@ namespace WinFormsMVC.Services
             MememtoCommand = new List<IEnumerable<Request.AbstractCommand>>();
         }
 
+        /// <summary>
+        /// コマンドを追加します。
+        /// </summary>
+        /// <param name="abstractCommand"></param>
         public void PushCommand(IEnumerable<Request.AbstractCommand> abstractCommand)
         {
             MememtoCommand.Add(abstractCommand);
@@ -28,6 +41,10 @@ namespace WinFormsMVC.Services
             }
         }
 
+        /// <summary>
+        /// コマンドを削除します。
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Request.AbstractCommand> PopCommand()
         {
             if (MememtoCommand.Count != 0)
@@ -41,7 +58,11 @@ namespace WinFormsMVC.Services
                 return null;
             }
         }
-
+        
+        /// <summary>
+        /// 「元に戻す」が可能かどうかを表します。
+        /// </summary>
+        /// <returns></returns>
         public bool IsAvalableUndo()
         {
             return MememtoCommand.Count != 0;

@@ -58,16 +58,19 @@ namespace WinFormsMVCSample
                         },
                         PrevOperation = (command, item, form3) =>
                         {
-                            if (item.PrevText != null)
+                            if (item.GetPrevious(form3) != null)
                             {
-                                form3.Message = item.PrevText;
+                                form3.Message = item.GetPrevious(form3);
+
+                                //form3.Message = item.PrevText;
                             }
                         },
                         NextOperation = (command, item, form3) =>
                         {
+
                             if (item.NextText != null)
                             {
-                                item.PrevText = form3.Message;
+                                item.SetPreviousState(form3, form3.Message);
                                 form3.Message = item.NextText;
                             }
                         }
@@ -81,16 +84,17 @@ namespace WinFormsMVCSample
                         },
                         PrevOperation = (command, item, form4) =>
                         {
-                            if (item.PrevText != null)
+                            if (item.GetPrevious(form4) != null)
                             {
-                                form4.Message = item.PrevText;
+                                form4.Message = item.GetPrevious(form4);
+                                //form4.Message = item.PrevText;
                             }
                         },
                         NextOperation = (command, item, form4) =>
                         {
                             if (item.NextText != null)
                             {
-                                item.PrevText = form4.Message;
+                                item.SetPreviousState(form4, form4.Message);
                                 form4.Message = item.NextText;
                             }
                         }
@@ -294,16 +298,16 @@ namespace WinFormsMVCSample
                         },
                         PrevOperation = (command, item, form2) =>
                         {
-                            if (item.PrevText != null)
+                            if (item.GetPrevious(form2) != null)
                             {
-                                form2.MessageFromClone = item.PrevText;
+                                form2.MessageFromClone = item.GetPrevious(form2);
                             }
                         },
                         NextOperation = (command, item, form2) =>
                         {
                             if (item.NextText != null)
                             {
-                                item.PrevText = form2.MessageFromClone;
+                                item.SetPreviousState(form2, form2.MessageFromClone);
                                 form2.MessageFromClone = item.NextText;
                             }
                         }

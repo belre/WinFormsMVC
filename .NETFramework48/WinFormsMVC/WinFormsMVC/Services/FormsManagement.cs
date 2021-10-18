@@ -9,18 +9,38 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Services
 {
+    /// <summary>
+    /// BaseFormを管理します。
+    /// </summary>
     public class FormsManagement
     {
+        /// <summary>
+        /// 管理されているBaseFormの一覧です。
+        /// </summary>
         private List<BaseForm> _managed_baseform;
+
+        /// <summary>
+        /// BaseFormとControllerを接続する窓口役(Facade)を表します。
+        /// </summary>
         private ViewFacade _facade;
+
+        /// <summary>
+        /// 管理しているコマンド履歴です。
+        /// </summary>
         private CommandMementoManagement _memento_management;
 
+        /// <summary>
+        /// 窓口を表すクラスです。
+        /// </summary>
         public ViewFacade Facade
         {
             get { return _facade; }
             set { _facade = value; }
         }
 
+        /// <summary>
+        /// コマンド履歴のオブジェクトです。
+        /// </summary>
         public CommandMementoManagement MementoManager
         {
             get
@@ -29,12 +49,21 @@ namespace WinFormsMVC.Services
             }
         }
 
+        /// <summary>
+        /// Form管理を生成します。
+        /// </summary>
         public FormsManagement()
         {
             _managed_baseform = new List<BaseForm>();
             _memento_management = new CommandMementoManagement();
         }
 
+        /// <summary>
+        /// 新しいフォームを立ち上げます。
+        /// </summary>
+        /// <typeparam name="TargetForm"></typeparam>
+        /// <param name="source">どのフォームが立ち上げるか</param>
+        /// <param name="target">なんのフォームを立ち上げるか</param>
         public void LaunchForm<TargetForm>(BaseForm source, TargetForm target)
             where TargetForm : BaseForm
         {
@@ -42,10 +71,15 @@ namespace WinFormsMVC.Services
             target.Invoker = source;
             target.Facade = _facade;
             target.Closed += OnFormClosed;
-            OperateFromInit(target);
+            //OperateFromInit(target);
             target.Show();
         }
 
+        /// <summary>
+        /// コマンド履歴に従って、フォームを更新します。
+        /// </summary>
+        /// <param name="abstract_command"></param>
+        /// <param name="is_record_memento"></param>
         public void Operate(IEnumerable<Request.AbstractCommand> abstract_command, bool is_record_memento)
         {
             foreach (var command in abstract_command)
@@ -66,6 +100,12 @@ namespace WinFormsMVC.Services
             }
         }
 
+
+        /// <summary>
+        /// コマンド履歴に従って、フォームを更新します。
+        /// なお、非同期で処理を実行します。
+        /// </summary>
+        /// <param name="abstract_command"></param>
         public void OperateAsync(IEnumerable<Request.AbstractCommand> abstract_command)
         {
             foreach (var command in abstract_command)
@@ -77,7 +117,10 @@ namespace WinFormsMVC.Services
             }
         }
 
-
+        /// <summary>
+        /// 新たに立ち上げたフォームを、履歴に従って更新します。
+        /// </summary>
+        /// <param name="target"></param>
         public void OperateFromInit(BaseForm target)
         {
             foreach (var recent_commands in _memento_management.MememtoCommand)
@@ -106,6 +149,10 @@ namespace WinFormsMVC.Services
             }
         }
 
+        /// <summary>
+        /// Memento一覧に従ってフォームを更新します。
+        /// </summary>
+        /// <param name="command"></param>
         public void ReflectNext(AbstractCommand command)
         {
             var target_forms = new List<BaseForm>();
@@ -137,7 +184,9 @@ namespace WinFormsMVC.Services
             }
         }
 
-
+        /// <summary>
+        /// Memento一覧に従って、フォームを戻します。
+        /// </summary>
         public void ReflectPrevious()
         {
             var recent_commands = _memento_management.PopCommand();
@@ -174,7 +223,11 @@ namespace WinFormsMVC.Services
             }
         }
 
-
+        /// <summary>
+        /// フォームが閉じられた時に自動的に実行されます。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void OnFormClosed(object sender, EventArgs e)
         {
             // 自分自身
