@@ -41,7 +41,7 @@ namespace WinFormsMVCSample
             private void button1_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.LaunchForm3(this);
+                controller.Launch<Form3>(this);
             }
 
             private void button2_Click(object sender, EventArgs e)
@@ -95,7 +95,7 @@ namespace WinFormsMVCSample
             private void button4_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
-                controller.LaunchForm4(this);
+                controller.Launch<Form4>(this);
             }
 
 

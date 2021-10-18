@@ -9,7 +9,7 @@ using WinFormsMVCSample.Model.TestComm;
 
 namespace WinFormsMVCSample.Controller
 {
-    class Form2TimestampController : CommandController
+    public class Form2TimestampController : CommandController
     {
         public delegate void NotifyTimeStamp(string timestamp);
 

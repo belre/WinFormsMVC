@@ -8,7 +8,7 @@ using WinFormsMVCSample.View;
 
 namespace WinFormsMVCSample.Controller
 {
-    class Form1Controller : CommandController
+    public class Form1Controller : CommandController
     {
 
         public Form1Controller(FormsManagement manager)
@@ -16,11 +16,5 @@ namespace WinFormsMVCSample.Controller
         {
         }
 
-
-        public void LaunchForm2(Form1 self_form)
-        {
-            var forms = new Form2();
-            _manager.LaunchForm(self_form, forms);
-        }
     }
 }

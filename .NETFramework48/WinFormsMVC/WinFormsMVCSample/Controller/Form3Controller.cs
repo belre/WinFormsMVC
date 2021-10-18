@@ -14,10 +14,5 @@ namespace WinFormsMVCSample.Controller
         }
 
 
-        public void RenewWindow(Form3 form3)
-        {
-            _manager.LaunchForm(form3, new Form2());
-        }
-
     }
 }

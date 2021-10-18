@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WinFormsMVC.Request;
 using WinFormsMVC.Services;
+using WinFormsMVC.View;
 
 namespace WinFormsMVC.Controller
 {
@@ -44,6 +47,19 @@ namespace WinFormsMVC.Controller
             _manager.OperateAsync(abstractCommand);
             ReflectMemento(notify_undo_func);
         }
+
+        public void Undo(NotifyIsAvailableUndo notify_undo_func)
+        {
+            _manager.ReflectPrevious();
+            ReflectMemento(notify_undo_func);
+        }
+
+        public void Launch<T>(BaseForm self_form) where T : BaseForm
+        {
+            var create_instance = (T)typeof(T).InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
+            _manager.LaunchForm(self_form, create_instance);
+        }
+
 
         public void ReflectMemento(NotifyIsAvailableUndo notify_undo_func)
         {

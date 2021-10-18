@@ -28,7 +28,8 @@ namespace WinFormsMVCSample
             private void button1_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form1Controller>(this);
-                controller.LaunchForm2(this);
+                controller.Launch<Form2>(this);
+                //controller.LaunchForm2(this);
             }
 
             private void button2_Click(object sender, EventArgs e)
