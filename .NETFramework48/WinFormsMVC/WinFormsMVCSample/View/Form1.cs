@@ -30,6 +30,7 @@ namespace WinFormsMVCSample
                 var controller = Facade.GetController<Form1Controller>(this);
                 controller.Launch<Form2>(this);
                 //controller.LaunchForm2(this);
+
             }
 
             private void button2_Click(object sender, EventArgs e)
@@ -40,7 +41,7 @@ namespace WinFormsMVCSample
             private void button2_Click_1(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form1Controller>(this);
-                controller.SendMessageWithRecord( new Command[]
+                controller.SendStoredMessage( new Command[]
                 {
                     new GenericCommand<Form3, TextItem>()
                     {

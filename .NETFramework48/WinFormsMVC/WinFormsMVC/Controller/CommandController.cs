@@ -30,23 +30,24 @@ namespace WinFormsMVC.Controller
             _manager = manager;
         }
 
-        public void SendMessageWithRecord(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
+        public void SendStoredMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
         {
             _manager.Operate(abstractCommand, true);
             ReflectMemento(notify_undo_func);
         }
 
-        public void SendSimpleMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
+        public void SendSimpleMessage(Command[] abstractCommand)
         {
             _manager.Operate(abstractCommand, false);
-            ReflectMemento(notify_undo_func);
         }
 
+        /*
         public void SendAsyncMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
         {
             _manager.OperateAsync(abstractCommand);
             ReflectMemento(notify_undo_func);
         }
+        */
 
         public void Undo(NotifyIsAvailableUndo notify_undo_func)
         {

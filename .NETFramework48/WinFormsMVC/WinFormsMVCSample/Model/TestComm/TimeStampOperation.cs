@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinFormsMVCSample.Model.TestComm
 {
-    public class TestTimeStampCommunication
+    public class TimeStampOperation
     {
         public string GetTimeStamp()
         {

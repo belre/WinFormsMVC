@@ -48,7 +48,7 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageWithRecord( new Command[] {
+                controller.SendStoredMessage( new Command[] {
                     new GenericCommand<Form3, TextItem> {
                         Invoker=this,
                         Validation = (command, item) =>
@@ -115,7 +115,7 @@ namespace WinFormsMVCSample
                     _is_now_drawing = false;
 
                     var controller = Facade.GetController<Form2Controller>(this);
-                    controller.SendMessageWithRecord( new Command[]
+                    controller.SendStoredMessage( new Command[]
                     {
                         new GenericCommand<Form2, ImageItem>()
                         {
@@ -156,7 +156,7 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageWithRecord(new Command[]
+                controller.SendStoredMessage(new Command[]
                 {
                     new GenericCommand<Form4, ImageItem>()
                     {
@@ -181,8 +181,8 @@ namespace WinFormsMVCSample
 
             private void button6_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2TimestampController>(this);
-                controller.TriggerAsyncTimeStamp(NotifyTimeStamp);
+                var controller = Facade.GetController<Form2Controller>(this);
+                controller.GetTimeStamp(NotifyTimeStamp);
             }
 
             private void NotifyTimeStamp(string timestamp)
@@ -222,38 +222,42 @@ namespace WinFormsMVCSample
                             form4.DisplayedImage = item.Next;
                         }
                     }
-                }, IsUndoEnable);
+                });
             }
 
             private void button8_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendAsyncMessage(new Command[]
+                controller.StampTextIntoImage(BeNotifiedImage, pictureBox1.Image);
+            }
+
+            private void BeNotifiedImage(Image image)
+            {
+                var controller = Facade.GetController<Form2Controller>(this);
+                controller.SendSimpleMessage(new Command[]
                 {
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
                         Validation = (command, item) =>
                         {
-                            item.Next = (Image)pictureBox1.Image.Clone();
-                            System.Threading.Thread.Sleep(5000);
+                            item.Next = image;
                             return true;
                         },
                         NextOperation = (command, item, form4) =>
                         {
-                            item[form4] = (Image)form4.DisplayedImage.Clone();
                             form4.DisplayedImage = item.Next;
                         }
                     }
-                }, IsUndoEnable);
+                });
             }
 
             private void button9_Click(object sender, EventArgs e)
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageWithRecord(new Command[] {
+                controller.SendStoredMessage(new Command[] {
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
                         IsRetrieved=true,
