@@ -40,6 +40,19 @@ namespace WinFormsMVCSample
                     label2.Text = value;
                 }
             }
+            
+            public string FolderPath
+            {
+                get
+                {
+                    return label3.Text;
+                }
+                set
+                {
+                    label3.Text = value;
+                }
+            }
+
             public Form3()
             {
                 InitializeComponent();
