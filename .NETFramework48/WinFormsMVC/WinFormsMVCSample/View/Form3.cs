@@ -29,6 +29,17 @@ namespace WinFormsMVCSample
                 }
             }
 
+            public string RootMessage
+            {
+                get
+                {
+                    return label2.Text;
+                }
+                set
+                {
+                    label2.Text = value;
+                }
+            }
             public Form3()
             {
                 InitializeComponent();

@@ -19,6 +19,18 @@ namespace WinFormsMVCSample
             private Image _before_edit_image = null;
             private bool _is_now_drawing = false;
 
+            public string MessageFromClone
+            {
+                get
+                {
+                    return label2.Text;
+                }
+                set
+                {
+                    label2.Text = value;
+                }
+            }
+
             public Form2()
             {
                 InitializeComponent();
@@ -261,6 +273,38 @@ namespace WinFormsMVCSample
                             {
                                 item.PrevImage = (Image)form4.DisplayedImage.Clone();
                                 form4.DisplayedImage = item.NextImage;
+                            }
+                        }
+                    }
+                }, IsUndoEnable);
+            }
+
+            private void button9_Click(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form2Controller>(this);
+
+                controller.SendMessageWithRecord(new AbstractCommand[] {
+                    new Command<Form2, TextItem> {
+                        Invoker=this,
+                        IsRetrieved=true,
+                        Validation = (command, item) =>
+                        {
+                            item.NextText = textBox1.Text;
+                            return true;
+                        },
+                        PrevOperation = (command, item, form2) =>
+                        {
+                            if (item.PrevText != null)
+                            {
+                                form2.MessageFromClone = item.PrevText;
+                            }
+                        },
+                        NextOperation = (command, item, form2) =>
+                        {
+                            if (item.NextText != null)
+                            {
+                                item.PrevText = form2.MessageFromClone;
+                                form2.MessageFromClone = item.NextText;
                             }
                         }
                     }

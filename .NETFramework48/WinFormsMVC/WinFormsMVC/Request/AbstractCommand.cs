@@ -15,6 +15,8 @@ namespace WinFormsMVC.Request
 
         public bool IsForSelf { get; set; }
 
+        public bool IsRetrieved { get; set; }
+
         public abstract bool Validate();
 
 

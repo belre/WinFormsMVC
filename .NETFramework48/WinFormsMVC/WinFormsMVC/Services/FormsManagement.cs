@@ -84,9 +84,21 @@ namespace WinFormsMVC.Services
             {
                 foreach (var command in recent_commands)
                 {
-                    BaseForm invoker = command.IsForSelf ? target : target.Invoker;
+                    bool is_match_invoker = false;
+                    if (command.IsForSelf)
+                    {
+                        is_match_invoker = target == command.Invoker;
+                    }
+                    else if (command.IsRetrieved)
+                    {
+                        is_match_invoker = target.IsOriginatingFromTarget(command.Invoker);
+                    }
+                    else
+                    {
+                        is_match_invoker = target.Invoker == command.Invoker;
+                    }
 
-                    if (invoker == command.Invoker && target.GetType() == command.FormType)
+                    if (is_match_invoker && target.GetType() == command.FormType)
                     {
                         command.Next(target);
                     }
@@ -99,9 +111,21 @@ namespace WinFormsMVC.Services
             var target_forms = new List<BaseForm>();
             foreach (var form in _managed_baseform)
             {
-                BaseForm invoker = command.IsForSelf ? form: form.Invoker;
+                bool is_match_invoker = false;
+                if (command.IsForSelf)
+                {
+                    is_match_invoker = form == command.Invoker;
+                }
+                else if (command.IsRetrieved)
+                {
+                    is_match_invoker = form.IsOriginatingFromTarget(command.Invoker);
+                }
+                else
+                {
+                    is_match_invoker = form.Invoker == command.Invoker;
+                }
 
-                if (invoker == command.Invoker && form.GetType() == command.FormType)
+                if (is_match_invoker && form.GetType() == command.FormType)
                 {
                     target_forms.Add(form);
                 }
@@ -127,9 +151,21 @@ namespace WinFormsMVC.Services
             {
                 foreach (var form in _managed_baseform)
                 {
-                    BaseForm invoker = command.IsForSelf ? form : form.Invoker;
+                    bool is_match_invoker = false;
+                    if (command.IsForSelf)
+                    {
+                        is_match_invoker = form == command.Invoker;
+                    }
+                    else if (command.IsRetrieved)
+                    {
+                        is_match_invoker = form.IsOriginatingFromTarget(command.Invoker);
+                    }
+                    else
+                    {
+                        is_match_invoker = form.Invoker == command.Invoker;
+                    }
 
-                    if (invoker == command.Invoker && form.GetType() == command.FormType)
+                    if (is_match_invoker && form.GetType() == command.FormType)
                     {
                         command.Prev(form);
                         command.Finalize(form);

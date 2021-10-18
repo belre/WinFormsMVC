@@ -19,6 +19,7 @@ namespace WinFormsMVCSample.Controller
                 return _manager.MementoManager.IsAvalableUndo();
             }
         }
+
         public Form2Controller(FormsManagement manager)
         {
             _manager = manager;
