@@ -33,7 +33,7 @@ namespace WinFormsMVCSample.Controller
             _manager.LaunchForm(self_form, forms);
         }
 
-        public void SendMessageWithRecord(AbstractCommand[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
+        public void SendMessageWithRecord(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
         {
             _manager.Operate(abstractCommand, true);
             ReflectMemento(notify_undo_func);

@@ -35,19 +35,19 @@ namespace WinFormsMVCSample.Controller
             _manager.LaunchForm(self_view, new Form4());
         }
 
-        public void SendMessageWithRecord(AbstractCommand[] abstractCommand, NotifyIsAvailableUndo notify_undo_func) 
+        public void SendMessageWithRecord(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func) 
         {
             _manager.Operate(abstractCommand, true);
             ReflectMemento(notify_undo_func);
         }
 
-        public void SendSimpleMessage(AbstractCommand[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
+        public void SendSimpleMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
         {
             _manager.Operate(abstractCommand, false);
             ReflectMemento(notify_undo_func);
         }
 
-        public void SendAsyncMessage(AbstractCommand[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
+        public void SendAsyncMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
         {
             _manager.OperateAsync(abstractCommand);
             ReflectMemento(notify_undo_func);

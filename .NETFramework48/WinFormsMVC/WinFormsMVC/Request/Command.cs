@@ -5,134 +5,61 @@ using WinFormsMVC.View;
 namespace WinFormsMVC.Request
 {
     /// <summary>
-    /// コマンドを表します
+    /// 抽象化されたコマンド
     /// </summary>
-    /// <typeparam name="TargetForm">対象とするフォーム</typeparam>
-    /// <typeparam name="Item">何を送信するか(テキスト、画像など)</typeparam>
-    public class Command<TargetForm, Item> : AbstractCommand where TargetForm : BaseForm where Item : CommandItem
+    public abstract class Command
     {
         /// <summary>
-        /// 確保されているデータを表します。
+        /// コマンドを発生させたフォーム
         /// </summary>
-        public Item StoredItem
+        public virtual BaseForm Invoker { get; set; }
+
+        /// <summary>
+        /// フォームの型
+        /// </summary>
+        public abstract Type FormType
         {
             get;
         }
 
         /// <summary>
-        /// フォームの型を表します。
+        /// 自分自身に対するコマンドか
         /// </summary>
-        public override Type FormType
-        {
-            get
-            {
-                return typeof(TargetForm);
-            }
-        }
+        public bool IsForSelf { get; set; }
 
         /// <summary>
-        /// コマンドを生成します。
+        /// 孫に再帰するか
         /// </summary>
-        public Command()
-        {
-            var temporary_item = typeof(Item).GetConstructor(new Type[0]);
-            if (temporary_item != null)
-            {
-                StoredItem = (Item)temporary_item.Invoke(new object[0]);
-            }
-            else
-            {
-                throw new TypeInitializationException(typeof(Item).Name, new Exception("コマンドアイテムが異常です"));
-            }
-        }
+        public bool IsRetrieved { get; set; }
 
         /// <summary>
-        /// データ検証を行うときに実行される処理です。
+        /// データ反映
         /// </summary>
-        public Func<Command<TargetForm, Item>, Item, bool> Validation { get; set; }
+        /// <returns>成功時はtrue</returns>
+        public abstract bool Validate();
+
 
         /// <summary>
-        /// 「実行」「やり直し」で行なわれる処理です。
+        /// 元に戻す
         /// </summary>
-        public Action<Command<TargetForm, Item>, Item, TargetForm> NextOperation { get; set; }
+        /// <param name="form">対象のフォーム</param>
+        public abstract void Prev(BaseForm form);
 
         /// <summary>
-        /// 「元に戻す」で行なわれる処理です。
+        /// やり直し＆実行
         /// </summary>
-        public Action<Command<TargetForm, Item>, Item, TargetForm> PrevOperation { get; set; }
+        /// <param name="form">対象のフォーム</param>
+        public abstract void Next(BaseForm form);
 
         /// <summary>
-        /// 「元に戻す」の後に行なわれる処理です。
-        /// </summary>
-        public Action<Command<TargetForm, Item>, Item> FinalOperation { get; set; }
-
-        /// <summary>
-        /// データ検証に失敗したときに実行される処理です。
-        /// </summary>
-        public Action<Command<TargetForm, Item>, Item>  ErrorOperation { get; set; }
-
-        /// <summary>
-        /// データ検証を実行します。
-        /// </summary>
-        /// <returns></returns>
-        public override bool Validate()
-        {
-            if (Validation != null)
-            {
-                return Validation(this, StoredItem);
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// 元に戻すを実行します。
+        /// 元に戻す実行後に行なう処理
         /// </summary>
         /// <param name="form"></param>
-        public override void Prev(BaseForm form)
-        {
-            if (PrevOperation != null)
-            {
-                PrevOperation(this, StoredItem, (TargetForm)form);
-            }
-        }
+        public abstract void Invalidate();
 
         /// <summary>
-        /// 実行、やり直しを実行します。
+        /// データ反映時に失敗したら実行する処理
         /// </summary>
-        /// <param name="form"></param>
-        public override void Next(BaseForm form)
-        {
-            if (NextOperation != null)
-            {
-                NextOperation(this, StoredItem, (TargetForm)form);
-            }
-        }
-
-
-        /// <summary>
-        /// 元に戻すの後の処理を表します。
-        /// </summary>
-        /// <param name="form"></param>
-        public override void Invalidate()
-        {
-            if (FinalOperation != null)
-            {
-                FinalOperation(this, StoredItem);
-            }
-        }
-
-        /// <summary>
-        /// データ検証に失敗したときの処理を表します。
-        /// </summary>
-        public override void HandleValidationError()
-        {
-            if (ErrorOperation != null)
-            {
-                ErrorOperation(this, StoredItem);
-            }
-        }
+        public abstract void HandleValidationError();
     }
 }

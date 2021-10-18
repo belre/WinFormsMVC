@@ -27,7 +27,7 @@ namespace WinFormsMVC.Services
         /// <summary>
         /// 管理しているコマンド履歴です。
         /// </summary>
-        private CommandMementoManagement _memento_management;
+        private CommandMemento _memento;
 
         /// <summary>
         /// 窓口を表すクラスです。
@@ -41,11 +41,11 @@ namespace WinFormsMVC.Services
         /// <summary>
         /// コマンド履歴のオブジェクトです。
         /// </summary>
-        public CommandMementoManagement MementoManager
+        public CommandMemento MementoManager
         {
             get
             {
-                return _memento_management;
+                return _memento;
             }
         }
 
@@ -55,7 +55,7 @@ namespace WinFormsMVC.Services
         public FormsManagement()
         {
             _managed_baseform = new List<BaseForm>();
-            _memento_management = new CommandMementoManagement();
+            _memento = new CommandMemento();
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace WinFormsMVC.Services
         /// </summary>
         /// <param name="abstract_command"></param>
         /// <param name="is_record_memento"></param>
-        public void Operate(IEnumerable<Request.AbstractCommand> abstract_command, bool is_record_memento)
+        public void Operate(IEnumerable<Request.Command> abstract_command, bool is_record_memento)
         {
             foreach (var command in abstract_command)
             {
@@ -96,7 +96,7 @@ namespace WinFormsMVC.Services
 
             if (is_record_memento)
             {
-                _memento_management.PushCommand(abstract_command);
+                _memento.PushCommand(abstract_command);
             }
         }
 
@@ -106,7 +106,7 @@ namespace WinFormsMVC.Services
         /// なお、非同期で処理を実行します。
         /// </summary>
         /// <param name="abstract_command"></param>
-        public void OperateAsync(IEnumerable<Request.AbstractCommand> abstract_command)
+        public void OperateAsync(IEnumerable<Request.Command> abstract_command)
         {
             foreach (var command in abstract_command)
             {
@@ -123,7 +123,7 @@ namespace WinFormsMVC.Services
         /// <param name="target"></param>
         public void OperateFromInit(BaseForm target)
         {
-            foreach (var recent_commands in _memento_management.MememtoCommand)
+            foreach (var recent_commands in _memento.Mememtoes)
             {
                 foreach (var command in recent_commands)
                 {
@@ -153,7 +153,7 @@ namespace WinFormsMVC.Services
         /// Memento一覧に従ってフォームを更新します。
         /// </summary>
         /// <param name="command"></param>
-        public void ReflectNext(AbstractCommand command)
+        public void ReflectNext(Command command)
         {
             var target_forms = new List<BaseForm>();
             foreach (var form in _managed_baseform)
@@ -189,7 +189,7 @@ namespace WinFormsMVC.Services
         /// </summary>
         public void ReflectPrevious()
         {
-            var recent_commands = _memento_management.PopCommand();
+            var recent_commands = _memento.PopCommand();
 
             if (recent_commands == null)
             {

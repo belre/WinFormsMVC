@@ -10,7 +10,7 @@ namespace WinFormsMVC.Services
     /// <summary>
     /// Mementoパターンを使用して、コマンドの履歴を参照します。
     /// </summary>
-    public class CommandMementoManagement
+    public class CommandMemento
     {
         /// <summary>
         /// 最大で記録するコマンド数です。
@@ -20,24 +20,24 @@ namespace WinFormsMVC.Services
         /// <summary>
         /// Mementoのコマンドの一覧を表します。
         /// </summary>
-        public List<IEnumerable<Request.AbstractCommand>> MememtoCommand { get; }
+        public List<IEnumerable<Request.Command>> Mememtoes { get; }
 
-        public CommandMementoManagement()
+        public CommandMemento()
         {
-            MememtoCommand = new List<IEnumerable<Request.AbstractCommand>>();
+            Mememtoes = new List<IEnumerable<Request.Command>>();
         }
 
         /// <summary>
         /// コマンドを追加します。
         /// </summary>
         /// <param name="abstractCommand"></param>
-        public void PushCommand(IEnumerable<Request.AbstractCommand> abstractCommand)
+        public void PushCommand(IEnumerable<Request.Command> abstractCommand)
         {
-            MememtoCommand.Add(abstractCommand);
+            Mememtoes.Add(abstractCommand);
 
-            if (MememtoCommand.Count > MAX_MEMEMTO_NUMBER)
+            if (Mememtoes.Count > MAX_MEMEMTO_NUMBER)
             {
-                MememtoCommand.RemoveRange(0, MememtoCommand.Count - MAX_MEMEMTO_NUMBER);
+                Mememtoes.RemoveRange(0, Mememtoes.Count - MAX_MEMEMTO_NUMBER);
             }
         }
 
@@ -45,12 +45,12 @@ namespace WinFormsMVC.Services
         /// コマンドを削除します。
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Request.AbstractCommand> PopCommand()
+        public IEnumerable<Request.Command> PopCommand()
         {
-            if (MememtoCommand.Count != 0)
+            if (Mememtoes.Count != 0)
             {
-                var target = MememtoCommand.Last();
-                MememtoCommand.Remove(target);
+                var target = Mememtoes.Last();
+                Mememtoes.Remove(target);
                 return target;
             }
             else
@@ -65,7 +65,7 @@ namespace WinFormsMVC.Services
         /// <returns></returns>
         public bool IsAvalableUndo()
         {
-            return MememtoCommand.Count != 0;
+            return Mememtoes.Count != 0;
         }
     }
 }

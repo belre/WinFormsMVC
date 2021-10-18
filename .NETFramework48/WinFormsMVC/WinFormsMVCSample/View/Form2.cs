@@ -48,55 +48,39 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageWithRecord( new AbstractCommand[] {
-                    new Command<Form3, TextItem> {
+                controller.SendMessageWithRecord( new Command[] {
+                    new GenericCommand<Form3, TextItem> {
                         Invoker=this,
                         Validation = (command, item) =>
                         {
-                            item.NextText = textBox1.Text;
+                            item.Next = textBox1.Text;
                             return true;
                         },
                         PrevOperation = (command, item, form3) =>
                         {
-                            if (item.GetPrevious(form3) != null)
-                            {
-                                form3.Message = item.GetPrevious(form3);
-
-                                //form3.Message = item.PrevText;
-                            }
+                            form3.Message = item[form3];
                         },
                         NextOperation = (command, item, form3) =>
                         {
-
-                            if (item.NextText != null)
-                            {
-                                item.SetPreviousState(form3, form3.Message);
-                                form3.Message = item.NextText;
-                            }
+                            item[form3] = form3.Message;
+                            form3.Message = item.Next;
                         }
                     },
-                    new Command<Form4, TextItem>() {
+                    new GenericCommand<Form4, TextItem>() {
                         Invoker = this,
                         Validation = (command, item) =>
                         {
-                            item.NextText = textBox1.Text;
+                            item.Next = textBox1.Text;
                             return true;
                         },
                         PrevOperation = (command, item, form4) =>
                         {
-                            if (item.GetPrevious(form4) != null)
-                            {
-                                form4.Message = item.GetPrevious(form4);
-                                //form4.Message = item.PrevText;
-                            }
+                            form4.Message = item[form4];
                         },
                         NextOperation = (command, item, form4) =>
                         {
-                            if (item.NextText != null)
-                            {
-                                item.SetPreviousState(form4, form4.Message);
-                                form4.Message = item.NextText;
-                            }
+                            item[form4] = form4.Message;
+                            form4.Message = item.Next;
                         }
                     }
                 }, IsUndoEnable);
@@ -131,31 +115,25 @@ namespace WinFormsMVCSample
                     _is_now_drawing = false;
 
                     var controller = Facade.GetController<Form2Controller>(this);
-                    controller.SendMessageWithRecord( new AbstractCommand[]
+                    controller.SendMessageWithRecord( new Command[]
                     {
-                        new Command<Form2, ImageItem>()
+                        new GenericCommand<Form2, ImageItem>()
                         {
                             Invoker = this,
                             IsForSelf = true,
                             Validation = (command, item) =>
                             {
-                                item.NextImage = (Image)pictureBox1.Image.Clone();
+                                item.Next = (Image)pictureBox1.Image.Clone();
                                 return true;
                             },
                             PrevOperation = (command, item, form2) =>
                             {
-                                if (item.PrevImage != null)
-                                {
-                                    form2.pictureBox1.Image = item.PrevImage;
-                                }
+                                form2.pictureBox1.Image = item[form2];
                             },
                             NextOperation = (command, item, form2) =>
                             {
-                                if (item.NextImage != null)
-                                {
-                                    item.PrevImage = (Image)_before_edit_image.Clone();
-                                    form2.pictureBox1.Image = item.NextImage;
-                                }
+                                item[form2] = (Image)_before_edit_image.Clone();
+                                form2.pictureBox1.Image = item.Next;
                             }
                         }
                     }, IsUndoEnable);
@@ -178,30 +156,24 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageWithRecord(new AbstractCommand[]
+                controller.SendMessageWithRecord(new Command[]
                 {
-                    new Command<Form4, ImageItem>()
+                    new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
                         Validation = (command, item) =>
                         {
-                            item.NextImage = (Image)pictureBox1.Image.Clone();
+                            item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
                         },
                         PrevOperation = (command, item, form4) =>
                         {
-                            if (item.PrevImage != null)
-                            {
-                                form4.DisplayedImage = item.PrevImage;
-                            }
+                            form4.DisplayedImage = item[form4];
                         },
                         NextOperation = (command, item, form4) =>
                         {
-                            if (item.NextImage != null)
-                            {
-                                item.PrevImage = (Image)form4.DisplayedImage.Clone();
-                                form4.DisplayedImage = item.NextImage;
-                            }
+                            item[form4] = (Image)form4.DisplayedImage.Clone();
+                            form4.DisplayedImage = item.Next;
                         }
                     }
                 }, IsUndoEnable);
@@ -234,23 +206,20 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendSimpleMessage(new AbstractCommand[]
+                controller.SendSimpleMessage(new Command[]
                 {
-                    new Command<Form4, ImageItem>()
+                    new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
                         Validation = (command, item) =>
                         {
-                            item.NextImage = (Image)pictureBox1.Image.Clone();
+                            item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
                         },
                         NextOperation = (command, item, form4) =>
                         {
-                            if (item.NextImage != null)
-                            {
-                                item.PrevImage = (Image)form4.DisplayedImage.Clone();
-                                form4.DisplayedImage = item.NextImage;
-                            }
+                            item[form4] = (Image)form4.DisplayedImage.Clone();
+                            form4.DisplayedImage = item.Next;
                         }
                     }
                 }, IsUndoEnable);
@@ -260,24 +229,21 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendAsyncMessage(new AbstractCommand[]
+                controller.SendAsyncMessage(new Command[]
                 {
-                    new Command<Form4, ImageItem>()
+                    new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
                         Validation = (command, item) =>
                         {
-                            item.NextImage = (Image)pictureBox1.Image.Clone();
+                            item.Next = (Image)pictureBox1.Image.Clone();
                             System.Threading.Thread.Sleep(5000);
                             return true;
                         },
                         NextOperation = (command, item, form4) =>
                         {
-                            if (item.NextImage != null)
-                            {
-                                item.PrevImage = (Image)form4.DisplayedImage.Clone();
-                                form4.DisplayedImage = item.NextImage;
-                            }
+                            item[form4] = (Image)form4.DisplayedImage.Clone();
+                            form4.DisplayedImage = item.Next;
                         }
                     }
                 }, IsUndoEnable);
@@ -287,29 +253,23 @@ namespace WinFormsMVCSample
             {
                 var controller = Facade.GetController<Form2Controller>(this);
 
-                controller.SendMessageWithRecord(new AbstractCommand[] {
-                    new Command<Form2, TextItem> {
+                controller.SendMessageWithRecord(new Command[] {
+                    new GenericCommand<Form2, TextItem> {
                         Invoker=this,
                         IsRetrieved=true,
                         Validation = (command, item) =>
                         {
-                            item.NextText = textBox1.Text;
+                            item.Next = textBox1.Text;
                             return true;
                         },
                         PrevOperation = (command, item, form2) =>
                         {
-                            if (item.GetPrevious(form2) != null)
-                            {
-                                form2.MessageFromClone = item.GetPrevious(form2);
-                            }
+                            form2.MessageFromClone = item[form2];
                         },
                         NextOperation = (command, item, form2) =>
                         {
-                            if (item.NextText != null)
-                            {
-                                item.SetPreviousState(form2, form2.MessageFromClone);
-                                form2.MessageFromClone = item.NextText;
-                            }
+                            item[form2] = form2.MessageFromClone;
+                            form2.MessageFromClone = item.Next;
                         }
                     }
                 }, IsUndoEnable);

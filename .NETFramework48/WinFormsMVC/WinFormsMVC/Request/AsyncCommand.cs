@@ -10,14 +10,14 @@ namespace WinFormsMVC.Request
     /// <summary>
     /// 非同期処理を表すコマンド
     /// </summary>
-    public class AsyncCommand : AbstractCommand
+    public class AsyncCommand : Command
     {
         /// <summary>
         /// デリゲート
         /// 非同期処理通知
         /// </summary>
         /// <param name="command"></param>
-        public delegate void NotifyAsync(AbstractCommand command);
+        public delegate void NotifyAsync(Command command);
 
         /// <summary>
         /// コマンドを発生させたフォーム
@@ -39,7 +39,7 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// ラップさせたコマンド
         /// </summary>
-        public AbstractCommand Command
+        public Command Command
         {
             get;
             set;
@@ -51,7 +51,7 @@ namespace WinFormsMVC.Request
         public NotifyAsync NotifyingAsync { get; set; }
 
 
-        public AsyncCommand(AbstractCommand command)
+        public AsyncCommand(Command command)
         {
             Command = command;
         }
