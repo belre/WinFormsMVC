@@ -22,21 +22,21 @@ namespace WinFormsMVC.View
         /// <summary>
         /// このフォームの先祖にtargetがいるかどうかをチェックします。
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="parent"></param>
         /// <returns></returns>
-        public bool IsOriginatingFromTarget(BaseForm target)
+        public bool IsOriginatingFromParent(BaseForm parent)
         {
-            if (target == null || Invoker == null)
+            if (parent == null || Invoker == null)
             {
                 return false;
             } 
-            else if (target == Invoker)
+            else if (parent == Invoker)
             {
                 return true;
             }
             else
             {
-                return Invoker.IsOriginatingFromTarget(target);
+                return Invoker.IsOriginatingFromParent(parent);
             }
 
         }

@@ -71,18 +71,17 @@ namespace WinFormsMVC.Services
             target.Invoker = source;
             target.Facade = _facade;
             target.Closed += OnFormClosed;
-            //OperateFromInit(target);
             target.Show();
         }
 
         /// <summary>
         /// コマンド履歴に従って、フォームを更新します。
         /// </summary>
-        /// <param name="abstract_command"></param>
+        /// <param name="command_list"></param>
         /// <param name="is_record_memento"></param>
-        public void Operate(IEnumerable<Request.Command> abstract_command, bool is_record_memento)
+        public void Operate(IEnumerable<Request.Command> command_list, bool is_record_memento)
         {
-            foreach (var command in abstract_command)
+            foreach (var command in command_list)
             {
                 if (command.Validate())
                 {
@@ -96,7 +95,7 @@ namespace WinFormsMVC.Services
 
             if (is_record_memento)
             {
-                _memento.PushCommand(abstract_command);
+                _memento.PushCommand(command_list);
             }
         }
 
@@ -105,10 +104,10 @@ namespace WinFormsMVC.Services
         /// コマンド履歴に従って、フォームを更新します。
         /// なお、非同期で処理を実行します。
         /// </summary>
-        /// <param name="abstract_command"></param>
-        public void OperateAsync(IEnumerable<Request.Command> abstract_command)
+        /// <param name="command_list"></param>
+        public void OperateAsync(IEnumerable<Request.Command> command_list)
         {
-            foreach (var command in abstract_command)
+            foreach (var command in command_list)
             {
                 var async_command = new AsyncCommand(command);
 
@@ -117,35 +116,19 @@ namespace WinFormsMVC.Services
             }
         }
 
-        /// <summary>
-        /// 新たに立ち上げたフォームを、履歴に従って更新します。
-        /// </summary>
-        /// <param name="target"></param>
-        public void OperateFromInit(BaseForm target)
+        protected bool IsMatchInvoker(BaseForm form, Command command)
         {
-            foreach (var recent_commands in _memento.Mememtoes)
+            if (command.IsForSelf)
             {
-                foreach (var command in recent_commands)
-                {
-                    bool is_match_invoker = false;
-                    if (command.IsForSelf)
-                    {
-                        is_match_invoker = target == command.Invoker;
-                    }
-                    else if (command.IsRetrieved)
-                    {
-                        is_match_invoker = target.IsOriginatingFromTarget(command.Invoker);
-                    }
-                    else
-                    {
-                        is_match_invoker = target.Invoker == command.Invoker;
-                    }
-
-                    if (is_match_invoker && target.GetType() == command.FormType)
-                    {
-                        command.Next(target);
-                    }
-                }
+                return form == command.Invoker;
+            }
+            else if (command.IsRetrieved)
+            {
+                return form.IsOriginatingFromParent(command.Invoker);
+            }
+            else
+            {
+                return form.Invoker == command.Invoker;
             }
         }
 
@@ -158,21 +141,7 @@ namespace WinFormsMVC.Services
             var target_forms = new List<BaseForm>();
             foreach (var form in _managed_baseform)
             {
-                bool is_match_invoker = false;
-                if (command.IsForSelf)
-                {
-                    is_match_invoker = form == command.Invoker;
-                }
-                else if (command.IsRetrieved)
-                {
-                    is_match_invoker = form.IsOriginatingFromTarget(command.Invoker);
-                }
-                else
-                {
-                    is_match_invoker = form.Invoker == command.Invoker;
-                }
-
-                if (is_match_invoker && form.GetType() == command.FormType)
+                if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
                 {
                     target_forms.Add(form);
                 }
@@ -200,21 +169,7 @@ namespace WinFormsMVC.Services
             {
                 foreach (var form in _managed_baseform)
                 {
-                    bool is_match_invoker = false;
-                    if (command.IsForSelf)
-                    {
-                        is_match_invoker = form == command.Invoker;
-                    }
-                    else if (command.IsRetrieved)
-                    {
-                        is_match_invoker = form.IsOriginatingFromTarget(command.Invoker);
-                    }
-                    else
-                    {
-                        is_match_invoker = form.Invoker == command.Invoker;
-                    }
-
-                    if (is_match_invoker && form.GetType() == command.FormType)
+                    if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
                     {
                         command.Prev(form);
                         command.Invalidate();
