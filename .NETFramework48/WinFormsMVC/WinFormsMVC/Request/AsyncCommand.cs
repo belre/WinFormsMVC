@@ -111,9 +111,9 @@ namespace WinFormsMVC.Request
         /// 元に戻した後に実行される処理(Commandと同じ）
         /// </summary>
         /// <param name="form"></param>
-        public override void Finalize()
+        public override void Invalidate()
         {
-            Command.Finalize();
+            Command.Invalidate();
         }
 
         /// <summary>

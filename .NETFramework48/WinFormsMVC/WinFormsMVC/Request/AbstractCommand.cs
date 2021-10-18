@@ -55,7 +55,7 @@ namespace WinFormsMVC.Request
         /// 元に戻す実行後に行なう処理
         /// </summary>
         /// <param name="form"></param>
-        public abstract void Finalize();
+        public abstract void Invalidate();
 
         /// <summary>
         /// データ反映時に失敗したら実行する処理

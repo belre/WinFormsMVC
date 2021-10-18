@@ -116,7 +116,7 @@ namespace WinFormsMVC.Request
         /// 元に戻すの後の処理を表します。
         /// </summary>
         /// <param name="form"></param>
-        public override void Finalize()
+        public override void Invalidate()
         {
             if (FinalOperation != null)
             {
