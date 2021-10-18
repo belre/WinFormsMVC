@@ -64,14 +64,22 @@ namespace WinFormsMVC.Services
         /// <typeparam name="TargetForm"></typeparam>
         /// <param name="source">どのフォームが立ち上げるか</param>
         /// <param name="target">なんのフォームを立ち上げるか</param>
-        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target)
+        public void LaunchForm<TargetForm>(BaseForm source, TargetForm target, bool is_modal)
             where TargetForm : BaseForm
         {
             _managed_baseform.Add(target);
             target.Invoker = source;
             target.Facade = _facade;
             target.Closed += OnFormClosed;
-            target.Show();
+
+            if (is_modal)
+            {
+                target.ShowDialog();
+            }
+            else
+            {
+                target.Show();
+            }
         }
 
         /// <summary>

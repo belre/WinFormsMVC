@@ -84,6 +84,12 @@
     <Compile Include="View\Form5.Designer.cs">
       <DependentUpon>Form5.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\SPWFolderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SPWFolderForm.Designer.cs">
+      <DependentUpon>SPWFolderForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SPWFolderForm.resx">
+      <DependentUpon>SPWFolderForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

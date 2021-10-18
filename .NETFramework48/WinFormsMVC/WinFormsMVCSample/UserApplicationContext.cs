@@ -38,7 +38,7 @@ namespace WinFormsMVCSample
             }
 
             // フォーム生成
-            _form_manager.LaunchForm(null, _root_form);
+            _form_manager.LaunchForm(null, _root_form, false);
         }
 
         protected void OnFormClosed(object sender, EventArgs e)

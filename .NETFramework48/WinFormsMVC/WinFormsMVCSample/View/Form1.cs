@@ -64,6 +64,47 @@ namespace WinFormsMVCSample
                     }
                 }, null);
             }
+
+            private void button3_Click(object sender, EventArgs e)
+            {
+                var controller = Facade.GetController<Form1Controller>(this);
+                controller.LaunchWithLock<SPWFolderForm>(this, OnClosedFolderBrowser<SPWFolderForm>, (spw_form) =>
+                {
+                    spw_form.RootDrive = @"F:\usrdata";
+                });
+            }
+            
+            private void OnClosedFolderBrowser<T>(object sender, FormClosedEventArgs e) where T : SPWFolderForm
+            {
+                var form = (T) sender;
+
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    var controller = Facade.GetController<Form1Controller>(this);
+                    controller.SendStoredMessage(new Command[]
+                    {
+                        new GenericCommand<Form3, TextItem>()
+                        {
+                            Invoker = this,
+                            IsRetrieved = true,
+                            Validation = (command, item) =>
+                            {
+                                item.Next = form.FilePath;
+                                return true;
+                            },
+                            PrevOperation = (command, item, form3) =>
+                            {
+                                form3.FolderPath = item[form3];
+                            },
+                            NextOperation = (command, item, form3) =>
+                            {
+                                item[form3] = form3.FolderPath;
+                                form3.FolderPath = item.Next;
+                            }
+                        }
+                    }, null);
+                }
+            }
         }
     }
 }

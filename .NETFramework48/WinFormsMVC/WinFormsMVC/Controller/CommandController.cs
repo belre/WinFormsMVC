@@ -57,10 +57,37 @@ namespace WinFormsMVC.Controller
 
         public void Launch<T>(BaseForm self_form) where T : BaseForm
         {
-            var create_instance = (T)typeof(T).InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
-            _manager.LaunchForm(self_form, create_instance);
+            Launch<T>(self_form, null, null);
         }
 
+        public void Launch<T>(BaseForm self_form, Action<T> preload) where T : BaseForm
+        {
+            Launch<T>(self_form, null, preload);
+        }
+
+        public void Launch<T>(BaseForm self_form, FormClosedEventHandler on_closed, Action<T> preload) where T : BaseForm
+        {
+            var create_instance = (T)typeof(T).InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
+            if (preload != null)
+            {
+                preload(create_instance);
+            }
+            create_instance.FormClosed += on_closed;
+
+            _manager.LaunchForm(self_form, create_instance, false);
+        }
+
+        public void LaunchWithLock<T>(BaseForm self_form, FormClosedEventHandler on_closed, Action<T> preload) where T : BaseForm
+        {
+            var create_instance = (T)typeof(T).InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
+            if (preload != null)
+            {
+                preload(create_instance);
+            }
+            create_instance.FormClosed += on_closed;
+
+            _manager.LaunchForm(self_form, create_instance, true);
+        }
 
         public void ReflectMemento(NotifyIsAvailableUndo notify_undo_func)
         {

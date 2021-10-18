@@ -34,6 +34,7 @@ namespace WinFormsMVCSample
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -58,15 +59,25 @@ namespace WinFormsMVCSample
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(71, 210);
+            this.label2.Location = new System.Drawing.Point(71, 137);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 12);
             this.label2.TabIndex = 2;
             this.label2.Text = "Ancestor Message";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(71, 181);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(93, 12);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Folder File Name";
+            // 
             // Form3
             // 
             this.ClientSize = new System.Drawing.Size(470, 270);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
@@ -82,6 +93,7 @@ namespace WinFormsMVCSample
             private System.Windows.Forms.Label label1;
             private System.Windows.Forms.Button button1;
             private System.Windows.Forms.Label label2;
+            private System.Windows.Forms.Label label3;
         }
     }
 
