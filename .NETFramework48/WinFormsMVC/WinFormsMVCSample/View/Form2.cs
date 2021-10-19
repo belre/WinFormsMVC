@@ -56,14 +56,14 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        PrevOperation = (command, item, form3) =>
-                        {
-                            form3.Message = item[form3];
-                        },
                         NextOperation = (command, item, form3) =>
                         {
                             item[form3] = form3.Message;
                             form3.Message = item.Next;
+                        },
+                        PrevOperation = (command, item, form3) =>
+                        {
+                            form3.Message = item[form3];
                         }
                     },
                     new GenericCommand<Form4, TextItem>() {
@@ -73,14 +73,14 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        PrevOperation = (command, item, form4) =>
-                        {
-                            form4.Message = item[form4];
-                        },
                         NextOperation = (command, item, form4) =>
                         {
                             item[form4] = form4.Message;
                             form4.Message = item.Next;
+                        },
+                        PrevOperation = (command, item, form4) =>
+                        {
+                            form4.Message = item[form4];
                         }
                     }
                 }, IsUndoEnable);
@@ -126,14 +126,14 @@ namespace WinFormsMVCSample
                                 item.Next = (Image)pictureBox1.Image.Clone();
                                 return true;
                             },
-                            PrevOperation = (command, item, form2) =>
-                            {
-                                form2.pictureBox1.Image = item[form2];
-                            },
                             NextOperation = (command, item, form2) =>
                             {
                                 item[form2] = (Image)_before_edit_image.Clone();
                                 form2.pictureBox1.Image = item.Next;
+                            },
+                            PrevOperation = (command, item, form2) =>
+                            {
+                                form2.pictureBox1.Image = item[form2];
                             }
                         }
                     }, IsUndoEnable);
@@ -166,14 +166,14 @@ namespace WinFormsMVCSample
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
                         },
-                        PrevOperation = (command, item, form4) =>
-                        {
-                            form4.DisplayedImage = item[form4];
-                        },
                         NextOperation = (command, item, form4) =>
                         {
                             item[form4] = (Image)form4.DisplayedImage.Clone();
                             form4.DisplayedImage = item.Next;
+                        },
+                        PrevOperation = (command, item, form4) =>
+                        {
+                            form4.DisplayedImage = item[form4];
                         }
                     }
                 }, IsUndoEnable);
@@ -266,14 +266,14 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        PrevOperation = (command, item, form2) =>
-                        {
-                            form2.MessageFromClone = item[form2];
-                        },
                         NextOperation = (command, item, form2) =>
                         {
                             item[form2] = form2.MessageFromClone;
                             form2.MessageFromClone = item.Next;
+                        },
+                        PrevOperation = (command, item, form2) =>
+                        {
+                            form2.MessageFromClone = item[form2];
                         }
                     }
                 }, IsUndoEnable);

@@ -77,6 +77,16 @@ namespace WinFormsMVC.Controller
             _manager.LaunchForm(self_form, create_instance, false);
         }
 
+        public void LaunchWithLock<T>(BaseForm self_form) where T : BaseForm
+        {
+            LaunchWithLock<T>(self_form, null, null);
+        }
+
+        public void LaunchWithLock<T>(BaseForm self_form, Action<T> preload) where T : BaseForm
+        {
+            LaunchWithLock<T>(self_form, null, preload);
+        }
+
         public void LaunchWithLock<T>(BaseForm self_form, FormClosedEventHandler on_closed, Action<T> preload) where T : BaseForm
         {
             var create_instance = (T)typeof(T).InvokeMember(null, BindingFlags.CreateInstance, null, null, null);
