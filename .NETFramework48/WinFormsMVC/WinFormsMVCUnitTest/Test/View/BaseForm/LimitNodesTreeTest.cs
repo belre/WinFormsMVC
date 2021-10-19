@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 
 namespace WinFormsMVCUnitTest.Test.View.BaseForm
 {
@@ -11,6 +12,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
         [TestMethod]
         public void TheSameLimitDepthTest()
         {
+            // 単連結リストの作成
             var root = new WinFormsMVC.View.BaseForm();
 
             var base_target = root;
@@ -48,36 +50,6 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             }
         }
 
-        private void MakeBinaryTree(WinFormsMVC.View.BaseForm target, int count=1)
-        {
-            if (count >= WinFormsMVC.View.BaseForm.MaxDepthTree)
-            {
-                return;
-            }
-
-            var child1 = new WinFormsMVC.View.BaseForm()
-            {
-                Invoker = target
-            };
-
-            var child2 = new WinFormsMVC.View.BaseForm()
-            {
-                Invoker = target
-            };
-
-            MakeBinaryTree(child1, count+1);
-            MakeBinaryTree(child2, count+1);
-        }
-
-        [TestMethod]
-        public void PerfectBinaryTree()
-        {
-            var root = new WinFormsMVC.View.BaseForm();
-            MakeBinaryTree(root);
-            Console.WriteLine("TEST");
-
-
-        }
 
         [TestMethod]
         public void ExceedLimitDepthTest()

@@ -58,6 +58,7 @@
     <Compile Include="Test\Controller\BaseController\NoAttributeReflectionTest.cs" />
     <Compile Include="Test\View\BaseForm\LimitNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />
+    <Compile Include="Test\View\BaseForm\PerfectTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\SingleNodeTreeTest.cs" />
   </ItemGroup>
   <ItemGroup>
