@@ -77,9 +77,20 @@ namespace WinFormsMVCSample.View
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (listBox1.SelectedItem == null || treeView1.SelectedNode == null)
+            {
+                DialogResult = DialogResult.Cancel;
+                return;
+            }
+
             DialogResult = DialogResult.OK;
 
-            FilePath = string.Format(@"{0}\{1}", treeView1.SelectedNode.Tag, listBox1.SelectedItem.ToString());
+            var targetNode = treeView1.Nodes[0];
+            if (treeView1.SelectedNode != null)
+            {
+                targetNode = treeView1.SelectedNode;
+            }
+            FilePath = string.Format(@"{0}\{1}", targetNode.Tag, listBox1.SelectedItem.ToString());
         }
 
         private void button2_Click(object sender, EventArgs e)
