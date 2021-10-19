@@ -7,7 +7,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
     public class SingleNodeTreeTest
     {
         [TestMethod]
-        public void SingleNodeTest()
+        public void SingleNode()
         {
             var single_node = new WinFormsMVC.View.BaseForm();
             Assert.IsFalse(single_node.IsOriginatingFromParent(single_node));
@@ -16,14 +16,14 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
         }
 
         [TestMethod]
-        public void AnyInvokerTest()
+        public void AnyInvoker()
         {
             var single_node = new WinFormsMVC.View.BaseForm();
             single_node.Invoker = new WinFormsMVC.View.BaseForm();
         }
         
         [TestMethod]
-        public void SelfInvokerTest()
+        public void SelfInvoker()
         {
             var single_node = new WinFormsMVC.View.BaseForm();
             Assert.ThrowsException<InvalidOperationException>( () => single_node.Invoker = single_node);

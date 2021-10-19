@@ -61,7 +61,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.BaseController
             }
         }
 
-        public void GetRuntimeConstructorTest<T>() where T : class
+        public void GetRuntimeConstructor<T>() where T : class
 
         {
             var ctor = WinFormsMVC.Controller.BaseController.GetRuntimeConstructor(typeof(T));
@@ -69,11 +69,11 @@ namespace WinFormsMVCUnitTest.Test.Controller.BaseController
         }
 
         [TestMethod]
-        public void GetRuntimeConstructorTest()
+        public void GetRuntimeConstructor()
         {
-            GetRuntimeConstructorTest<DualClass1>();
-            GetRuntimeConstructorTest<DualClass2>();
-            GetRuntimeConstructorTest<MulpipleClass>();
+            GetRuntimeConstructor<DualClass1>();
+            GetRuntimeConstructor<DualClass2>();
+            GetRuntimeConstructor<MulpipleClass>();
         }
     }
 }

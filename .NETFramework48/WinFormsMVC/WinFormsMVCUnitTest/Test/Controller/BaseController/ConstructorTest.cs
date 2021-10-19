@@ -7,7 +7,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.BaseController
     public class ConstructorTest
     {
         [TestMethod]
-        public void CtorTest()
+        public void Ctor()
         {
             var controller = new WinFormsMVC.Controller.BaseController();
         }

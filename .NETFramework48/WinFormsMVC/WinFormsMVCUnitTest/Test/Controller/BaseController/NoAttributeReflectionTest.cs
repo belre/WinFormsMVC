@@ -65,7 +65,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.BaseController
             }
         }
 
-        public void GetRuntimeConstructorTest<T>(Type[] check_types) where T : class
+        public void GetRuntimeConstructor<T>(Type[] check_types) where T : class
 
         {
             var ctor = WinFormsMVC.Controller.BaseController.GetRuntimeConstructor(typeof(T));
@@ -73,13 +73,13 @@ namespace WinFormsMVCUnitTest.Test.Controller.BaseController
         }
 
         [TestMethod]
-        public void GetRuntimeConstructorTest()
+        public void GetRuntimeConstructor()
         {
-            GetRuntimeConstructorTest<NoCtorClass>(Type.EmptyTypes);
-            GetRuntimeConstructorTest<SingleClass>(Type.EmptyTypes);
-            GetRuntimeConstructorTest<DualClass1>(Type.EmptyTypes);
-            GetRuntimeConstructorTest<DualClass2>(new Type[]{typeof(int)});
-            GetRuntimeConstructorTest<MulpipleClass>(new Type[] { typeof(int[]) });
+            GetRuntimeConstructor<NoCtorClass>(Type.EmptyTypes);
+            GetRuntimeConstructor<SingleClass>(Type.EmptyTypes);
+            GetRuntimeConstructor<DualClass1>(Type.EmptyTypes);
+            GetRuntimeConstructor<DualClass2>(new Type[]{typeof(int)});
+            GetRuntimeConstructor<MulpipleClass>(new Type[] { typeof(int[]) });
         }
     }
 }

@@ -16,8 +16,14 @@ namespace WinFormsMVC.View
             OVER_DEPTH
         }
 
-        private int _resource_max_depth_tree = 3;
 
+        public static int MaxDepthTree
+        {
+            get
+            {
+                return int.Parse(Properties.Resources.MAX_DEPTH_TREEFORM);
+            }
+        }
 
         private BaseForm _invoker;
 
@@ -59,8 +65,6 @@ namespace WinFormsMVC.View
         public BaseForm()
         {
             InitializeComponent();
-
-            _resource_max_depth_tree = int.Parse(Properties.Resources.MAX_DEPTH_TREEFORM);
         }
 
         /// <summary>
@@ -69,18 +73,17 @@ namespace WinFormsMVC.View
         /// <param name="seeked_list"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        protected FormTreeStatus IsFormTreeValid(List<BaseForm> seeked_list, int count=0)
+        protected FormTreeStatus IsFormTreeValid(List<BaseForm> seeked_list, int count=1)
         {
             if (Invoker == null)
             {
                 return FormTreeStatus.OK;
             }
-            else if (seeked_list.Contains(Invoker) 
-                     || count >= _resource_max_depth_tree) 
+            else if (seeked_list.Contains(Invoker) ) 
             {
                 return FormTreeStatus.TREE_CORRUPTED;
             } 
-            else if (count >= _resource_max_depth_tree)           // 再帰防止(MAX_NUMBER_INVOKER_LOOP)
+            else if (count >= MaxDepthTree)           // 再帰防止(MAX_NUMBER_INVOKER_LOOP)
             {
                 return FormTreeStatus.OVER_DEPTH;
             }
@@ -96,9 +99,9 @@ namespace WinFormsMVC.View
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public bool IsOriginatingFromParent(BaseForm parent, int count=0)
+        public bool IsOriginatingFromParent(BaseForm parent, int count=1)
         {
-            if (parent == null || Invoker == null || count >= _resource_max_depth_tree)
+            if (parent == null || Invoker == null || count >= MaxDepthTree)
             {
                 return false;
             } 
