@@ -33,6 +33,14 @@ namespace WinFormsMVC.View
         /// </summary>
         public ViewFacade Facade { get; set; }
 
+        public IEnumerable<BaseForm> Children
+        {
+            get
+            {
+                return _children;
+            }
+        }
+
         /// <summary>
         /// このフォームがどのフォームから作られたかを表します。
         /// </summary>
@@ -106,7 +114,7 @@ namespace WinFormsMVC.View
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public bool IsOriginatingFromParent(BaseForm parent, int count=1)
+        public bool IsAncestor(BaseForm parent, int count=1)
         {
             if (parent == null || Invoker == null || count >= MaxDepthTree)
             {
@@ -118,7 +126,7 @@ namespace WinFormsMVC.View
             }
             else
             {
-                return Invoker.IsOriginatingFromParent(parent, count+1);
+                return Invoker.IsAncestor(parent, count+1);
             }
         }
     }

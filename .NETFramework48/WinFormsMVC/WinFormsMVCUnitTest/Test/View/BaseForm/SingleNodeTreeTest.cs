@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace WinFormsMVCUnitTest.Test.View.BaseForm
 {
@@ -10,9 +11,10 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
         public void SingleNode()
         {
             var single_node = new WinFormsMVC.View.BaseForm();
-            Assert.IsFalse(single_node.IsOriginatingFromParent(single_node));
-            Assert.IsFalse(single_node.IsOriginatingFromParent(new WinFormsMVC.View.BaseForm()));
-            Assert.IsFalse(single_node.IsOriginatingFromParent(null));
+            Assert.IsFalse(single_node.IsAncestor(single_node));
+            Assert.IsFalse(single_node.IsAncestor(new WinFormsMVC.View.BaseForm()));
+            Assert.IsFalse(single_node.IsAncestor(null));
+            Assert.AreEqual(single_node.Children.Count(), 0);
         }
 
         [TestMethod]
@@ -20,7 +22,9 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
         {
             var single_node = new WinFormsMVC.View.BaseForm();
             single_node.Invoker = new WinFormsMVC.View.BaseForm();
-            Assert.IsTrue(single_node.IsOriginatingFromParent(single_node.Invoker));
+            Assert.IsTrue(single_node.IsAncestor(single_node.Invoker));
+            Assert.AreEqual(single_node.Children.Count(), 0);
+            Assert.IsTrue(single_node.Invoker.Children.Contains(single_node));
         }
         
         [TestMethod]

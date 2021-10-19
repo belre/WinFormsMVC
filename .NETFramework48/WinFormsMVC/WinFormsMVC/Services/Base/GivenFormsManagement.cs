@@ -78,7 +78,7 @@ namespace WinFormsMVC.Services.Base
             }
             else if (command.IsRetrieved)
             {
-                return form.IsOriginatingFromParent(command.Invoker);
+                return form.IsAncestor(command.Invoker);
             }
             else
             {

@@ -19,10 +19,11 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
 
             for (int i = 0; i < WinFormsMVC.View.BaseForm.MaxDepthTree - 1; i++)
             {
-                base_target.Invoker = new WinFormsMVC.View.BaseForm();
-                base_target = base_target.Invoker;
+                var child = new WinFormsMVC.View.BaseForm();
+                child.Invoker = base_target;
+                all_forms_ordered_from_root.Add(child);
 
-                all_forms_ordered_from_root.Add(base_target);
+                base_target = child;
             }
 
             // 先祖-孫の関係が満たされているかをチェックする
@@ -30,14 +31,19 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             {
                 foreach (var child in all_forms_ordered_from_root.Skip(i + 1))
                 {
-                    Assert.IsTrue(all_forms_ordered_from_root[i].IsOriginatingFromParent(child));
-                    Assert.IsFalse(child.IsOriginatingFromParent(all_forms_ordered_from_root[i]));
+                    Assert.IsTrue(child.IsAncestor(all_forms_ordered_from_root[i]));
+                    Assert.IsFalse(all_forms_ordered_from_root[i].IsAncestor(child));
                 }
 
                 foreach (var parent in all_forms_ordered_from_root.Take(i))
                 {
-                    Assert.IsFalse(all_forms_ordered_from_root[i].IsOriginatingFromParent(parent));
-                    Assert.IsTrue(parent.IsOriginatingFromParent(all_forms_ordered_from_root[i]));
+                    Assert.IsFalse(parent.IsAncestor(all_forms_ordered_from_root[i]));
+                    Assert.IsTrue(all_forms_ordered_from_root[i].IsAncestor(parent));
+                }
+
+                if (i >= 1)
+                {
+                    Assert.IsTrue(all_forms_ordered_from_root[i - 1].Children.Contains(all_forms_ordered_from_root[i]));
                 }
             }
         }
