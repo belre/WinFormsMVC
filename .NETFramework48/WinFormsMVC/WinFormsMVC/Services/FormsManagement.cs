@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.Facade;
 using WinFormsMVC.Request;
+using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Services
@@ -12,8 +13,20 @@ namespace WinFormsMVC.Services
     /// <summary>
     /// BaseFormを管理します。
     /// </summary>
-    public class FormsManagement
+    public class FormsManagement : GivenFormsManagement
     {
+        /// <summary>
+        /// 固定の数のフォーム一覧を表します。
+        /// </summary>
+        protected override IEnumerable<BaseForm> ManagedBaseForms
+        {
+            get
+            {
+                return _managed_baseform;
+            }
+        }
+
+
         /// <summary>
         /// 管理されているBaseFormの一覧です。
         /// </summary>
@@ -53,6 +66,7 @@ namespace WinFormsMVC.Services
         /// Form管理を生成します。
         /// </summary>
         public FormsManagement()
+            : base(new BaseForm[0])
         {
             _managed_baseform = new List<BaseForm>();
             _memento = new CommandMemento();
@@ -82,83 +96,12 @@ namespace WinFormsMVC.Services
             }
         }
 
-        /// <summary>
-        /// コマンド履歴に従って、フォームを更新します。
-        /// </summary>
-        /// <param name="command_list"></param>
-        /// <param name="is_record_memento"></param>
-        public void Operate(IEnumerable<Request.Command> command_list, bool is_record_memento)
+
+        public void RunAndRecord(IEnumerable<Request.Command> command_list) 
         {
-            foreach (var command in command_list)
-            {
-                if (command.Validate())
-                {
-                    ReflectNext(command);
-                }
-                else
-                {
-                    command.HandleValidationError();
-                }
-            }
+            base.Run(command_list);
 
-            if (is_record_memento)
-            {
-                _memento.PushCommand(command_list);
-            }
-        }
-
-
-        /// <summary>
-        /// コマンド履歴に従って、フォームを更新します。
-        /// なお、非同期で処理を実行します。
-        /// </summary>
-        /// <param name="command_list"></param>
-        public void OperateAsync(IEnumerable<Request.Command> command_list)
-        {
-            foreach (var command in command_list)
-            {
-                var async_command = new AsyncCommand(command);
-
-                async_command.NotifyingAsync += ReflectNext;
-                Task.Run(async_command.ValidateAsync);
-            }
-        }
-
-        protected bool IsMatchInvoker(BaseForm form, Command command)
-        {
-            if (command.IsForSelf)
-            {
-                return form == command.Invoker;
-            }
-            else if (command.IsRetrieved)
-            {
-                return form.IsOriginatingFromParent(command.Invoker);
-            }
-            else
-            {
-                return form.Invoker == command.Invoker;
-            }
-        }
-
-        /// <summary>
-        /// Memento一覧に従ってフォームを更新します。
-        /// </summary>
-        /// <param name="command"></param>
-        public void ReflectNext(Command command)
-        {
-            var target_forms = new List<BaseForm>();
-            foreach (var form in _managed_baseform)
-            {
-                if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
-                {
-                    target_forms.Add(form);
-                }
-            }
-
-            foreach (var target in target_forms)
-            {
-                command.Next(target);
-            }
+            _memento.PushCommand(command_list);
         }
 
         /// <summary>

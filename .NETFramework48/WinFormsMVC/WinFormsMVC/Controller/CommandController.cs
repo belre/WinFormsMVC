@@ -11,11 +11,25 @@ using WinFormsMVC.View;
 
 namespace WinFormsMVC.Controller
 {
+    /// <summary>
+    /// コマンドを取り扱うController
+    /// </summary>
     public class CommandController : BaseController
     {
+        /// <summary>
+        /// フォームの管理オブジェクトです。
+        /// </summary>
         protected FormsManagement _manager;
+
+        /// <summary>
+        /// Undoの処理を通知するためのDelagateです。
+        /// </summary>
+        /// <param name="is_enable"></param>
         public delegate void NotifyIsAvailableUndo(bool is_enable);
 
+        /// <summary>
+        /// いま「元に戻す」の動作が可能であるかを表します.
+        /// </summary>
         public bool IsAvailableUndo
         {
             get
@@ -24,30 +38,34 @@ namespace WinFormsMVC.Controller
             }
         }
 
-
+        /// <summary>
+        /// 既定のmanagerを入力してControllerを生成します。
+        /// </summary>
+        /// <param name="manager"></param>
         public CommandController(FormsManagement manager)
         {
             _manager = manager;
         }
 
-        public void SendStoredMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
+        /// <summary>
+        /// 履歴を記録してコマンドを送信します。
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="notify_undo_func"></param>
+        public void SendStoredMessage(Command[] commands, NotifyIsAvailableUndo notify_undo_func)
         {
-            _manager.Operate(abstractCommand, true);
+            _manager.RunAndRecord(commands);
             ReflectMemento(notify_undo_func);
         }
 
-        public void SendSimpleMessage(Command[] abstractCommand)
+        /// <summary>
+        /// 履歴を記録せずにコマンドを送信します。
+        /// </summary>
+        /// <param name="commands"></param>
+        public void SendSimpleMessage(Command[] commands)
         {
-            _manager.Operate(abstractCommand, false);
+            _manager.Run(commands);
         }
-
-        /*
-        public void SendAsyncMessage(Command[] abstractCommand, NotifyIsAvailableUndo notify_undo_func)
-        {
-            _manager.OperateAsync(abstractCommand);
-            ReflectMemento(notify_undo_func);
-        }
-        */
 
         public void Undo(NotifyIsAvailableUndo notify_undo_func)
         {

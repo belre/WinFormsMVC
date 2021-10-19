@@ -56,6 +56,11 @@
     <Compile Include="Controller\CommandController.cs" />
     <Compile Include="Facade\ViewFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\CommandItem.cs" />
     <Compile Include="Request\AsyncCommand.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="Request\GenericCommandItem.cs" />
     <Compile Include="Request\Item\ImageItem.cs" />
     <Compile Include="Request\Item\TextItem.cs" />
+    <Compile Include="Services\Base\GivenFormsManagement.cs" />
     <Compile Include="Services\FormsManagement.cs" />
     <Compile Include="Services\CommandMemento.cs" />
     <Compile Include="View\BaseForm.cs">
@@ -73,6 +79,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>

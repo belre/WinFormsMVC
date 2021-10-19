@@ -16,7 +16,10 @@ namespace WinFormsMVC.Controller
     public class BaseController
     {
         /// <summary>
-        /// Controllerのコンストラクタを返します。
+        /// リフレクションを使って、Controllerのコンストラクタを返します。
+        /// ・CalledAsController属性が指定されているコンストラクタを優先して生成する
+        /// ・CalledAsController属性がコンストラクタに複数指定されている場合は、nullを返却する
+        /// ・CalledAsController属性が指定されていない場合は、最初に指定されたコンストラクタを生成する。
         /// </summary>
         /// <param name="controller_type">Controllerの型</param>
         /// <returns>コンストラクタの型</returns>
