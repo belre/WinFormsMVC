@@ -11,6 +11,8 @@ namespace WinFormsMVCSample.View
 {
     public partial class SPWFolderForm : WinFormsMVC.View.BaseForm
     {
+        private List<string> _all_path = new List<string>();
+
         public string RootDrive
         {
             get;
