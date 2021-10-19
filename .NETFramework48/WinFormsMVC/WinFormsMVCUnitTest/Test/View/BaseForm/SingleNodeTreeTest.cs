@@ -20,6 +20,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
         {
             var single_node = new WinFormsMVC.View.BaseForm();
             single_node.Invoker = new WinFormsMVC.View.BaseForm();
+            Assert.IsTrue(single_node.IsOriginatingFromParent(single_node.Invoker));
         }
         
         [TestMethod]
@@ -29,6 +30,5 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             Assert.ThrowsException<InvalidOperationException>( () => single_node.Invoker = single_node);
             Assert.IsNull(single_node.Invoker);
         }
-
     }
 }

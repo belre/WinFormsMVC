@@ -26,6 +26,7 @@ namespace WinFormsMVC.View
         }
 
         private BaseForm _invoker;
+        private List<BaseForm> _children;
 
         /// <summary>
         /// ViewとFacadeの窓口クラスを表します。
@@ -58,13 +59,19 @@ namespace WinFormsMVC.View
                         throw new InvalidOperationException("BaseFormの階層が深すぎます.");
                     }
                 }
-
+                else
+                {
+                    // privateなクラス間であれば子クラスを定義できる
+                    _invoker._children.Add(this);
+                }
             }
         }
 
         public BaseForm()
         {
             InitializeComponent();
+
+            _children = new List<BaseForm>();
         }
 
         /// <summary>
