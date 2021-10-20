@@ -58,9 +58,5 @@ namespace WinFormsMVC.Request
         {
             PrevItem = new Dictionary<BaseForm, T>();
         }
-
-
-
-
     }
 }

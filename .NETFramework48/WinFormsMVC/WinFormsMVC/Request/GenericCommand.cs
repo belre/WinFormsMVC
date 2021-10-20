@@ -49,27 +49,27 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// データ検証を行うときに実行される処理です。
         /// </summary>
-        public Func<GenericCommand<TargetForm, Item>, Item, bool> Validation { get; set; }
+        public Func< Item, bool> Validation { get; set; }
 
         /// <summary>
         /// 「実行」「やり直し」で行なわれる処理です。
         /// </summary>
-        public Action<GenericCommand<TargetForm, Item>, Item, TargetForm> NextOperation { get; set; }
+        public Action< Item, TargetForm> NextOperation { get; set; }
 
         /// <summary>
         /// 「元に戻す」で行なわれる処理です。
         /// </summary>
-        public Action<GenericCommand<TargetForm, Item>, Item, TargetForm> PrevOperation { get; set; }
+        public Action<Item, TargetForm> PrevOperation { get; set; }
 
         /// <summary>
         /// 「元に戻す」の後に行なわれる処理です。
         /// </summary>
-        public Action<GenericCommand<TargetForm, Item>, Item> FinalOperation { get; set; }
+        public Action<Item> FinalOperation { get; set; }
 
         /// <summary>
         /// データ検証に失敗したときに実行される処理です。
         /// </summary>
-        public Action<GenericCommand<TargetForm, Item>, Item>  ErrorOperation { get; set; }
+        public Action<Item>  ErrorOperation { get; set; }
 
         /// <summary>
         /// データ検証を実行します。
@@ -79,7 +79,7 @@ namespace WinFormsMVC.Request
         {
             if (Validation != null)
             {
-                return Validation(this, StoredItem);
+                return Validation(StoredItem);
             }
             else
             {
@@ -95,7 +95,7 @@ namespace WinFormsMVC.Request
         {
             if (PrevOperation != null)
             {
-                PrevOperation(this, StoredItem, (TargetForm)form);
+                PrevOperation( StoredItem, (TargetForm)form);
             }
         }
 
@@ -107,7 +107,7 @@ namespace WinFormsMVC.Request
         {
             if (NextOperation != null)
             {
-                NextOperation(this, StoredItem, (TargetForm)form);
+                NextOperation( StoredItem, (TargetForm)form);
             }
         }
 
@@ -120,7 +120,7 @@ namespace WinFormsMVC.Request
         {
             if (FinalOperation != null)
             {
-                FinalOperation(this, StoredItem);
+                FinalOperation( StoredItem);
             }
         }
 
@@ -131,7 +131,7 @@ namespace WinFormsMVC.Request
         {
             if (ErrorOperation != null)
             {
-                ErrorOperation(this, StoredItem);
+                ErrorOperation( StoredItem);
             }
         }
     }
