@@ -33,10 +33,6 @@ namespace WinFormsMVC.Services.Base
                 {
                     Update(command);
                 }
-                else
-                {
-                    command.HandleValidationError();
-                }
             }
         }
 

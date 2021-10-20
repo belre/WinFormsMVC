@@ -67,7 +67,7 @@ namespace WinFormsMVC.View
                         throw new InvalidOperationException("BaseFormの階層が深すぎます.");
                     }
                 }
-                else
+                else if(_invoker != null)
                 {
                     // privateなクラス間であれば子クラスを定義できる
                     _invoker._children.Add(this);

@@ -119,9 +119,10 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// データ検証に失敗したときに実行(Commandと同じ）
         /// </summary>
-        public override void HandleValidationError()
+        protected override void HandleValidationError()
         {
-            Command.HandleValidationError();
+            // Validateにエラー処理をゆだねる
+            // Command.HandleValidationError();
         }
 
 

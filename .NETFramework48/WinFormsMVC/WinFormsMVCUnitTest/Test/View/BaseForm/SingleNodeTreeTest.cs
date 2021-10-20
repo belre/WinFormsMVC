@@ -26,6 +26,13 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             Assert.AreEqual(single_node.Children.Count(), 0);
             Assert.IsTrue(single_node.Invoker.Children.Contains(single_node));
         }
+
+        [TestMethod]
+        public void InvokerSubstitutesNull()
+        {
+            var single_node = new WinFormsMVC.View.BaseForm();
+            single_node.Invoker = null;
+        }
         
         [TestMethod]
         public void SelfInvoker()

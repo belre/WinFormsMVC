@@ -60,6 +60,6 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// データ反映時に失敗したら実行する処理
         /// </summary>
-        public abstract void HandleValidationError();
+        protected abstract void HandleValidationError();
     }
 }

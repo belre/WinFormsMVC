@@ -11,6 +11,20 @@ namespace WinFormsMVC.Request
     /// <typeparam name="Item">何を送信するか(テキスト、画像など)</typeparam>
     public class GenericCommand<TargetForm, Item> : Command where TargetForm : BaseForm where Item : CommandItem
     {
+        protected enum OperationStatus
+        {
+            NO_VALIDATION,
+            VALIDATED,
+            ERROR_WITH_VALIDATING,
+            DONE_FINALIZE
+        };
+
+        protected OperationStatus Status
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 確保されているデータを表します。
         /// </summary>
@@ -44,6 +58,8 @@ namespace WinFormsMVC.Request
             {
                 throw new TypeInitializationException(typeof(Item).Name, new Exception("コマンドアイテムが異常です"));
             }
+
+            Status = OperationStatus.NO_VALIDATION;
         }
 
         /// <summary>
@@ -54,7 +70,7 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// 「実行」「やり直し」で行なわれる処理です。
         /// </summary>
-        public Action< Item, TargetForm> NextOperation { get; set; }
+        public Action<Item, TargetForm> NextOperation { get; set; }
 
         /// <summary>
         /// 「元に戻す」で行なわれる処理です。
@@ -77,13 +93,37 @@ namespace WinFormsMVC.Request
         /// <returns></returns>
         public override bool Validate()
         {
-            if (Validation != null)
+            if (Status == OperationStatus.NO_VALIDATION)
             {
-                return Validation(StoredItem);
+
+                bool ret = false;
+
+                // Validation状態で処理を変える
+                if (Validation != null)
+                {
+                    ret = Validation(StoredItem);
+                }
+                else
+                {
+                    ret = true;
+                }
+
+                // Validateの結果によってStatusを変える
+                if (ret)
+                {
+                    Status = OperationStatus.VALIDATED;
+                }
+                else
+                {
+                    HandleValidationError();
+                    Status = OperationStatus.ERROR_WITH_VALIDATING;
+                }
+
+                return ret;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 
@@ -93,9 +133,12 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Prev(BaseForm form)
         {
-            if (PrevOperation != null)
+            if (Status == OperationStatus.VALIDATED)
             {
-                PrevOperation( StoredItem, (TargetForm)form);
+                if (PrevOperation != null)
+                {
+                    PrevOperation(StoredItem, (TargetForm) form);
+                }
             }
         }
 
@@ -105,9 +148,12 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Next(BaseForm form)
         {
-            if (NextOperation != null)
+            if (Status == OperationStatus.VALIDATED)
             {
-                NextOperation( StoredItem, (TargetForm)form);
+                if (NextOperation != null)
+                {
+                    NextOperation(StoredItem, (TargetForm)form);
+                }
             }
         }
 
@@ -118,16 +164,20 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Invalidate()
         {
-            if (FinalOperation != null)
+            if (Status == OperationStatus.VALIDATED)
             {
-                FinalOperation( StoredItem);
+                if (FinalOperation != null)
+                {
+                    FinalOperation(StoredItem);
+                    Status = OperationStatus.DONE_FINALIZE;
+                }
             }
         }
 
         /// <summary>
         /// データ検証に失敗したときの処理を表します。
         /// </summary>
-        public override void HandleValidationError()
+        protected override void HandleValidationError()
         {
             if (ErrorOperation != null)
             {
