@@ -15,6 +15,7 @@ namespace WinFormsMVC.Services.Base
             get;
         }
 
+
         public GivenFormsManagement(IEnumerable<BaseForm> _managed_base_forms)
         {
             ManagedBaseForms = _managed_base_forms;
@@ -78,7 +79,7 @@ namespace WinFormsMVC.Services.Base
             }
             else
             {
-                return form.Invoker == command.Invoker;
+                return command.Invoker != null && form.Invoker == command.Invoker;
             }
         }
 

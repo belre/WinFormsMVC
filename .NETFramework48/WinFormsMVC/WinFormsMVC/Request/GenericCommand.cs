@@ -25,6 +25,14 @@ namespace WinFormsMVC.Request
             set;
         }
 
+        public bool WasThroughValidation
+        {
+            get
+            {
+                return Status != OperationStatus.NO_VALIDATION;
+            }
+        }
+
         /// <summary>
         /// 確保されているデータを表します。
         /// </summary>

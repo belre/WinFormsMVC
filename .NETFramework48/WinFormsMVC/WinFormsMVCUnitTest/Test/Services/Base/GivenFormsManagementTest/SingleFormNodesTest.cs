@@ -76,6 +76,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsTrue(_was_validation);
             Assert.IsFalse(_was_finalize);
             Assert.IsFalse(_was_error);
+            Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
             Assert.AreEqual(_form_list.First().Text, "First Text");
         }
 
@@ -95,13 +96,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsTrue(_was_validation);
             Assert.IsFalse(_was_finalize);
             Assert.IsTrue(_was_error);
+            Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
             Assert.AreEqual(_form_list.First().Text, "First Text");
         }
 
         [TestMethod]
         public void ValidationNullCheckTest()
         {
-
             ((GenericCommand<ChildForm1, TextItem>) _default_commands[0]).Validation = null;
 
             var given_form_obj = new GivenFormsManagement(_form_list);
@@ -110,6 +111,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsFalse(_was_validation);
             Assert.IsFalse(_was_finalize);
             Assert.IsFalse(_was_error);
+            Assert.IsFalse(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
             Assert.AreEqual(_form_list.First().Text, "First Text");
         }
 
