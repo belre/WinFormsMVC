@@ -10,130 +10,116 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
     public class OperationTest
     {
 
-        [TestMethod]
-        public void ProcessingTest()
-        {
-            bool was_validated = false;
-            bool was_done_next = false;
-            bool was_done_prev = false;
-            bool was_done_finalize = false;
-            bool was_done_error_handling = false;
-            var base_form = new BaseForm();
+        private GenericCommand<BaseForm, TextItem> _default_command;
+        private bool _was_validated = false;
+        private bool _was_done_next = false;
+        private bool _was_done_prev = false;
+        private bool _was_done_finalize = false;
+        private bool _was_done_error_handling = false;
 
-            var new_command = new GenericCommand<BaseForm, TextItem>()
+
+        public OperationTest()
+        {
+            _default_command = new GenericCommand<BaseForm, TextItem>()
             {
                 Validation = ((item) =>
                 {
-                    was_validated = true;
+                    _was_validated = true;
                     return true;
                 }),
                 NextOperation = ((item, form) =>
                 {
                     form.Text = "Next Text";
-                    was_done_next = true;
+                    _was_done_next = true;
                 }),
                 PrevOperation = ((item, form) =>
                 {
                     form.Text = "Previous Text";
-                    was_done_prev = true;
+                    _was_done_prev = true;
                 }),
-                FinalOperation = ((item) => { was_done_finalize = true; }),
-                ErrorOperation = ((item) => { was_done_error_handling = true; })
+                FinalOperation = ((item) => { _was_done_finalize = true; }),
+                ErrorOperation = ((item) => { _was_done_error_handling = true; })
             };
+        }
 
-            new_command.Validate();
-            Assert.IsTrue(was_validated);
-            Assert.IsFalse(was_done_next);
-            Assert.IsFalse(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsFalse(was_done_error_handling);
+        [TestMethod]
+        public void ProcessingTest()
+        {
+            var base_form = new BaseForm();
 
-            new_command.Next(base_form);
-            Assert.IsTrue(was_validated);
-            Assert.IsTrue(was_done_next);
-            Assert.IsFalse(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsFalse(was_done_error_handling);
+            _default_command.Validate();
+            Assert.IsTrue(_was_validated);
+            Assert.IsFalse(_was_done_next);
+            Assert.IsFalse(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsFalse(_was_done_error_handling);
+
+            _default_command.Next(base_form);
+            Assert.IsTrue(_was_validated);
+            Assert.IsTrue(_was_done_next);
+            Assert.IsFalse(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsFalse(_was_done_error_handling);
             Assert.AreEqual(base_form.Text, "Next Text");
 
-            new_command.Prev(base_form);
-            Assert.IsTrue(was_validated);
-            Assert.IsTrue(was_done_next);
-            Assert.IsTrue(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsFalse(was_done_error_handling);
+            _default_command.Prev(base_form);
+            Assert.IsTrue(_was_validated);
+            Assert.IsTrue(_was_done_next);
+            Assert.IsTrue(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsFalse(_was_done_error_handling);
             Assert.AreEqual(base_form.Text, "Previous Text");
 
-            new_command.Invalidate();
-            Assert.IsTrue(was_validated);
-            Assert.IsTrue(was_done_next);
-            Assert.IsTrue(was_done_prev);
-            Assert.IsTrue(was_done_finalize);
-            Assert.IsFalse(was_done_error_handling);
+            _default_command.Invalidate();
+            Assert.IsTrue(_was_validated);
+            Assert.IsTrue(_was_done_next);
+            Assert.IsTrue(_was_done_prev);
+            Assert.IsTrue(_was_done_finalize);
+            Assert.IsFalse(_was_done_error_handling);
         }
 
 
         [TestMethod]
         public void ValidationErrorTest()
         {
-            bool was_validated = false;
-            bool was_done_next = false;
-            bool was_done_prev = false;
-            bool was_done_finalize = false;
-            bool was_done_error_handling = false;
             var base_form = new BaseForm();
             base_form.Text = "First Text";
 
-            var new_command = new GenericCommand<BaseForm, TextItem>()
+            ((GenericCommand<BaseForm, TextItem>) _default_command).Validation = (item) =>
             {
-                Validation = ((item) =>
-                {
-                    was_validated = true;
-                    return false;
-                }),
-                NextOperation = ((item, form) =>
-                {
-                    form.Text = "Next Text";
-                    was_done_next = true;
-                }),
-                PrevOperation = ((item, form) =>
-                {
-                    form.Text = "Previous Text";
-                    was_done_prev = true;
-                }),
-                FinalOperation = ((item) => { was_done_finalize = true; }),
-                ErrorOperation = ((item) => { was_done_error_handling = true; })
+                _was_validated = true;
+                return false;
             };
 
-            new_command.Validate();
-            Assert.IsTrue(was_validated);
-            Assert.IsFalse(was_done_next);
-            Assert.IsFalse(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsTrue(was_done_error_handling);
+            _default_command.Validate();
+            Assert.IsTrue(_was_validated);
+            Assert.IsFalse(_was_done_next);
+            Assert.IsFalse(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsTrue(_was_done_error_handling);
 
-            new_command.Next(base_form);
-            Assert.IsTrue(was_validated);
-            Assert.IsFalse(was_done_next);
-            Assert.IsFalse(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsTrue(was_done_error_handling);
+            _default_command.Next(base_form);
+            Assert.IsTrue(_was_validated);
+            Assert.IsFalse(_was_done_next);
+            Assert.IsFalse(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsTrue(_was_done_error_handling);
             Assert.AreEqual(base_form.Text, "First Text");
 
-            new_command.Prev(base_form);
-            Assert.IsTrue(was_validated);
-            Assert.IsFalse(was_done_next);
-            Assert.IsFalse(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsTrue(was_done_error_handling);
+            _default_command.Prev(base_form);
+            Assert.IsTrue(_was_validated);
+            Assert.IsFalse(_was_done_next);
+            Assert.IsFalse(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsTrue(_was_done_error_handling);
             Assert.AreEqual(base_form.Text, "First Text");
 
-            new_command.Invalidate();
-            Assert.IsTrue(was_validated);
-            Assert.IsFalse(was_done_next);
-            Assert.IsFalse(was_done_prev);
-            Assert.IsFalse(was_done_finalize);
-            Assert.IsTrue(was_done_error_handling);
+            _default_command.Invalidate();
+            Assert.IsTrue(_was_validated);
+            Assert.IsFalse(_was_done_next);
+            Assert.IsFalse(_was_done_prev);
+            Assert.IsFalse(_was_done_finalize);
+            Assert.IsTrue(_was_done_error_handling);
 
         }
 

@@ -60,6 +60,7 @@
     <Compile Include="Test\Request\GenericCommand\OperationTest.cs" />
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
     <Compile Include="Test\Request\Item\TextItem\BackupTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleFormNodesTest.cs" />
     <Compile Include="Test\View\BaseForm\LimitNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\PerfectTreeTest.cs" />
@@ -77,7 +78,6 @@
   <ItemGroup>
     <Folder Include="Controller\" />
     <Folder Include="Test\Facade\ViewFacade\" />
-    <Folder Include="Test\Services\Base\GivenFormsManagementTest\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
