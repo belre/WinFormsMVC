@@ -95,18 +95,15 @@ namespace WinFormsMVC.Request
         {
             if (Status == OperationStatus.NO_VALIDATION)
             {
+                if (Validation == null)
+                {
+                    return false;
+                }
 
-                bool ret = false;
 
                 // Validation状態で処理を変える
-                if (Validation != null)
-                {
-                    ret = Validation(StoredItem);
-                }
-                else
-                {
-                    ret = true;
-                }
+
+                bool ret = Validation(StoredItem); ;
 
                 // Validateの結果によってStatusを変える
                 if (ret)
@@ -115,8 +112,8 @@ namespace WinFormsMVC.Request
                 }
                 else
                 {
-                    HandleValidationError();
                     Status = OperationStatus.ERROR_WITH_VALIDATING;
+                    HandleValidationError();
                 }
 
                 return ret;
@@ -179,9 +176,12 @@ namespace WinFormsMVC.Request
         /// </summary>
         protected override void HandleValidationError()
         {
-            if (ErrorOperation != null)
+            if (Status != OperationStatus.NO_VALIDATION)
             {
-                ErrorOperation( StoredItem);
+                if (ErrorOperation != null)
+                {
+                    ErrorOperation(StoredItem);
+                }
             }
         }
     }

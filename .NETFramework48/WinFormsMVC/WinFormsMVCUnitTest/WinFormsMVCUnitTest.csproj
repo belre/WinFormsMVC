@@ -60,6 +60,7 @@
     <Compile Include="Test\Request\GenericCommand\OperationTest.cs" />
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
     <Compile Include="Test\Request\Item\TextItem\BackupTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\IsonatedFormsNodesTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleFormNodesTest.cs" />
     <Compile Include="Test\View\BaseForm\LimitNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />

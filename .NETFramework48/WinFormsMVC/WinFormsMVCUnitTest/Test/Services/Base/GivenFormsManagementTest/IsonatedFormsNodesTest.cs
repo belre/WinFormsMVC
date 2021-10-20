@@ -10,9 +10,19 @@ using WinFormsMVC.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     [TestClass]
-    public class SingleFormNodesTest
+    public class IsonatedFormsNodesTest
     {
         public class ChildForm1 : BaseForm
+        {
+
+        }
+
+        public class ChildForm2 : BaseForm
+        {
+
+        }
+
+        public class ChildForm3 : BaseForm
         {
 
         }
@@ -24,13 +34,25 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         private bool _was_finalize = false;
         private bool _was_error = false;
 
-        public SingleFormNodesTest()
+        public IsonatedFormsNodesTest()
         {
             _form_list = new List<BaseForm>()
             {
                 new ChildForm1()
                 {
-                    Text = "First Text"
+                    Text = "First Text, ChildForm1" 
+                },
+                new ChildForm2()
+                {
+                    Text = "First Text, ChildForm2-1"
+                },
+                new ChildForm2()
+                {
+                    Text = "First Text, ChildForm2-2"
+                },
+                new ChildForm3()
+                {
+                    Text = "First Text, ChildForm3"
                 }
             };
 
@@ -38,10 +60,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 new GenericCommand<ChildForm1, TextItem>()
                 {
-                    Invoker = _form_list.First(),
+                    Invoker = _form_list[0],
+                    IsForSelf = true,
                     Validation = (item) =>
                     {
-                        item.Next = "Validation Text";
+                        item.Next = "Validation Text - ChildForm1";
                         _was_validation = true;
                         return true;
                     },
@@ -76,18 +99,24 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsTrue(_was_validation);
             Assert.IsFalse(_was_finalize);
             Assert.IsFalse(_was_error);
-            Assert.AreEqual(_form_list.First().Text, "First Text");
+            Assert.AreEqual(_form_list.First().Text, "Validation Text - ChildForm1");
         }
 
         [TestMethod]
         public void ValidationErrorTest()
         {
-            ((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).Validation = (item) =>
+            foreach (var command in ((Command[])_default_commands))
             {
-                item.Next = "Validation Text";
-                _was_validation = true;
-                return false;
-            };
+                if( command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                {
+                    ((GenericCommand<ChildForm1, TextItem>)command).Validation = (item) =>
+                    {
+                        item.Next = "Validation Text";
+                        _was_validation = true;
+                        return false;
+                    };
+                }
+            }
 
             var given_form_obj = new GivenFormsManagement(_form_list);
             given_form_obj.Run(_default_commands);
@@ -95,14 +124,19 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsTrue(_was_validation);
             Assert.IsFalse(_was_finalize);
             Assert.IsTrue(_was_error);
-            Assert.AreEqual(_form_list.First().Text, "First Text");
+            Assert.AreEqual(_form_list.First().Text, "First Text, ChildForm1");
         }
 
         [TestMethod]
         public void ValidationNullCheckTest()
         {
-
-            ((GenericCommand<ChildForm1, TextItem>) _default_commands[0]).Validation = null;
+            foreach (var command in ((Command[]) _default_commands))
+            {
+                if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                {
+                    ((GenericCommand<ChildForm1, TextItem>) command).Validation = null;
+                }
+            }
 
             var given_form_obj = new GivenFormsManagement(_form_list);
             given_form_obj.Run(_default_commands);
@@ -110,7 +144,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsFalse(_was_validation);
             Assert.IsFalse(_was_finalize);
             Assert.IsFalse(_was_error);
-            Assert.AreEqual(_form_list.First().Text, "First Text");
+            Assert.AreEqual(_form_list.First().Text, "First Text, ChildForm1");
         }
 
     }
