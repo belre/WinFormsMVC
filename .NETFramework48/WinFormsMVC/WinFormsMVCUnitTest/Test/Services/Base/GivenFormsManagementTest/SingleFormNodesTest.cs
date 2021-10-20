@@ -39,6 +39,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 new GenericCommand<ChildForm1, TextItem>()
                 {
                     Invoker = _form_list.First(),
+                    IsForSelf = true,
                     Validation = (item) =>
                     {
                         item.Next = "Validation Text";
@@ -68,7 +69,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
 
         [TestMethod]
-        public void RunTest()
+        public void BeCalledBySelfTest()
         {
             var given_form_obj = new GivenFormsManagement(_form_list);
             given_form_obj.Run(_default_commands);
@@ -77,7 +78,23 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsFalse(_was_finalize);
             Assert.IsFalse(_was_error);
             Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
-            Assert.AreEqual(_form_list.First().Text, "First Text");
+            Assert.AreEqual("Validation Text", _form_list.First().Text );
+        }
+
+        [TestMethod]
+        public void BeCalledByNullInvokerTest()
+        {
+            ((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).Invoker = null;
+            ((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).IsForSelf = false;
+
+            var given_form_obj = new GivenFormsManagement(_form_list);
+            given_form_obj.Run(_default_commands);
+
+            Assert.IsTrue(_was_validation);         // Validationはされる
+            Assert.IsFalse(_was_finalize);
+            Assert.IsFalse(_was_error);
+            Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
+            Assert.AreEqual("First Text", _form_list.First().Text);         // 該当データがいないのでテキストは同じ
         }
 
         [TestMethod]
@@ -97,7 +114,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsFalse(_was_finalize);
             Assert.IsTrue(_was_error);
             Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
-            Assert.AreEqual(_form_list.First().Text, "First Text");
+            Assert.AreEqual("First Text", _form_list.First().Text);
         }
 
         [TestMethod]
@@ -112,7 +129,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.IsFalse(_was_finalize);
             Assert.IsFalse(_was_error);
             Assert.IsFalse(((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).WasThroughValidation);
-            Assert.AreEqual(_form_list.First().Text, "First Text");
+            Assert.AreEqual("First Text", _form_list.First().Text );
         }
 
     }

@@ -60,7 +60,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.BaseController
 
         {
             var ctor = WinFormsMVC.Controller.BaseController.GetRuntimeConstructor(typeof(T));
-            Assert.AreEqual(ctor, typeof(T).GetConstructor(check_types));
+            Assert.AreEqual(typeof(T).GetConstructor(check_types), ctor);
         }
 
         [TestMethod]

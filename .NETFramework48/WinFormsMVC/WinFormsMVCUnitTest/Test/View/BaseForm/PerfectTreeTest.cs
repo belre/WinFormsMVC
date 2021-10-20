@@ -32,7 +32,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
         {
             foreach (var child in target.Children)
             {
-                Assert.AreEqual(child.Invoker, target);
+                Assert.AreEqual(target, child.Invoker);
                 Assert.IsTrue(target.Children.Contains(child));
 
                 CheckBinaryTree(child, count + 1);
@@ -40,7 +40,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
 
             if (count == WinFormsMVC.View.BaseForm.MaxDepthTree)
             {
-                Assert.AreEqual(target.Children.Count(), 0);
+                Assert.AreEqual(0, target.Children.Count());
             }
         }
 

@@ -30,7 +30,7 @@ namespace WinFormsMVCUnitTest.Test.Request.Item
             Assert.IsNull(item[form]);
 
             item.Next = NextValue;
-            Assert.AreEqual(item.Next, NextValue);
+            Assert.AreEqual(NextValue, item.Next);
         }
 
         [TestMethod]
@@ -40,10 +40,10 @@ namespace WinFormsMVCUnitTest.Test.Request.Item
             var form = new BaseForm();
 
             item[form] = FormValue;
-            Assert.AreEqual(item[form], FormValue);
+            Assert.AreEqual(FormValue, item[form]);
 
             item.Next = NextValue;
-            Assert.AreEqual(item.Next, NextValue);
+            Assert.AreEqual(NextValue, item.Next);
         }
     }
 }

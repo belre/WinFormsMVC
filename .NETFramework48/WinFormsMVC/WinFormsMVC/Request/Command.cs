@@ -23,12 +23,13 @@ namespace WinFormsMVC.Request
         }
 
         /// <summary>
-        /// 自分自身に対するコマンドか
+        /// 自分自身に対するコマンドか.
         /// </summary>
         public bool IsForSelf { get; set; }
 
         /// <summary>
-        /// 孫に再帰するか
+        /// 孫に再帰するか.
+        /// コマンドはIsForSelfが先に優先されます.
         /// </summary>
         public bool IsRetrieved { get; set; }
 

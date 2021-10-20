@@ -60,7 +60,7 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             Assert.IsFalse(_was_done_prev);
             Assert.IsFalse(_was_done_finalize);
             Assert.IsFalse(_was_done_error_handling);
-            Assert.AreEqual(base_form.Text, "Next Text");
+            Assert.AreEqual("Next Text", base_form.Text);
 
             _default_command.Prev(base_form);
             Assert.IsTrue(_was_validated);
@@ -68,7 +68,7 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             Assert.IsTrue(_was_done_prev);
             Assert.IsFalse(_was_done_finalize);
             Assert.IsFalse(_was_done_error_handling);
-            Assert.AreEqual(base_form.Text, "Previous Text");
+            Assert.AreEqual("Previous Text", base_form.Text);
 
             _default_command.Invalidate();
             Assert.IsTrue(_was_validated);
@@ -104,7 +104,7 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             Assert.IsFalse(_was_done_prev);
             Assert.IsFalse(_was_done_finalize);
             Assert.IsTrue(_was_done_error_handling);
-            Assert.AreEqual(base_form.Text, "First Text");
+            Assert.AreEqual("First Text", base_form.Text);
 
             _default_command.Prev(base_form);
             Assert.IsTrue(_was_validated);
@@ -112,7 +112,7 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             Assert.IsFalse(_was_done_prev);
             Assert.IsFalse(_was_done_finalize);
             Assert.IsTrue(_was_done_error_handling);
-            Assert.AreEqual(base_form.Text, "First Text");
+            Assert.AreEqual( "First Text", base_form.Text);
 
             _default_command.Invalidate();
             Assert.IsTrue(_was_validated);

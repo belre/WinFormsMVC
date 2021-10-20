@@ -14,7 +14,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             Assert.IsFalse(single_node.IsAncestor(single_node));
             Assert.IsFalse(single_node.IsAncestor(new WinFormsMVC.View.BaseForm()));
             Assert.IsFalse(single_node.IsAncestor(null));
-            Assert.AreEqual(single_node.Children.Count(), 0);
+            Assert.AreEqual(0, single_node.Children.Count());
         }
 
         [TestMethod]
@@ -23,7 +23,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             var single_node = new WinFormsMVC.View.BaseForm();
             single_node.Invoker = new WinFormsMVC.View.BaseForm();
             Assert.IsTrue(single_node.IsAncestor(single_node.Invoker));
-            Assert.AreEqual(single_node.Children.Count(), 0);
+            Assert.AreEqual(0, single_node.Children.Count());
             Assert.IsTrue(single_node.Invoker.Children.Contains(single_node));
         }
 
