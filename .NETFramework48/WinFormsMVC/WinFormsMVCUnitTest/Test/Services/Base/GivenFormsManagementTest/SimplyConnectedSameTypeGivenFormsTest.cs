@@ -33,7 +33,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand(forms.First(), "Validation Text")
+                CreateDefaultCommand<BaseForm>(forms.First(), "Validation Text")
             });
         }
 
@@ -49,7 +49,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -77,7 +77,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -105,7 +105,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -135,7 +135,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -158,15 +158,15 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
-                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.Last();
+                (list.First()).IsForSelf = false;
+                (list.First()).Invoker = forms.Last();
             }, null, (list, forms) =>
             {
 
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -187,7 +187,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First();
                 ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
 
-                list.Add(CreateDefaultCommand(forms.Last(), "Validation Text - 2"));
+                list.Add(CreateDefaultCommand<BaseForm>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
             }, null, (list, forms) =>
             {
@@ -195,7 +195,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -217,15 +217,15 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsRetrieved = true;
-                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.Last();
+                (list.First()).IsForSelf = false;
+                (list.First()).IsRetrieved = true;
+                (list.First()).Invoker = forms.Last();
             }, null, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -245,8 +245,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
                     {
-                        ((GenericCommand<BaseForm, TextItem>)command).Invoker = null;
-                        ((GenericCommand<BaseForm, TextItem>)command).IsForSelf = false;
+                        (command).Invoker = null;
+                        (command).IsForSelf = false;
                     }
                 }
 
@@ -255,7 +255,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation); // Validationはされる
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
 
                 foreach (var form in forms)
                 {
@@ -288,7 +288,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsTrue(_was_error);
-                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list.First()).WasThroughValidation);
+                Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
             });
         }
@@ -311,7 +311,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsFalse(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsFalse((list[0]).WasThroughValidation);
                 Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
             });
         }

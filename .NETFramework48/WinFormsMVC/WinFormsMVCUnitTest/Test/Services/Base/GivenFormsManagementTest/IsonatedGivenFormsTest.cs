@@ -70,8 +70,37 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)list.First()).WasThroughValidation);
+                Assert.IsTrue(list.First().WasThroughValidation);
                 Assert.AreEqual("Validation Text - ChildForm1", forms.First().Text);
+            });
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledBy2InvokersTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                
+                list.First().Invoker = forms.First();
+                list.First().IsForSelf = false;
+
+                list.Add(CreateDefaultCommand<ChildForm1>(forms.Last(), "Validation Text - 2"));
+                list.Last().IsForSelf = false;
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.Skip(1).First())
+                    {
+                        Assert.AreNotEqual("Validation Text", form.Text);
+                    }
+                }
             });
         }
 
@@ -98,7 +127,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsTrue(_was_error);
-                Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)list.First()).WasThroughValidation);
+                Assert.IsTrue(list.First().WasThroughValidation);
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
             });
         }
@@ -121,7 +150,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsFalse(((GenericCommand<ChildForm1, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsFalse(list[0].WasThroughValidation);
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
             });
         }
@@ -135,7 +164,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
                     {
-                        ((GenericCommand<ChildForm1, TextItem>)command).Invoker = null;
+                        command.Invoker = null;
                     }
                 }
 
@@ -144,7 +173,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue(list[0].WasThroughValidation);
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text);         // 該当データがいないのでテキストは同じ
             });
         }
@@ -158,8 +187,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
                     {
-                        ((GenericCommand<ChildForm1, TextItem>)command).Invoker = null;
-                        ((GenericCommand<ChildForm1, TextItem>)command).IsForSelf = false;
+                        (command).Invoker = null;
+                        (command).IsForSelf = false;
                     }
                 }
 
@@ -168,7 +197,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text);         // 該当データがいないのでテキストは同じ
             });
         }
@@ -182,8 +211,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
                     {
-                        ((GenericCommand<ChildForm1, TextItem>)command).Invoker = forms.Last();
-                        ((GenericCommand<ChildForm1, TextItem>)command).IsForSelf = false;
+                        (command).Invoker = forms.Last();
+                        (command).IsForSelf = false;
                     }
                 }
 
@@ -193,7 +222,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation); // Validationはされる
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text); // 該当データがいないのでテキストは同じ            });
             });
         }
@@ -207,9 +236,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
                     {
-                        ((GenericCommand<ChildForm1, TextItem>)command).Invoker = forms.Last();
-                        ((GenericCommand<ChildForm1, TextItem>)command).IsForSelf = false;
-                        ((GenericCommand<ChildForm1, TextItem>)command).IsRetrieved = true;
+                        (command).Invoker = forms.Last();
+                        (command).IsForSelf = false;
+                        (command).IsRetrieved = true;
                     }
                 }
             }, null, (list, forms) =>
@@ -217,7 +246,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue(((GenericCommand<ChildForm1, TextItem>)list[0]).WasThroughValidation);
+                Assert.IsTrue((list[0]).WasThroughValidation);
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text);         // 該当データがいないのでテキストは同じ          });
             });
 

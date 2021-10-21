@@ -22,6 +22,12 @@ namespace WinFormsMVC.Request
             get;
         }
 
+        public abstract bool WasThroughValidation
+        {
+            get;
+        }
+
+
         /// <summary>
         /// 自分自身に対するコマンドか.
         /// </summary>
