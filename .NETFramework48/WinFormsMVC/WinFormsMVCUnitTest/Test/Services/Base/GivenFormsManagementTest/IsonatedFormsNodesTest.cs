@@ -90,7 +90,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("正常系")]
         public void BeCalledBySelfTest()
         {
             var given_form_obj = new GivenFormsManagement(_form_list);
@@ -103,7 +103,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("Validation Text - ChildForm1", _form_list.First().Text);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void ValidationErrorTest()
         {
             foreach (var command in ((Command[])_default_commands))
@@ -129,7 +129,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual( "First Text, ChildForm1", _form_list.First().Text );
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void ValidationNullCheckTest()
         {
             foreach (var command in ((Command[]) _default_commands))
@@ -150,7 +150,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("First Text, ChildForm1", _form_list.First().Text);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void InvokerNullTest()
         {
             foreach (var command in ((Command[])_default_commands))
@@ -171,7 +171,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("First Text, ChildForm1", _form_list.First().Text);         // 該当データがいないのでテキストは同じ
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void BeCalledByNullInvokerTest()
         {
             foreach (var command in ((Command[])_default_commands))
@@ -193,7 +193,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("First Text, ChildForm1", _form_list.First().Text);         // 該当データがいないのでテキストは同じ
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("正常系")]
         public void BeCalledByExistedInvokerTest()
         {
             foreach (var command in ((Command[])_default_commands))
@@ -215,7 +215,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("First Text, ChildForm1", _form_list.First().Text);         // 該当データがいないのでテキストは同じ
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("正常系")]
         public void BeRetrievedByExistedInvokerTest()
         {
             foreach (var command in ((Command[])_default_commands))

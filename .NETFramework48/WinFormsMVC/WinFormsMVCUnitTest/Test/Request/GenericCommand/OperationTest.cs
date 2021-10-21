@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.ComponentModel;
 using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.View;
@@ -42,7 +43,8 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             };
         }
 
-        [TestMethod]
+
+        [TestMethod, TestCategory("正常系")]
         public void ProcessingTest()
         {
             var base_form = new BaseForm();
@@ -78,8 +80,8 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             Assert.IsFalse(_was_done_error_handling);
         }
 
-
-        [TestMethod]
+        
+        [TestMethod, TestCategory("異常系")]
         public void ValidationErrorTest()
         {
             var base_form = new BaseForm();

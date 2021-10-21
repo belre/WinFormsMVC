@@ -68,7 +68,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("正常系")]
         public void BeCalledBySelfTest()
         {
             var given_form_obj = new GivenFormsManagement(_form_list);
@@ -81,7 +81,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("Validation Text", _form_list.First().Text );
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void BeCalledByNullInvokerTest()
         {
             ((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).Invoker = null;
@@ -97,7 +97,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("First Text", _form_list.First().Text);         // 該当データがいないのでテキストは同じ
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void ValidationErrorTest()
         {
             ((GenericCommand<ChildForm1, TextItem>)_default_commands[0]).Validation = (item) =>
@@ -117,7 +117,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Assert.AreEqual("First Text", _form_list.First().Text);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("異常系")]
         public void ValidationNullCheckTest()
         {
             ((GenericCommand<ChildForm1, TextItem>) _default_commands[0]).Validation = null;
