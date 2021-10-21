@@ -16,6 +16,25 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
 {
     public class GivenFormManagementTestFormat
     {
+        public class ChildForm1 : BaseForm
+        {
+
+        }
+
+        public class ChildForm2 : BaseForm
+        {
+
+        }
+
+        public class ChildForm3 : BaseForm
+        {
+
+        }
+
+        protected bool _was_validation = false;
+        protected bool _was_finalize = false;
+        protected bool _was_error = false;
+
         private List<BaseForm> FormList
         {
             get;
@@ -30,6 +49,38 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
         {
             FormList = new List<BaseForm>();
             DefaultCommands = new List<Command>();
+        }
+
+        protected Command CreateDefaultCommand(BaseForm invoker, string validation_text)
+        {
+            return new GenericCommand<BaseForm, TextItem>()
+            {
+                Invoker = invoker,
+                IsForSelf = true,
+                Validation = (item) =>
+                {
+                    item.Next = validation_text;
+                    _was_validation = true;
+                    return true;
+                },
+                NextOperation = ((item, form1) =>
+                {
+                    item[form1] = item.Next;
+                    form1.Text = item.Next;
+                }),
+                PrevOperation = ((item, form1) =>
+                {
+                    form1.Text = item[form1];
+                }),
+                FinalOperation = ((item) =>
+                {
+                    _was_finalize = true;
+                }),
+                ErrorOperation = ((item) =>
+                {
+                    _was_error = true;
+                })
+            };
         }
 
         protected void UpdateForms(IEnumerable<BaseForm> forms)

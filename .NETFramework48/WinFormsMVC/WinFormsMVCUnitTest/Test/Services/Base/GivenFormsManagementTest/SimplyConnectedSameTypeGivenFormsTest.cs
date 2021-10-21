@@ -14,11 +14,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
     [TestClass]
     public class SimplyConnectedSameTypeGivenFormsTest : GivenFormManagementTestFormat
     {
-        private bool _was_validation = false;
-        private bool _was_finalize = false;
-        private bool _was_error = false;
-
-
         protected WinFormsMVC.View.BaseForm DefaultBaseForm
         {
             get;
@@ -38,33 +33,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                new GenericCommand<BaseForm, TextItem>() {
-                    Invoker = forms.First(),
-                    IsForSelf = true,
-                    Validation = (item) =>
-                    {
-                        item.Next = "Validation Text";
-                        _was_validation = true;
-                        return true;
-                    },
-                    NextOperation = ((item, form1) =>
-                    {
-                        item[form1] = item.Next;
-                        form1.Text = item.Next;
-                    }),
-                    PrevOperation = ((item, form1) =>
-                    {
-                        form1.Text = item[form1];
-                    }),
-                    FinalOperation = ((item) =>
-                    {
-                        _was_finalize = true;
-                    }),
-                    ErrorOperation = ((item) =>
-                    {
-                        _was_error = true;
-                    })
-                }
+                CreateDefaultCommand(forms.First(), "Validation Text")
             });
         }
 
@@ -204,7 +173,42 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+        }
 
+
+
+
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledByFirstAndLastInvokerTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First();
+                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+
+                list.Add(CreateDefaultCommand(forms.Last(), "Validation Text - 2"));
+                list.Last().IsForSelf = false;
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.Skip(1).First())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+            });
         }
 
         [TestMethod, TestCategory("正常系")]

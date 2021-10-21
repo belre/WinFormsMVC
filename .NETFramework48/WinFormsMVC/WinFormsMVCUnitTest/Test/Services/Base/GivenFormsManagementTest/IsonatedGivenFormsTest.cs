@@ -13,24 +13,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
     [TestClass]
     public class IsonatedGivenFormsTest : GivenFormManagementTestFormat
     {
-        public class ChildForm1 : BaseForm
-        {
-
-        }
-
-        public class ChildForm2 : BaseForm
-        {
-
-        }
-
-        public class ChildForm3 : BaseForm
-        {
-
-        }
-
-        private bool _was_validation = false;
-        private bool _was_finalize = false;
-        private bool _was_error = false;
 
         public IsonatedGivenFormsTest()
         {

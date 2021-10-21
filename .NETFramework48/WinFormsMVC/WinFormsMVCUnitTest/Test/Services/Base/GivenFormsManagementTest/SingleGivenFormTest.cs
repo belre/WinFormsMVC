@@ -12,15 +12,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
     [TestClass]
     public class SingleGivenFormTest : GivenFormManagementTestFormat
     {
-        public class ChildForm1 : BaseForm
-        {
-
-        }
-
-        private bool _was_validation = false;
-        private bool _was_finalize = false;
-        private bool _was_error = false;
-
         public SingleGivenFormTest()
         {
             var forms = new List<BaseForm>()
