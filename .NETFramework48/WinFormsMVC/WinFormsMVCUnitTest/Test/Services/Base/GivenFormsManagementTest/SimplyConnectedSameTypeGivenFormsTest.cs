@@ -69,7 +69,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void BeCalledBySelf_InvokerRoot_Test()
+        public void CalledBySelf_InvokerRoot_Test()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
@@ -97,7 +97,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void BeCalledByInvokerRootTest()
+        public void CalledByInvokerRootTest()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
@@ -125,7 +125,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void BeRetrievedByInvokerRootTest()
+        public void RetrievedByInvokerRootTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
@@ -154,7 +154,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void BeCalledBySelf_InvokerLast_Test()
+        public void CalledBySelf_InvokerLast_Test()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
@@ -185,7 +185,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }                
 
         [TestMethod, TestCategory("正常系")]
-        public void BeCalledByInvokerLastTest()
+        public void CalledByInvokerLastTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
@@ -208,7 +208,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void BeRetrievedByInvokerLastTest()
+        public void RetrievedByInvokerLastTest()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
@@ -232,7 +232,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
 
         [TestMethod, TestCategory("異常系")]
-        public void BeCalledByNullInvokerTest()
+        public void CalledByNullInvokerTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {

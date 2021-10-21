@@ -54,7 +54,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
 
         [TestMethod, TestCategory("正常系")]
-        public void BeCalledBySelfTest()
+        public void CalledBySelfTest()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
@@ -72,7 +72,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("異常系")]
-        public void BeCalledByNullInvokerTest()
+        public void CalledByNullInvokerTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
