@@ -7,8 +7,56 @@ using System.Runtime.Versioning;
 namespace WinFormsMVCUnitTest.Test.View.BaseForm
 {
     [TestClass]
-    public class LimitNodesTreeTest
+    public class SimplyConnectedNodesTreeTest
     {
+        protected List<WinFormsMVC.View.BaseForm> ListFormsOrderedFromRoot
+        {
+            get;
+        }
+
+        protected WinFormsMVC.View.BaseForm DefaultBaseForm
+        {
+            get;
+        }
+
+        protected WinFormsMVC.View.BaseForm CreateDefaultBaseForm()
+        {
+            return new WinFormsMVC.View.BaseForm()
+            {
+                Text = DefaultBaseForm.Text
+            };
+        }
+
+        protected void GenerateList(int number)
+        {
+            // 単連結リストの作成
+            var root = CreateDefaultBaseForm();
+
+            var base_target = root;
+            ListFormsOrderedFromRoot.Add(root);
+
+            for (int i = 0; i < number - 1; i++)
+            {
+                var child = CreateDefaultBaseForm();
+                child.Invoker = base_target;
+                ListFormsOrderedFromRoot.Add(child);
+
+                base_target = child;
+            }
+        }
+
+        public SimplyConnectedNodesTreeTest()
+        {
+            ListFormsOrderedFromRoot = new List<WinFormsMVC.View.BaseForm>();
+
+            DefaultBaseForm = new WinFormsMVC.View.BaseForm()
+            {
+                Text = "Default BaseForm"
+            };
+
+            GenerateList(WinFormsMVC.View.BaseForm.MaxDepthTree);
+        }
+
         [TestMethod]
         public void TheSameLimitDepthTest()
         {
@@ -59,12 +107,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
 
             Assert.ThrowsException<InvalidOperationException>(() =>
             {
-                for (int i = 0; i < WinFormsMVC.View.BaseForm.MaxDepthTree; i++)
-                {
-                    var child = new WinFormsMVC.View.BaseForm();
-                    child.Invoker = base_target;
-                    base_target = child;
-                }
+                GenerateList(WinFormsMVC.View.BaseForm.MaxDepthTree+1);
             });
         }
     }

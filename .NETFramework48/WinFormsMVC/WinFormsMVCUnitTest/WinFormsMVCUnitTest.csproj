@@ -60,9 +60,12 @@
     <Compile Include="Test\Request\GenericCommand\OperationTest.cs" />
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
     <Compile Include="Test\Request\Item\TextItem\BackupTest.cs" />
-    <Compile Include="Test\Services\Base\GivenFormsManagementTest\IsonatedFormsNodesTest.cs" />
-    <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleFormNodesTest.cs" />
-    <Compile Include="Test\View\BaseForm\LimitNodesTreeTest.cs" />
+    <Compile Include="Test\Services\Base\FormManagementTestFormat.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\IsonatedFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\NullListTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\SimplyConnectedSameTypeFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleFormTest.cs" />
+    <Compile Include="Test\View\BaseForm\SimplyConnectedNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\PerfectTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\SingleNodeTreeTest.cs" />
