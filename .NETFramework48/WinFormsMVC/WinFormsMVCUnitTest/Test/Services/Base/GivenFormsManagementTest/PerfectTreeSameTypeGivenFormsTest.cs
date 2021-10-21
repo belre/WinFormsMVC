@@ -126,9 +126,49 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 }
                 Assert.AreEqual(forms.Count-1, throw_count);
             });
-
         }
 
+        [TestMethod, TestCategory("正常系")]
+        public void RecursiveFromSecondRootInvokerTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                (list.First()).Invoker = forms.First().Children.First();
+                (list.First()).IsForSelf = false;
+                (list.First()).IsRecursive = true;
+            }, null, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                var is_ancestor_target = new Dictionary<BaseForm, bool>();
+                is_ancestor_target[forms.First()] = false;
+                is_ancestor_target[forms.First().Children.First()] = true;
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form == forms.First() || form == forms.First().Children.First()) 
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                    else if (is_ancestor_target[form.Invoker])
+                    {
+                        is_ancestor_target[form] = true;
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        is_ancestor_target[form] = false;
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
+            });
+        }
 
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelf_LastInvoker_Test()
