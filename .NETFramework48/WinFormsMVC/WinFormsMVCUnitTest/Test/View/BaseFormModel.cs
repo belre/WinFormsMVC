@@ -39,5 +39,40 @@ namespace WinFormsMVCUnitTest.Test.View
             return list_form;
         }
 
+        public static List<WinFormsMVC.View.BaseForm> CreatePerfectTreeForms(WinFormsMVC.View.BaseForm original, int depth)
+        {
+            var list_form = new List<WinFormsMVC.View.BaseForm>();
+
+            var root = CreateDefaultBaseForm(original);
+
+
+            int count = WinFormsMVC.View.BaseForm.MaxDepthTree - depth + 1;
+            MakeBinaryTree<WinFormsMVC.View.BaseForm>(root, count);
+
+            list_form.Add(root);
+
+            return list_form;
+        }
+
+        private static void MakeBinaryTree<T>(T target, int count = 1) where T : WinFormsMVC.View.BaseForm
+        {
+            if (count >= WinFormsMVC.View.BaseForm.MaxDepthTree)
+            {
+                return;
+            }
+
+            var child1 = new WinFormsMVC.View.BaseForm()
+            {
+                Invoker = target
+            };
+
+            var child2 = new WinFormsMVC.View.BaseForm()
+            {
+                Invoker = target
+            };
+
+            MakeBinaryTree(child1, count + 1);
+            MakeBinaryTree(child2, count + 1);
+        }
     }
 }

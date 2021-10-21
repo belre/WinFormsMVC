@@ -12,7 +12,7 @@ using WinFormsMVCUnitTest.Test.View.BaseForm;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     [TestClass]
-    public class SimplyConnectedSameTypeGivenFormsTest : GivenFormManagementTestFormat
+    public class PerfectTreeSameTypeGivenFormsTest : GivenFormManagementTestFormat
     {
         protected WinFormsMVC.View.BaseForm DefaultBaseForm
         {
@@ -21,14 +21,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
 
 
-        public SimplyConnectedSameTypeGivenFormsTest()
+        public PerfectTreeSameTypeGivenFormsTest()
         {
             DefaultBaseForm = new WinFormsMVC.View.BaseForm()
             {
                 Text = "Default BaseForm"
             };
 
-            var forms = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree);
+            var forms = BaseFormModel.CreatePerfectTreeForms(DefaultBaseForm, BaseForm.MaxDepthTree);
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()
@@ -81,7 +81,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 foreach (var form in forms)
                 {
-                    if (form == forms.Skip(1).First())
+                    if (forms.First() == form.Invoker)
                     {
                         Assert.AreEqual("Validation Text", form.Text);
                     }
@@ -184,8 +184,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                (list.First()).Invoker = forms.First();
-                (list.First()).IsForSelf = false;
+                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First();
+                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
 
                 list.Add(CreateDefaultCommand<BaseForm>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
@@ -199,7 +199,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 foreach (var form in forms)
                 {
-                    if (form == forms.Skip(1).First())
+                    if (form.Invoker == forms.First())
                     {
                         Assert.AreEqual("Validation Text", form.Text);
                     }
@@ -289,6 +289,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_finalize);
                 Assert.IsTrue(_was_error);
                 Assert.IsTrue((list.First()).WasThroughValidation);
+
                 foreach (var form in forms)
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
