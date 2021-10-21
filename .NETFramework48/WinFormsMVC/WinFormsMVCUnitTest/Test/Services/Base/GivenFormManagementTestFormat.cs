@@ -51,9 +51,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
             DefaultCommands = new List<Command>();
         }
 
-        protected Command CreateDefaultCommand(BaseForm invoker, string validation_text)
+        protected Command CreateDefaultCommand<T>(BaseForm invoker, string validation_text) where T : BaseForm
         {
-            return new GenericCommand<BaseForm, TextItem>()
+            return new GenericCommand<T, TextItem>()
             {
                 Invoker = invoker,
                 IsForSelf = true,

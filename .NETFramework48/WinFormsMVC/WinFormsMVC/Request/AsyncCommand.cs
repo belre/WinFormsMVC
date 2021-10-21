@@ -45,6 +45,14 @@ namespace WinFormsMVC.Request
             set;
         }
 
+        public override bool WasThroughValidation
+        {
+            get
+            {
+                return Command.WasThroughValidation;
+            }
+        }
+
         /// <summary>
         /// 非同期処理が終わったら実行される処理
         /// </summary>

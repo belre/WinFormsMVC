@@ -25,7 +25,7 @@ namespace WinFormsMVC.Request
             set;
         }
 
-        public bool WasThroughValidation
+        public override bool WasThroughValidation
         {
             get
             {
