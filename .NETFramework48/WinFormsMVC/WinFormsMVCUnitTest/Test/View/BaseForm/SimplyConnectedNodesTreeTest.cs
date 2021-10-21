@@ -19,31 +19,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             get;
         }
 
-        protected WinFormsMVC.View.BaseForm CreateDefaultBaseForm()
-        {
-            return new WinFormsMVC.View.BaseForm()
-            {
-                Text = DefaultBaseForm.Text
-            };
-        }
 
-        protected void GenerateList(int number)
-        {
-            // 単連結リストの作成
-            var root = CreateDefaultBaseForm();
-
-            var base_target = root;
-            ListFormsOrderedFromRoot.Add(root);
-
-            for (int i = 0; i < number - 1; i++)
-            {
-                var child = CreateDefaultBaseForm();
-                child.Invoker = base_target;
-                ListFormsOrderedFromRoot.Add(child);
-
-                base_target = child;
-            }
-        }
 
         public SimplyConnectedNodesTreeTest()
         {
@@ -54,7 +30,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
                 Text = "Default BaseForm"
             };
 
-            GenerateList(WinFormsMVC.View.BaseForm.MaxDepthTree);
+            ListFormsOrderedFromRoot = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, WinFormsMVC.View.BaseForm.MaxDepthTree);
         }
 
         [TestMethod]
@@ -107,7 +83,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
 
             Assert.ThrowsException<InvalidOperationException>(() =>
             {
-                GenerateList(WinFormsMVC.View.BaseForm.MaxDepthTree+1);
+                BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, WinFormsMVC.View.BaseForm.MaxDepthTree+1);
             });
         }
     }

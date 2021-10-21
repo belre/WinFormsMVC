@@ -14,22 +14,34 @@ using WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base
 {
-    public class FormManagementTestFormat
+    public class GivenFormManagementTestFormat
     {
-        protected List<BaseForm> FormList
+        private List<BaseForm> FormList
         {
             get;
         }
 
-        protected List<Command> DefaultCommands
+        private List<Command> DefaultCommands
         {
             get;
         }
 
-        public FormManagementTestFormat()
+        public GivenFormManagementTestFormat()
         {
             FormList = new List<BaseForm>();
             DefaultCommands = new List<Command>();
+        }
+
+        protected void UpdateForms(IEnumerable<BaseForm> forms)
+        {
+            FormList.Clear();
+            FormList.AddRange(forms);
+        }
+
+        protected void UpdateCommands(IEnumerable<Command> commands)
+        {
+            DefaultCommands.Clear();
+            DefaultCommands.AddRange(commands);
         }
 
         public T ConstructFormsManagement<T>() where T : GivenFormsManagement

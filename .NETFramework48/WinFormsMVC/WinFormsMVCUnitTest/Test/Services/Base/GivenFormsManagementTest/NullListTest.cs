@@ -17,7 +17,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             _default_commands = new Command[]
             {
-                new GenericCommand<IsonatedFormsTest.ChildForm1, TextItem>()
+                new GenericCommand<IsonatedGivenFormsTest.ChildForm1, TextItem>()
                 {
                     Invoker = new BaseForm(),
                     IsForSelf = true,
