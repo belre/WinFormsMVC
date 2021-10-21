@@ -260,7 +260,7 @@ namespace WinFormsMVCSample
                 controller.SendStoredMessage(new Command[] {
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
-                        IsRetrieved=true,
+                        IsRecursive=true,
                         Validation = ( item) =>
                         {
                             item.Next = textBox1.Text;

@@ -94,12 +94,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void RetrievedByRootInvokerTest()
+        public void RecursiveFromRootInvokerTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRetrieved = true;
+                (list.First()).IsRecursive = true;
             }, null, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);
@@ -212,13 +212,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void RetrievedByLastInvokerTest()
+        public void RecursiveFromLastInvokerTest()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRetrieved = true;
+                (list.First()).IsRecursive = true;
                 (list.First()).Invoker = forms.Last();
             }, null, (list, forms) =>
             {

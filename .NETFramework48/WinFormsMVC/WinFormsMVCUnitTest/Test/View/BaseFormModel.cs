@@ -27,7 +27,7 @@ namespace WinFormsMVCUnitTest.Test.View
             var base_target = root;
             list_form.Add(root);
 
-            for (int i = 0; i < number - 1; i++)
+            for (int i = 0; i < number-1; i++)
             {
                 var child = CreateDefaultBaseForm(original);
                 child.Invoker = base_target;

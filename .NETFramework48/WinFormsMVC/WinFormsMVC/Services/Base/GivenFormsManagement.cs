@@ -73,7 +73,7 @@ namespace WinFormsMVC.Services.Base
             {
                 return form == command.Invoker;
             }
-            else if (command.IsRetrieved)
+            else if (command.IsRecursive)
             {
                 return form.IsAncestor(command.Invoker);
             }

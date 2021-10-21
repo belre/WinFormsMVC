@@ -228,7 +228,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void RetrievedByExistedInvokerTest()
+        public void RecursiveFromExistedInvokerTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
@@ -238,7 +238,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     {
                         (command).Invoker = forms.Last();
                         (command).IsForSelf = false;
-                        (command).IsRetrieved = true;
+                        (command).IsRecursive = true;
                     }
                 }
             }, null, (list, forms) =>

@@ -46,7 +46,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form3, TextItem>()
                     {
                         Invoker = this,
-                        IsRetrieved = true,
+                        IsRecursive = true,
                         Validation = ( item) =>
                         {
                             item.Next = "Hello World";
@@ -86,7 +86,7 @@ namespace WinFormsMVCSample
                         new GenericCommand<Form3, TextItem>()
                         {
                             Invoker = this,
-                            IsRetrieved = true,
+                            IsRecursive = true,
                             Validation = ( item) =>
                             {
                                 item.Next = form.FilePath;

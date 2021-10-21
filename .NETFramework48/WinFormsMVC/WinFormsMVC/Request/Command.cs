@@ -37,7 +37,7 @@ namespace WinFormsMVC.Request
         /// 孫に再帰するか.
         /// コマンドはIsForSelfが先に優先されます.
         /// </summary>
-        public bool IsRetrieved { get; set; }
+        public bool IsRecursive { get; set; }
 
         /// <summary>
         /// データ反映

@@ -98,12 +98,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("正常系")]
-        public void RetrievedByRootInvokerTest()
+        public void RecursiveFromRootInvokerTest()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRetrieved = true;
+                (list.First()).IsRecursive = true;
             }, null, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);
@@ -128,6 +128,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
         }
+
 
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelf_LastInvoker_Test()
@@ -191,8 +192,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First();
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+                (list.First()).Invoker = forms.First();
+                (list.First()).IsForSelf = false;
 
                 list.Add(CreateDefaultCommand<BaseForm>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
@@ -226,8 +227,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First().Children.First();
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+                (list.First()).Invoker = forms.First().Children.First();
+                (list.First()).IsForSelf = false;
             }, null, (list, forms) =>
             {
 
@@ -254,14 +255,216 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
+
+
         [TestMethod, TestCategory("正常系")]
-        public void RetrievedByLastInvokerTest()
+        public void CalledBySelf_AllLeftInvokers_Test()
+        {
+            var was_searched_left_method = new Dictionary<BaseForm, bool>();
+
+
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                list.First().IsForSelf = true;
+                was_searched_left_method[forms.First()] = true;
+
+                foreach (var form in forms)
+                {
+                    if (form != forms.First())
+                    {
+                        if ( form.Children.Count() != 0 && form.Invoker.Children.First() == form
+                            && was_searched_left_method[form.Invoker])
+                        {
+                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
+                            com.IsForSelf = true;
+                            list.Add(com);
+                            was_searched_left_method[form] = true;
+                        }
+                        else
+                        {
+                            was_searched_left_method[form] = false;
+                        }
+                    }
+                }
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (was_searched_left_method[form])
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(BaseForm.MaxDepthTree-1, throw_count);
+            });
+        }
+
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledByAllLeftInvokersTest()
+        {
+            var was_searched_left_method = new Dictionary<BaseForm, bool>();
+
+
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                list.First().IsForSelf = false;
+                was_searched_left_method[forms.First()] = true;
+
+                foreach (var form in forms)
+                {
+                    if (form != forms.First())
+                    {
+                        if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
+                            && was_searched_left_method[form.Invoker])
+                        {
+                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
+                            com.IsForSelf = false;
+                            list.Add(com);
+                            was_searched_left_method[form] = true;
+                        }
+                        else
+                        {
+                            was_searched_left_method[form] = false;
+                        }
+                    }
+                }
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form.Invoker != null && was_searched_left_method[form.Invoker])
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
+            });
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledByAllRightInvokersTest()
+        {
+            var was_searched_left_method = new Dictionary<BaseForm, bool>();
+
+
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                list.First().IsForSelf = false;
+                was_searched_left_method[forms.First()] = true;
+
+                foreach (var form in forms)
+                {
+                    if (form != forms.First())
+                    {
+                        if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
+                            && was_searched_left_method[form.Invoker])
+                        {
+                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
+                            com.IsForSelf = false;
+                            list.Add(com);
+                            was_searched_left_method[form] = true;
+                        }
+                        else
+                        {
+                            was_searched_left_method[form] = false;
+                        }
+                    }
+                }
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form.Invoker != null && was_searched_left_method[form.Invoker])
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
+            });
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledByRightSecondaryInvokerTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First().Children.Last();
+                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form.Invoker == forms.First().Children.Last())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(2, throw_count);
+            });
+        }
+
+
+        [TestMethod, TestCategory("正常系")]
+        public void RecursiveFromLastInvokerTest()
         {
 
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRetrieved = true;
+                (list.First()).IsRecursive = true;
                 (list.First()).Invoker = forms.Last();
             }, null, (list, forms) =>
             {
