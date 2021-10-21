@@ -258,6 +258,58 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
-        }        
+        }
+
+
+        [TestMethod, TestCategory("異常系")]
+        public void ValidationErrorTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                foreach (var command in list)
+                {
+                    if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
+                    {
+                        ((GenericCommand<BaseForm, TextItem>)command).Validation = (item) =>
+                        {
+                            item.Next = "Validation Text";
+                            _was_validation = true;
+                            return false;
+                        };
+                    }
+                }
+
+            }, null, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsTrue(_was_error);
+                Assert.IsTrue(((GenericCommand<BaseForm, TextItem>)list.First()).WasThroughValidation);
+                Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
+            });
+        }
+
+        [TestMethod, TestCategory("異常系")]
+        public void ValidationNullCheckTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                foreach (var command in list)
+                {
+                    if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
+                    {
+                        ((GenericCommand<BaseForm, TextItem>)command).Validation = null;
+                    }
+                }
+
+            }, null, (list, forms) =>
+            {
+                Assert.IsFalse(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsFalse(((GenericCommand<BaseForm, TextItem>)list[0]).WasThroughValidation);
+                Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
+            });
+        }
     }
 }

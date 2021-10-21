@@ -145,7 +145,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod, TestCategory("異常系")]
-        public void InvokerNullTest()
+        public void InvokerBySelf_Null_Test()
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
