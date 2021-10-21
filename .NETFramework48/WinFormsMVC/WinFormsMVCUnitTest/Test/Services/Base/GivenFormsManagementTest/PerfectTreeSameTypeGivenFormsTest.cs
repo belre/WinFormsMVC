@@ -79,17 +79,21 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_error);
                 Assert.IsTrue((list[0]).WasThroughValidation);
 
+                int throw_count = 0;
                 foreach (var form in forms)
                 {
                     if (forms.First() == form.Invoker)
                     {
                         Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
                     }
                     else
                     {
                         Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                     }
                 }
+
+                Assert.AreEqual(2, throw_count);
             });
         }
 
@@ -107,6 +111,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_error);
                 Assert.IsTrue((list[0]).WasThroughValidation);
 
+                int throw_count = 0;
                 foreach (var form in forms)
                 {
                     if (form == forms.First())
@@ -116,8 +121,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     else
                     {
                         Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
                     }
                 }
+                Assert.AreEqual(forms.Count-1, throw_count);
             });
 
         }
@@ -197,17 +204,53 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_error);
                 Assert.IsTrue((list[0]).WasThroughValidation);
 
+                int throw_count = 0;
                 foreach (var form in forms)
                 {
                     if (form.Invoker == forms.First())
                     {
                         Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
                     }
                     else
                     {
                         Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                     }
                 }
+                Assert.AreEqual(2, throw_count);
+            });
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledByLeftSecondaryInvokerTest()
+        {
+            AssertForms<GivenFormsManagement>((list, forms) =>
+            {
+                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First().Children.First();
+                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+            }, null, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list[0]).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form.Invoker == forms.First().Children.First())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(2, throw_count);
             });
         }
 

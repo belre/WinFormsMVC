@@ -45,34 +45,32 @@ namespace WinFormsMVCUnitTest.Test.View
 
             var root = CreateDefaultBaseForm(original);
 
-
             int count = WinFormsMVC.View.BaseForm.MaxDepthTree - depth + 1;
-            MakeBinaryTree<WinFormsMVC.View.BaseForm>(root, count);
+            var list = new List<WinFormsMVC.View.BaseForm>();
+            MakeBinaryTree(root, original, list, count);
 
-            list_form.Add(root);
+            list_form.AddRange(list);
 
             return list_form;
         }
 
-        private static void MakeBinaryTree<T>(T target, int count = 1) where T : WinFormsMVC.View.BaseForm
+        private static void MakeBinaryTree(WinFormsMVC.View.BaseForm target, WinFormsMVC.View.BaseForm original, List<WinFormsMVC.View.BaseForm> list, int count = 1) 
         {
             if (count >= WinFormsMVC.View.BaseForm.MaxDepthTree)
             {
                 return;
             }
 
-            var child1 = new WinFormsMVC.View.BaseForm()
-            {
-                Invoker = target
-            };
+            var child1 = CreateDefaultBaseForm(original);
+            child1.Invoker = target;
 
-            var child2 = new WinFormsMVC.View.BaseForm()
-            {
-                Invoker = target
-            };
+            var child2 = CreateDefaultBaseForm(original);
+            child2.Invoker = target;
 
-            MakeBinaryTree(child1, count + 1);
-            MakeBinaryTree(child2, count + 1);
+            list.Add(target);
+
+            MakeBinaryTree(child1, original, list, count + 1);
+            MakeBinaryTree(child2, original, list, count + 1);
         }
     }
 }
