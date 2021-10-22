@@ -11,7 +11,7 @@ using WinFormsMVCUnitTest.Test.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     [TestClass]
-    public class SimplyConnectedTestFormat : GivenFormManagementTestFormat
+    public class SimplyConnectedFormsTest : GivenFormManagementTestFormat
     {
 
         protected WinFormsMVC.View.BaseForm DefaultBaseForm
@@ -31,7 +31,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         private bool IsValidTestCalling(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if( modified == null && assert == null && GetType() != typeof(SimplyConnectedTestFormat))
+            if( modified == null && assert == null && GetType() != typeof(SimplyConnectedFormsTest))
             {
                 return false;
             }
@@ -41,7 +41,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             }
         }
 
-        public SimplyConnectedTestFormat()
+        public SimplyConnectedFormsTest()
         {
             DefaultBaseForm = new WinFormsMVC.View.BaseForm()
             {

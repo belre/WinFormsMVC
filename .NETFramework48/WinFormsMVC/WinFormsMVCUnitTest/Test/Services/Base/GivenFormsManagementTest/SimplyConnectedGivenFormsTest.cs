@@ -10,7 +10,7 @@ using WinFormsMVCUnitTest.Test.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     [TestClass]
-    public class SimplyConnectedGivenFormsTest : SimplyConnectedTestFormat
+    public class SimplyConnectedGivenFormsTest : SimplyConnectedFormsTest
     {
 
         public SimplyConnectedGivenFormsTest()
