@@ -462,8 +462,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledBySelf_AllLeftInvokers_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-
-
             var was_searched_left_method = new Dictionary<BaseForm, bool>();
 
             Define(ref modified, (list, forms) =>
@@ -575,9 +573,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
             });
-
-
-            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
         // --- All Right Invokers ---//
