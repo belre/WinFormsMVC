@@ -166,7 +166,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                     }
                 }
-                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
+
+                int all_nodes_number = (int)(Math.Pow(2, BaseForm.MaxDepthTree - 2) - 1);
+                Assert.AreEqual(all_nodes_number - 1, throw_count);
             });
         }
 

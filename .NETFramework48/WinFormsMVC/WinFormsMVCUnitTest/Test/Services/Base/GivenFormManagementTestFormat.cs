@@ -16,21 +16,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
 {
     public class GivenFormManagementTestFormat
     {
-        public class ChildForm1 : BaseForm
-        {
-
-        }
-
-        public class ChildForm2 : BaseForm
-        {
-
-        }
-
-        public class ChildForm3 : BaseForm
-        {
-
-        }
-
         protected bool _was_validation = false;
         protected bool _was_finalize = false;
         protected bool _was_error = false;

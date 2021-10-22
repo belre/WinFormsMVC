@@ -4,6 +4,7 @@ using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
+using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
@@ -17,7 +18,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             _default_commands = new Command[]
             {
-                new GenericCommand<IsonatedGivenFormsTest.ChildForm1, TextItem>()
+                new GenericCommand<BaseFormModel.ChildForm1, TextItem>()
                 {
                     Invoker = new BaseForm(),
                     IsForSelf = true,

@@ -7,6 +7,7 @@ using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
+using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
@@ -18,16 +19,16 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             var forms = new List<BaseForm>()
             {
-                new ChildForm1() { Text = "First Text, ChildForm1" },
-                new ChildForm2() { Text = "First Text, ChildForm2-1" },
-                new ChildForm2() { Text = "First Text, ChildForm2-2" },
-                new ChildForm3() { Text = "First Text, ChildForm3" }
+                new BaseFormModel.ChildForm1() { Text = "First Text, ChildForm1" },
+                new BaseFormModel.ChildForm2() { Text = "First Text, ChildForm2-1" },
+                new BaseFormModel.ChildForm2() { Text = "First Text, ChildForm2-2" },
+                new BaseFormModel.ChildForm3() { Text = "First Text, ChildForm3" }
             };
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()
             {
-                new GenericCommand<ChildForm1, TextItem>()
+                new GenericCommand<BaseFormModel.ChildForm1, TextItem>()
                 {
                     Invoker = forms.First(),
                     IsForSelf = true,
@@ -84,7 +85,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 list.First().Invoker = forms.First();
                 list.First().IsForSelf = false;
 
-                list.Add(CreateDefaultCommand<ChildForm1>(forms.Last(), "Validation Text - 2"));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
             }, null, (list, forms) =>
             {
@@ -111,9 +112,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 foreach (var command in list)
                 {
-                    if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
                     {
-                        ((GenericCommand<ChildForm1, TextItem>)command).Validation = (item) =>
+                        ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)command).Validation = (item) =>
                         {
                             item.Next = "Validation Text";
                             _was_validation = true;
@@ -139,9 +140,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 foreach (var command in list)
                 {
-                    if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
                     {
-                        ((GenericCommand<ChildForm1, TextItem>)command).Validation = null;
+                        ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)command).Validation = null;
                     }
                 }
 
@@ -162,7 +163,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 foreach (var command in list)
                 {
-                    if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
                     {
                         command.Invoker = null;
                     }
@@ -185,7 +186,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 foreach (var command in list)
                 {
-                    if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
                     {
                         (command).Invoker = null;
                         (command).IsForSelf = false;
@@ -209,7 +210,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 foreach (var command in list)
                 {
-                    if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
                     {
                         (command).Invoker = forms.Last();
                         (command).IsForSelf = false;
@@ -234,7 +235,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 foreach (var command in list)
                 {
-                    if (command.GetType() == typeof(GenericCommand<ChildForm1, TextItem>))
+                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
                     {
                         (command).Invoker = forms.Last();
                         (command).IsForSelf = false;

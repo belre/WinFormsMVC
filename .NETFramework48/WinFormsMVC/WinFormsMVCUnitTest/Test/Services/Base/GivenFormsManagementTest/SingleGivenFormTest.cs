@@ -6,6 +6,7 @@ using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
+using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
@@ -16,13 +17,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             var forms = new List<BaseForm>()
             {
-                new ChildForm1() { Text = "First Text" }
+                new BaseFormModel.ChildForm1() { Text = "First Text" }
             };
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()
             {
-                new GenericCommand<ChildForm1, TextItem>() {
+                new GenericCommand<BaseFormModel.ChildForm1, TextItem>() {
                     Invoker = forms.First(),
                     IsForSelf = true,
                     Validation = (item) =>
@@ -86,7 +87,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                ((GenericCommand<ChildForm1, TextItem>)list[0]).Validation = (item) =>
+                ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
                 {
                     item.Next = "Validation Text";
                     _was_validation = true;
@@ -108,7 +109,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             AssertForms<GivenFormsManagement>((list, forms) =>
             {
-                ((GenericCommand<ChildForm1, TextItem>)list[0]).Validation = null;
+                ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
             }, null, (list, forms) =>
             {
 
