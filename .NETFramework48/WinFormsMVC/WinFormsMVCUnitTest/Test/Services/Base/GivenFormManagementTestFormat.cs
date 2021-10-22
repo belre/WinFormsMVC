@@ -98,11 +98,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
 
 
         protected void AssertForms<T> ( 
-            Action<List<Command>, List<BaseForm>> input, 
+            Action<List<Command>, List<BaseForm>> modified, 
             Action<T, List<BaseForm>> launcher,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
         {
-            input( DefaultCommands, FormList);
+            modified( DefaultCommands, FormList);
 
             var form_management = ConstructFormsManagement<T>();
             if (launcher != null)

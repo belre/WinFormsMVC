@@ -10,6 +10,7 @@ using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
+    [TestClass]
     public class SimplyConnectedTestFormat : GivenFormManagementTestFormat
     {
 
@@ -19,12 +20,41 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             set;
         }
 
-        protected void Define<T>( ref T modified, T default_modified) where T : class
+        protected void Define<T>( ref T instance, T default_instance) where T : class
         {
-            if (modified == null)
+            if (instance == null)
             {
-                modified = default_modified;
+                instance = default_instance;
             }
+        }
+
+        private bool IsValidTestCalling(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            if( modified == null && assert == null && GetType() != typeof(SimplyConnectedTestFormat))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public SimplyConnectedTestFormat()
+        {
+            DefaultBaseForm = new WinFormsMVC.View.BaseForm()
+            {
+                Text = "Default BaseForm"
+            };
+
+            var forms = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree);
+            UpdateForms(forms);
+
+            UpdateCommands(new List<Command>()
+            {
+                CreateDefaultCommand<BaseForm>(forms.First(), "Validation Text")
+            });
         }
 
         // --- RootInvoker --- //
@@ -34,6 +64,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null,null)]
         public virtual void CalledBySelf_RootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            if (!IsValidTestCalling(modified, assert))
+            {
+                throw new NotImplementedException("子クラスのテストが定義されていません");
+            }
+            
             Define( ref modified, (list, forms) =>
             {
 

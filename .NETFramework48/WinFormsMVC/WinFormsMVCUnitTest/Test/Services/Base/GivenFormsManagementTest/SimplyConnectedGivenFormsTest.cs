@@ -29,6 +29,24 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledBySelf_RootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.CalledBySelf_RootInvokerTest((list, forms) => { }, (commands, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((commands.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            });
+        }
 
     }
 }
