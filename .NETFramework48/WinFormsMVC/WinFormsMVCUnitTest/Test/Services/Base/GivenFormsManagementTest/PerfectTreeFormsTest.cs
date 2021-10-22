@@ -57,16 +57,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
+        // ---RootInvoker--- ///
+
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
         public virtual void CalledBySelf_RootInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
-
             Define(ref modified, (list, forms) =>
             {
 
@@ -101,11 +98,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
-
 
             Define(ref modified, (list, forms) =>
             {
@@ -144,11 +136,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
-
             Define(ref modified, (list, forms) =>
             {
                 (list.First()).IsForSelf = false;
@@ -177,6 +164,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 }
                 Assert.AreEqual(forms.Count() - 1, throw_count);
             });
+
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -184,10 +174,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void RecursiveFromSecondRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
 
             Define(ref modified, (list, forms) =>
             {
@@ -239,10 +225,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledBySelf_LastInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
             
             Define(ref modified, (list, forms) =>
             {
@@ -279,11 +261,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
-
 
             Define(ref modified, (list, forms) =>
             {
@@ -317,10 +294,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByFirstAndLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
 
             Define(ref modified, (list, forms) =>
             {
@@ -364,11 +337,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByLeftSecondaryInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
-
 
             Define(ref modified, (list, forms) =>
             {
@@ -413,10 +381,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledBySelf_AllLeftInvokers_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
 
 
             var was_searched_left_method = new Dictionary<BaseForm, bool>();
@@ -481,11 +445,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByAllLeftInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
-
             var was_searched_left_method = new Dictionary<BaseForm, bool>();
 
             Define(ref modified, (list, forms) =>
@@ -546,10 +505,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByAllRightInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
+
 
             var was_searched_left_method = new Dictionary<BaseForm, bool>();
             Define(ref modified, (list, forms) =>
@@ -611,10 +567,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByRightSecondaryInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
+
 
             Define(ref modified, (list, forms) =>
             {
@@ -656,10 +609,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void RecursiveFromLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
 
             Define(ref modified, (list, forms) =>
             {
@@ -691,10 +640,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void CalledByNullInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
 
             Define(ref modified, (list, forms) =>
             {
@@ -732,10 +677,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void ValidationErrorTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
 
             Define(ref modified, (list, forms) =>
             {
@@ -776,10 +717,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public virtual void ValidationNullCheckTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
+
 
             Define(ref modified, (list, forms) =>
             {

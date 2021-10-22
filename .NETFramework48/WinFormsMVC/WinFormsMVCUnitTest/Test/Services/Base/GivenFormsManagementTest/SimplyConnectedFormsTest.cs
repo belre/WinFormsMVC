@@ -64,10 +64,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null,null)]
         public virtual void CalledBySelf_RootInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (!IsValidTestCalling(modified, assert))
-            {
-                throw new NotImplementedException("子クラスのテストが定義されていません");
-            }
             
             Define( ref modified, (list, forms) =>
             {
