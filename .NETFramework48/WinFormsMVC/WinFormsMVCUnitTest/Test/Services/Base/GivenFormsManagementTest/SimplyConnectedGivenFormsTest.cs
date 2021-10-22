@@ -3,20 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WinFormsMVC.Request;
+using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     [TestClass]
-    public class SimplyConnectedGivenFormsTest : GivenFormManagementTestFormat
+    public class SimplyConnectedGivenFormsTest : SimplyConnectedTestFormat
     {
-        protected WinFormsMVC.View.BaseForm DefaultBaseForm
-        {
-            get;
-        }
-
-
 
         public SimplyConnectedGivenFormsTest()
         {
@@ -25,12 +20,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Text = "Default BaseForm"
             };
 
-            var forms = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree);
+            var forms = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree, true);
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand<BaseForm>(forms.First(), "Validation Text")
+                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), "Validation Text")
             });
         }
 

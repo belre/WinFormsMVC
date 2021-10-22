@@ -100,7 +100,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
         protected void AssertForms<T> ( 
             Action<List<Command>, List<BaseForm>> input, 
             Action<T, List<BaseForm>> launcher,
-            Action<List<Command>, List<BaseForm>> assert) where T : GivenFormsManagement
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
         {
             input( DefaultCommands, FormList);
 

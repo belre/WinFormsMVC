@@ -58,7 +58,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue((list[0]).WasThroughValidation);
+                Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual("Validation Text", forms.First().Text);
             });
         }
@@ -76,7 +76,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue((list[0]).WasThroughValidation);
+                Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual("First Text", forms.First().Text);         // 該当データがいないのでテキストは同じ
             });
 
@@ -99,7 +99,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsTrue(_was_error);
-                Assert.IsTrue((list[0]).WasThroughValidation);
+                Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual("First Text", forms.First().Text);
             });
         }
@@ -116,7 +116,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsFalse((list[0]).WasThroughValidation);
+                Assert.IsFalse((list.First()).WasThroughValidation);
                 Assert.AreEqual("First Text", forms.First().Text);
             });
 

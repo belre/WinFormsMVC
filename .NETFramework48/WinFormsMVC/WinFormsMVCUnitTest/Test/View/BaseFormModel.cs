@@ -72,7 +72,9 @@ namespace WinFormsMVCUnitTest.Test.View
 
             for (int i = 0; i < number-1; i++)
             {
-                var child = are_child_forms ? CreateDefaultBaseForm(original, typeof(WinFormsMVC.View.BaseForm)) : 
+                int index = i + 1 >= DefinedChildForms.Count() ? DefinedChildForms.Count() - 1 : i + 1;
+
+                var child = are_child_forms ? CreateDefaultBaseForm(original, DefinedChildForms.Skip(index).First()) : 
                                                     CreateDefaultBaseForm(original, typeof(WinFormsMVC.View.BaseForm));
                 child.Invoker = base_target;
                 list_form.Add(child);
