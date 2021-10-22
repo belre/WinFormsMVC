@@ -19,112 +19,115 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             set;
         }
 
-
+        protected void Define<T>( ref T modified, T default_modified) where T : class
+        {
+            if (modified == null)
+            {
+                modified = default_modified;
+            }
+        }
 
         // --- RootInvoker --- //
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledBySelf_RootInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void CalledBySelf_RootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
+            Define( ref modified, (list, forms) =>
             {
-                assert = (list, forms) =>
+
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
                 {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
+                    if (form == forms.First())
                     {
-                        if (form == forms.First())
-                        {
-                            Assert.AreEqual("Validation Text", form.Text);
-                        }
-                        else
-                        {
-                            Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                        }
+                        Assert.AreEqual("Validation Text", form.Text);
                     }
-                };
-            }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+            });
 
-            AssertForms<GivenFormsManagement>((list, forms) =>
-            {
-
-            }, null, assert);
+            AssertForms<GivenFormsManagement>( modified, null, assert);
         }
 
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledByRootInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void CalledByRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
-                    {
-                        if (form == forms.Skip(1).First())
-                        {
-                            Assert.AreEqual("Validation Text", form.Text);
-                        }
-                        else
-                        {
-                            Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                        }
-                    }
-                };
-            }
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-            }, null, assert);
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.Skip(1).First())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void RecursiveFromRootInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
-                    {
-                        if (form == forms.First())
-                        {
-                            Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                        }
-                        else
-                        {
-                            Assert.AreEqual("Validation Text", form.Text);
-                        }
-                    }
-                };
-            }
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            Define(ref modified, ((list, forms) =>
             {
                 (list.First()).IsForSelf = false;
                 (list.First()).IsRecursive = true;
-            }, null, assert);
+            }));
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.First())
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                    }
+                }
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -132,65 +135,62 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledBySelf_LastInvoker_Test(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void CalledBySelf_LastInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
+            Define(ref modified, ((list, forms) =>
             {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
+                list.First().Invoker = forms.Last();
+            }));
 
-                    foreach (var form in forms)
+            Define( ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.Last())
                     {
-                        if (form == forms.Last())
-                        {
-                            Assert.AreEqual("Validation Text", form.Text);
-                        }
-                        else
-                        {
-                            Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                        }
+                        Assert.AreEqual("Validation Text", form.Text);
                     }
-                };
-            }
-
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
-            {
-                (list.First()).Invoker = forms.Last();
-            }, null, assert);
-        }
-
-        [TestMethod, TestCategory("正常系")]
-        [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledByLastInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
-        {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
+                    else
                     {
                         Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                     }
-                } ;
-            }
+                }
+            });
 
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null,null)]
+        public virtual void CalledByLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            Define(ref modified, (list, forms) =>
             {
                 (list.First()).IsForSelf = false;
                 (list.First()).Invoker = forms.Last();
-            }, null, assert);
+            });
+
+            Define( ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -199,97 +199,79 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledByFirstAndLastInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void CalledByFirstAndLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
-                    {
-                        if (form == forms.Skip(1).First())
-                        {
-                            Assert.AreEqual("Validation Text", form.Text);
-                        }
-                        else
-                        {
-                            Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                        }
-                    }
-                };
-            }
-
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 (list.First()).Invoker = forms.First();
                 (list.First()).IsForSelf = false;
 
                 list.Add(CreateDefaultCommand<BaseForm>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
-            }, null, assert);
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.Skip(1).First())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void RecursiveFromLastInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void RecursiveFromLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
-                };
-            }
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 (list.First()).IsForSelf = false;
                 (list.First()).IsRecursive = true;
                 (list.First()).Invoker = forms.Last();
-            }, null, assert);
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            });
+
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+
         }
 
 
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledByNullInvokerTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void CalledByNullInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
+            Define(ref modified, (list, forms) =>
             {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation); // Validationはされる
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-
-                    foreach (var form in forms)
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
-                };
-            }
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
-            {
-
                 foreach (var command in list)
                 {
                     if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
@@ -298,32 +280,32 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         (command).IsForSelf = false;
                     }
                 }
+            });
 
-            }, null, assert);
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation); // Validationはされる
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
 
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void ValidationErrorTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void ValidationErrorTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsTrue(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsTrue(_was_error);
-                    Assert.IsTrue((list.First()).WasThroughValidation);
-                    foreach (var form in forms)
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
-                    }
-                };
-            }
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -337,28 +319,31 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         };
                     }
                 }
+            });
 
-            }, null, assert);
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsTrue(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
+                }
+            });
+
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+
         }
 
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
-        [DataRow(null)]
-        public virtual void ValidationNullCheckTest(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null,null)]
+        public virtual void ValidationNullCheckTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            if (assert == null)
-            {
-                assert = (list, forms) =>
-                {
-                    Assert.IsFalse(_was_validation);
-                    Assert.IsFalse(_was_finalize);
-                    Assert.IsFalse(_was_error);
-                    Assert.IsFalse((list.First()).WasThroughValidation);
-                    Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
-                };
-            }
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -367,8 +352,20 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         ((GenericCommand<BaseForm, TextItem>)command).Validation = null;
                     }
                 }
+            });
 
-            }, null, assert);
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsFalse(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsFalse((list.First()).WasThroughValidation);
+                Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
+            });
+
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+
         }
 
     }
