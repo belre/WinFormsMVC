@@ -169,10 +169,57 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
+        // --- SecondRoot Invoker ---//
+
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void RecursiveFromSecondRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySecondLeftInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+
+            Define(ref modified, (list, forms) =>
+            {
+                (list.First()).Invoker = forms.First().Children.First();
+                (list.First()).IsForSelf = false;
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form.Invoker == forms.First().Children.First())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(2, throw_count);
+            });
+
+
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+        }
+
+
+
+
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void RecursiveFromSecondLeftRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -219,6 +266,53 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
+
+        // --- SecondRightInvoker --- ///
+
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledBySecondRightInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+
+
+            Define(ref modified, (list, forms) =>
+            {
+                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First().Children.Last();
+                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                int throw_count = 0;
+                foreach (var form in forms)
+                {
+                    if (form.Invoker == forms.First().Children.Last())
+                    {
+                        Assert.AreEqual("Validation Text", form.Text);
+                        throw_count++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+                Assert.AreEqual(2, throw_count);
+
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+        }
+
+
+
+        // --- LastInvoker ---//
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
@@ -285,9 +379,38 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void RecursiveFromLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+
+            Define(ref modified, (list, forms) =>
+            {
+                (list.First()).IsForSelf = false;
+                (list.First()).IsRecursive = true;
+                (list.First()).Invoker = forms.Last();
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+
+            });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
+        }
 
 
-
+        // --- First and Last Invokers ---//
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
@@ -332,49 +455,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
-        [TestMethod, TestCategory("正常系")]
-        [DataTestMethod]
-        [DataRow(null, null)]
-        public virtual void CalledByLeftSecondaryInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
-        {
-
-            Define(ref modified, (list, forms) =>
-            {
-                (list.First()).Invoker = forms.First().Children.First();
-                (list.First()).IsForSelf = false;
-            });
-
-            Define(ref assert, (list, forms) =>
-            {
-
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((list.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    if (form.Invoker == forms.First().Children.First())
-                    {
-                        Assert.AreEqual("Validation Text", form.Text);
-                        throw_count++;
-                    }
-                    else
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
-                }
-
-                Assert.AreEqual(2, throw_count);
-            });
-
-
-
-            AssertForms<GivenFormsManagement>(modified, null, assert);
-        }
-
-
+        // ---All Left Invokers---
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
@@ -439,7 +520,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
-
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
@@ -499,6 +579,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
+
+        // --- All Right Invokers ---//
 
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
@@ -562,77 +644,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
-        [TestMethod, TestCategory("正常系")]
-        [DataTestMethod]
-        [DataRow(null, null)]
-        public virtual void CalledByRightSecondaryInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
-        {
 
 
-            Define(ref modified, (list, forms) =>
-            {
-                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First().Children.Last();
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
-            });
-
-            Define(ref assert, (list, forms) =>
-            {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((list.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    if (form.Invoker == forms.First().Children.Last())
-                    {
-                        Assert.AreEqual("Validation Text", form.Text);
-                        throw_count++;
-                    }
-                    else
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
-                }
-
-                Assert.AreEqual(2, throw_count);
-
-            });
-
-            AssertForms<GivenFormsManagement>(modified, null, assert);
-        }
-
-
-        [TestMethod, TestCategory("正常系")]
-        [DataTestMethod]
-        [DataRow(null, null)]
-        public virtual void RecursiveFromLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
-        {
-
-            Define(ref modified, (list, forms) =>
-            {
-                (list.First()).IsForSelf = false;
-                (list.First()).IsRecursive = true;
-                (list.First()).Invoker = forms.Last();
-            });
-
-            Define(ref assert, (list, forms) =>
-            {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((list.First()).WasThroughValidation);
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-
-            });
-
-            AssertForms<GivenFormsManagement>(modified, null, assert);
-        }
 
 
         [TestMethod, TestCategory("異常系")]
