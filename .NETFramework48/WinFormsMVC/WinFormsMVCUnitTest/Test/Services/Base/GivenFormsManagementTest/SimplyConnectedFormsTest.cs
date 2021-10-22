@@ -62,7 +62,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null,null)]
-        public virtual void CalledBySelf_RootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySelf_RootInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             if (!IsValidTestCalling(modified, assert))
             {
@@ -151,7 +151,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 foreach (var form in forms)
                 {
-                    if (form == forms.First())
+                    if (forms.First() == form)
                     {
                         Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                     }
