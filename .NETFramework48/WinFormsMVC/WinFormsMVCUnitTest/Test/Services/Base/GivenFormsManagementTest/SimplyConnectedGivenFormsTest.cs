@@ -71,7 +71,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
-        [TestMethod, TestCategory("異常系")]
+        [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified,

@@ -89,34 +89,49 @@ namespace WinFormsMVCUnitTest.Test.View
         {
             var list_form = new List<WinFormsMVC.View.BaseForm>();
 
-            var root = CreateDefaultBaseForm(original, typeof(WinFormsMVC.View.BaseForm));
+            var root = are_child_forms ? CreateDefaultBaseForm(original, typeof(ChildForm1)) :
+                            CreateDefaultBaseForm(original, typeof(WinFormsMVC.View.BaseForm));
 
             int count = WinFormsMVC.View.BaseForm.MaxDepthTree - connected_node_number + 1;
             var list = new List<WinFormsMVC.View.BaseForm>();
-            MakeBinaryTree(root, original, list, count);
+            MakeBinaryTree(root, original, list, count, are_child_forms);
 
             list_form.AddRange(list);
 
             return list_form;
         }
 
-        private static void MakeBinaryTree(WinFormsMVC.View.BaseForm target, WinFormsMVC.View.BaseForm original, List<WinFormsMVC.View.BaseForm> list, int count = 1) 
+        private static void MakeBinaryTree(WinFormsMVC.View.BaseForm target, WinFormsMVC.View.BaseForm original, List<WinFormsMVC.View.BaseForm> list, int count = 1, bool are_child_forms = false) 
         {
             if (count >= WinFormsMVC.View.BaseForm.MaxDepthTree)
             {
                 return;
             }
 
-            var child1 = CreateDefaultBaseForm(original, typeof(WinFormsMVC.View.BaseForm));
+            Type child_type;
+            if (!are_child_forms)
+            {
+                child_type = typeof(WinFormsMVC.View.BaseForm);
+            }
+            else if  (count >= DefinedChildForms.Count())
+            {
+                child_type = DefinedChildForms.Last();
+            }
+            else
+            {
+                child_type = DefinedChildForms.Skip(count).First();
+            }
+
+            var child1 = CreateDefaultBaseForm(original, child_type);
             child1.Invoker = target;
 
-            var child2 = CreateDefaultBaseForm(original, typeof(WinFormsMVC.View.BaseForm));
+            var child2 = CreateDefaultBaseForm(original, child_type);
             child2.Invoker = target;
 
             list.Add(target);
 
-            MakeBinaryTree(child1, original, list, count + 1);
-            MakeBinaryTree(child2, original, list, count + 1);
+            MakeBinaryTree(child1, original, list, count + 1, are_child_forms);
+            MakeBinaryTree(child2, original, list, count + 1, are_child_forms);
         }
     }
 }

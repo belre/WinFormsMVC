@@ -63,7 +63,8 @@
     <Compile Include="Test\Services\Base\GivenFormManagementTestFormat.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\IsonatedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\NullListTest.cs" />
-    <Compile Include="Test\Services\Base\GivenFormsManagementTest\PerfectTreeSameTypeGivenFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\PerfectTreeFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\PerfectTreeGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SimplyConnectedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SimplyConnectedFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleGivenFormTest.cs" />
