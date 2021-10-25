@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.Services.Base;
@@ -155,55 +157,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         public override void CalledBySelf_AllLeftInvokers_Test(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-
-            var was_searched_left_method = new Dictionary<BaseForm, bool>();
-
-            base.CalledBySelf_AllLeftInvokers_Test((list, forms) =>
+            // 型生成
+            foreach (var form in BaseFormList)
             {
-                list.First().IsForSelf = true;
-                was_searched_left_method[forms.First()] = true;
+                var objtype = BaseFormModel.DefinedChildForms.Single(type => type == form.GetType());
+                var type_list = new List<Type>();
 
-                foreach (var form in forms)
+                if (objtype != null )
                 {
-                    if (form != forms.First())
-                    {
-                        if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
-                                                       && was_searched_left_method[form.Invoker])
-                        {
-                            var com = CreateDefaultCommand<BaseFormModel.ChildForm2>(form, DefaultValidationText);
-                            com.IsForSelf = true;
-                            list.Add(com);
-                            was_searched_left_method[form] = true;
-                        }
-                        else
-                        {
-                            was_searched_left_method[form] = false;
-                        }
-                    }
-                }
-            }, (commands, forms) =>
-            {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    if (form == forms.Skip(1).First())
-                    {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
-                        throw_count++;
-                    }
-                    else
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
+                    type_list.Add(objtype);
                 }
 
-                Assert.AreEqual(1, throw_count);
-            });
+                TypeDictionary[form] = type_list;
+            }
+
+
+            base.CalledBySelf_AllLeftInvokers_Test(null, null);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -211,56 +180,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public override void CalledByAllLeftInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-
-            var was_searched_left_method = new Dictionary<BaseForm, bool>();
-
-            base.CalledByAllLeftInvokersTest((list, forms) =>
+            // 型生成
+            foreach (var form in BaseFormList)
             {
-                list.First().IsForSelf = false;
-                was_searched_left_method[forms.First()] = true;
-
-                foreach (var form in forms)
+                var obj = BaseFormModel.DefinedChildForms.Single(type => type == form.GetType() );
+                var type_list = new List<Type>();
+                
+                if (obj != null && obj != BaseFormList.Last().GetType())
                 {
-                    if (form != forms.First())
-                    {
-                        if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
-                                                       && was_searched_left_method[form.Invoker])
-                        {
-                            var com = CreateDefaultCommand<BaseFormModel.ChildForm2>(form, DefaultValidationText);
-                            com.IsForSelf = false;
-                            list.Add(com);
-                            was_searched_left_method[form] = true;
-                        }
-                        else
-                        {
-                            was_searched_left_method[form] = false;
-                        }
-                    }
-                }
-            }, (commands, forms) =>
-            {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    if ( forms.First().Children.Contains(form))
-                    {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
-                        throw_count++;
-                    }
-                    else
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
-
+                    var next = BaseFormModel.DefinedChildForms.SkipWhile(type => type != form.GetType()).Skip(1).First();
+                    type_list.Add(next);
                 }
 
-                Assert.AreEqual(2, throw_count);
-            });
+                TypeDictionary[form] = type_list;
+            }
+
+            base.CalledByAllLeftInvokersTest(null, null);
         }
         
         [TestMethod, TestCategory("差分")]
@@ -268,56 +203,23 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [DataRow(null, null)]
         public override void CalledByAllRightInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            // 型生成
 
-            var was_searched_left_method = new Dictionary<BaseForm, bool>();
-
-            base.CalledByAllLeftInvokersTest((list, forms) =>
+            foreach (var form in BaseFormList)
             {
-                list.First().IsForSelf = false;
-                was_searched_left_method[forms.First()] = true;
+                var obj = BaseFormModel.DefinedChildForms.Single(type => type == form.GetType());
+                var type_list = new List<Type>();
 
-                foreach (var form in forms)
+                if (obj != null && obj != BaseFormList.Last().GetType())
                 {
-                    if (form != forms.First())
-                    {
-                        if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
-                                                       && was_searched_left_method[form.Invoker])
-                        {
-                            var com = CreateDefaultCommand<BaseForm>(form, DefaultValidationText);
-                            com.IsForSelf = false;
-                            list.Add(com);
-                            was_searched_left_method[form] = true;
-                        }
-                        else
-                        {
-                            was_searched_left_method[form] = false;
-                        }
-                    }
-                }
-            }, (commands, forms) =>
-            {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    if (forms.First().Children.Contains(form))
-                    {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
-                        throw_count++;
-                    }
-                    else
-                    {
-                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                    }
-
+                    var next = BaseFormModel.DefinedChildForms.SkipWhile(type => type != form.GetType()).Skip(1).First();
+                    type_list.Add(next);
                 }
 
-                Assert.AreEqual(2, throw_count);
-            });
+                TypeDictionary[form] = type_list;
+            }
+
+            base.CalledByAllLeftInvokersTest(null, null);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -339,19 +241,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         };
                     }
                 }
-            }), (commands, forms) =>
-            {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsTrue(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
-                }
-
-            });
+            }), null);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -368,14 +258,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = null;
                     }
                 }
-            }), (commands, forms) =>
-            {
-                Assert.IsFalse(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsFalse((commands.First()).WasThroughValidation);
-                Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
-            });
+            }), null);
 
         }
     }

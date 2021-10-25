@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.Services.Base;
@@ -19,6 +21,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             get;
             set;
         }
+
 
         protected string DefaultValidationText
         {
@@ -49,6 +52,41 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             }
         }
 
+        protected Dictionary<BaseForm, List<Type>> TypeDictionary
+        {
+            get;
+            set;
+        }
+
+
+        protected Command[] CreateDefaultCommandByTypeDictionary(BaseForm invoker, string validation_text)
+        {
+            List<Command> command_list = new List<Command>();
+
+            if (TypeDictionary.Keys.Contains(invoker))
+            {
+
+                foreach (var type in TypeDictionary[invoker])
+                {
+                    var methodinfos = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
+                    foreach (var methodinfo in methodinfos)
+                    {
+                        // リフレクションでメソッドを生成
+                        if (methodinfo.Name == "CreateDefaultCommand")
+                        {
+                            MethodInfo generic_mi = methodinfo.MakeGenericMethod(new Type[] { type });
+                            var return_obj = generic_mi.Invoke(this, new object[] { invoker, validation_text });
+                            command_list.Add((Command)return_obj);
+                        }
+                    }
+                }
+
+            }
+
+            return command_list.ToArray();
+    }
+
+
         public PerfectTreeFormsTest()
         {
             DefaultBaseForm = new WinFormsMVC.View.BaseForm()
@@ -63,6 +101,17 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 CreateDefaultCommand<BaseForm>(forms.First(), DefaultValidationText)
             });
+
+            TypeDictionary = new Dictionary<BaseForm, List<Type>>();
+            var form_list = BaseFormList;
+            foreach (var form in form_list)
+            {
+                TypeDictionary[form] = new List<Type>()
+                {
+                    typeof(BaseForm)
+                };
+            }
+
         }
 
         // ---RootInvoker--- ///
@@ -474,32 +523,33 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             Define(ref modified, (list, forms) =>
             {
-                list.First().IsForSelf = true;
                 was_searched_left_method[forms.First()] = true;
 
                 foreach (var form in forms)
                 {
-                    if (form != forms.First())
+                    if (form == forms.First() ||
+                        form.Children.Count() != 0 && form.Invoker.Children.First() == form
+                                                   && was_searched_left_method[form.Invoker])
                     {
-                        if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
-                                                       && was_searched_left_method[form.Invoker])
+
+                        var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
+                        foreach (var com in command_list)
                         {
-                            var com = CreateDefaultCommand<BaseForm>(form, DefaultValidationText);
                             com.IsForSelf = true;
                             list.Add(com);
-                            was_searched_left_method[form] = true;
                         }
-                        else
-                        {
-                            was_searched_left_method[form] = false;
-                        }
+
+                        was_searched_left_method[form] = true;
+                    }
+                    else
+                    {
+                        was_searched_left_method[form] = false;
                     }
                 }
             });
 
             Define(ref assert, (list, forms) =>
             {
-
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
@@ -521,7 +571,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 Assert.AreEqual(BaseForm.MaxDepthTree - 1, throw_count);
             });
-
 
             AssertForms<GivenFormsManagement>(modified, null, assert);
         }
@@ -545,9 +594,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var com = CreateDefaultCommand<BaseForm>(form, DefaultValidationText);
-                            com.IsForSelf = false;
-                            list.Add(com);
+                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
+                            foreach (var com in command_list)
+                            {
+                                com.IsForSelf = false;
+                                list.Add(com);
+                            }
                             was_searched_left_method[form] = true;
                         }
                         else
@@ -607,9 +659,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
                                                        && was_searched_right_method[form.Invoker])
                         {
-                            var com = CreateDefaultCommand<BaseForm>(form, DefaultValidationText);
-                            com.IsForSelf = false;
-                            list.Add(com);
+                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
+                            foreach (var com in command_list)
+                            {
+                                com.IsForSelf = false;
+                                list.Add(com);
+                            }
+
                             was_searched_right_method[form] = true;
                         }
                         else

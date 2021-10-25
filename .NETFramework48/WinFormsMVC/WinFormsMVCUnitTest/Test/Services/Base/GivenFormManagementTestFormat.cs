@@ -25,6 +25,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
             get;
         }
 
+        protected IEnumerable<BaseForm> BaseFormList
+        {
+            get
+            {
+                return FormList;
+            }
+        }
+
         private List<Command> DefaultCommands
         {
             get;
