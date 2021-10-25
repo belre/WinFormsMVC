@@ -35,7 +35,7 @@ namespace WinFormsMVC.Controller
         {
             get
             {
-                return _manager.ManagedMemento.IsAvalableUndo();
+                return _manager.ManagedMementoManagement.IsAvalableUndo();
             }
         }
 

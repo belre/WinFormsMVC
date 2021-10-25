@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.View;
 
-namespace WinFormsMVC.Services
+namespace WinFormsMVC.Services.Base
 {
     /// <summary>
     /// Mementoパターンを使用して、コマンドの履歴を参照します。
     /// </summary>
-    public class CommandMemento
+    public class MementoManagement
     {
         /// <summary>
         /// 最大で記録するコマンド数です。
@@ -22,7 +22,7 @@ namespace WinFormsMVC.Services
         /// </summary>
         public List<IEnumerable<Request.Command>> Mememtoes { get; }
 
-        public CommandMemento()
+        public MementoManagement()
         {
             Mememtoes = new List<IEnumerable<Request.Command>>();
         }

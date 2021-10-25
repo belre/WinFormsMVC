@@ -86,6 +86,7 @@
   <ItemGroup>
     <Folder Include="Controller\" />
     <Folder Include="Test\Facade\ViewFacade\" />
+    <Folder Include="Test\Services\Base\FormsManagementTest\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

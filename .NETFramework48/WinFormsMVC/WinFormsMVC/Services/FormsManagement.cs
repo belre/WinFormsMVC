@@ -87,7 +87,7 @@ namespace WinFormsMVC.Services
         {
             base.Run(command_list);
 
-            ManagedMemento.PushCommand(command_list);
+            ManagedMementoManagement.PushCommand(command_list);
         }
 
         /// <summary>

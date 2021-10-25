@@ -70,7 +70,7 @@
     <Compile Include="Request\Item\TextItem.cs" />
     <Compile Include="Services\Base\GivenFormsManagement.cs" />
     <Compile Include="Services\FormsManagement.cs" />
-    <Compile Include="Services\CommandMemento.cs" />
+    <Compile Include="Services\Base\MementoManagement.cs" />
     <Compile Include="View\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
