@@ -68,6 +68,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SimplyConnectedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SimplyConnectedFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleGivenFormTest.cs" />
+    <Compile Include="Test\Services\Base\MementoManagement\PushAndPopTest.cs" />
     <Compile Include="Test\View\BaseFormModel.cs" />
     <Compile Include="Test\View\BaseForm\SimplyConnectedNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />
@@ -86,7 +87,6 @@
   <ItemGroup>
     <Folder Include="Controller\" />
     <Folder Include="Test\Facade\ViewFacade\" />
-    <Folder Include="Test\Services\Base\FormsManagementTest\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
