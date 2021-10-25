@@ -36,7 +36,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.MementoManagement
         }
 
         [TestMethod]
-        public void PushSomeQueries()
+        public void PushingSomeQueries()
         {
             _managed_memento.PushCommand(SingleDefaultCommand);
             _managed_memento.PushCommand(SingleDefaultCommand);
@@ -46,7 +46,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.MementoManagement
         }
 
         [TestMethod]
-        public void PushManyQueries()
+        public void PushingManyQueries()
         {
             for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER-1; i++)
             {
@@ -61,6 +61,71 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.MementoManagement
             _managed_memento.PushCommand(SingleDefaultCommand);
             Assert.AreEqual(_managed_memento.MAX_MEMEMTO_NUMBER, _managed_memento.Mememtoes.Count);
 
+        }
+
+        [TestMethod]
+        public void EqualToFirstCommand()
+        {
+            var first_data = SingleDefaultCommand;
+            _managed_memento.PushCommand(first_data);
+
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER - 1; i++)
+            {
+                _managed_memento.PushCommand(SingleDefaultCommand);
+            }
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER - 1; i++)
+            {
+                _managed_memento.PopCommand();
+            }
+
+            Assert.IsTrue(_managed_memento.IsAvalableUndo());
+            Assert.AreEqual(first_data, _managed_memento.PopCommand());
+            Assert.IsFalse(_managed_memento.IsAvalableUndo());
+
+            Assert.IsNull(_managed_memento.PopCommand());
+        }
+
+
+
+        [TestMethod]
+        public void PoppedFirstCommand()
+        {
+            var first_data = SingleDefaultCommand;
+            _managed_memento.PushCommand(first_data);
+
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER; i++)
+            {
+                _managed_memento.PushCommand(SingleDefaultCommand);
+            }
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER - 1; i++)
+            {
+                _managed_memento.PopCommand();
+            }
+
+            Assert.IsTrue(_managed_memento.IsAvalableUndo());
+
+            var pop_data = _managed_memento.PopCommand();
+            Assert.AreNotEqual(pop_data, first_data);
+            Assert.IsNull(_managed_memento.PopCommand());
+            Assert.IsFalse(_managed_memento.IsAvalableUndo());
+        }
+
+        [TestMethod]
+        public void PushAndPopSameQueries()
+        {
+            for (int k = 0; k < 5; k++)
+            {
+                for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER-1; i++)
+                {
+                    _managed_memento.PushCommand(SingleDefaultCommand);
+                }
+                for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER - 1; i++)
+                {
+                    _managed_memento.PopCommand();
+                }
+            }
+            Assert.IsNull(_managed_memento.PopCommand());
+            Assert.IsFalse(_managed_memento.IsAvalableUndo());
         }
 
     }
