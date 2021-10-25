@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsMVC.Request;
 using WinFormsMVC.Services;
+using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Controller
@@ -34,7 +35,7 @@ namespace WinFormsMVC.Controller
         {
             get
             {
-                return _manager.MementoManager.IsAvalableUndo();
+                return _manager.ManagedMemento.IsAvalableUndo();
             }
         }
 
@@ -69,7 +70,7 @@ namespace WinFormsMVC.Controller
 
         public void Undo(NotifyIsAvailableUndo notify_undo_func)
         {
-            _manager.ReflectPrevious();
+            _manager.Undo();
             ReflectMemento(notify_undo_func);
         }
 

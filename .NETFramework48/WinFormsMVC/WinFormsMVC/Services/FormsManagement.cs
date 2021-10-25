@@ -30,17 +30,14 @@ namespace WinFormsMVC.Services
         /// <summary>
         /// 管理されているBaseFormの一覧です。
         /// </summary>
-        private List<BaseForm> _managed_baseform;
+        private readonly List<BaseForm> _managed_baseform;
 
         /// <summary>
         /// BaseFormとControllerを接続する窓口役(Facade)を表します。
         /// </summary>
         private ViewFacade _facade;
 
-        /// <summary>
-        /// 管理しているコマンド履歴です。
-        /// </summary>
-        private CommandMemento _memento;
+
 
         /// <summary>
         /// 窓口を表すクラスです。
@@ -51,16 +48,6 @@ namespace WinFormsMVC.Services
             set { _facade = value; }
         }
 
-        /// <summary>
-        /// コマンド履歴のオブジェクトです。
-        /// </summary>
-        public CommandMemento MementoManager
-        {
-            get
-            {
-                return _memento;
-            }
-        }
 
         /// <summary>
         /// Form管理を生成します。
@@ -69,7 +56,6 @@ namespace WinFormsMVC.Services
             : base(new BaseForm[0])
         {
             _managed_baseform = new List<BaseForm>();
-            _memento = new CommandMemento();
         }
 
         /// <summary>
@@ -97,36 +83,11 @@ namespace WinFormsMVC.Services
         }
 
 
-        public void RunAndRecord(IEnumerable<Request.Command> command_list) 
+        public virtual void RunAndRecord(IEnumerable<Request.Command> command_list) 
         {
             base.Run(command_list);
 
-            _memento.PushCommand(command_list);
-        }
-
-        /// <summary>
-        /// Memento一覧に従って、フォームを戻します。
-        /// </summary>
-        public void ReflectPrevious()
-        {
-            var recent_commands = _memento.PopCommand();
-
-            if (recent_commands == null)
-            {
-                return;
-            }
-
-            foreach (var command in recent_commands)
-            {
-                foreach (var form in _managed_baseform)
-                {
-                    if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
-                    {
-                        command.Prev(form);
-                        command.Invalidate();
-                    }
-                }
-            }
+            ManagedMemento.PushCommand(command_list);
         }
 
         /// <summary>
@@ -134,7 +95,7 @@ namespace WinFormsMVC.Services
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnFormClosed(object sender, EventArgs e)
+        private void OnFormClosed(object sender, EventArgs e)
         {
             // 自分自身
             BaseForm form = (BaseForm) sender;

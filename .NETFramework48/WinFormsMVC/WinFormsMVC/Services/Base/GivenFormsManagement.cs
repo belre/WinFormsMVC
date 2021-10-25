@@ -16,9 +16,24 @@ namespace WinFormsMVC.Services.Base
         }
 
 
+        /// <summary>
+        /// コマンド履歴のオブジェクトです。
+        /// </summary>
+        public CommandMemento ManagedMemento
+        {
+            get;
+            protected set;
+        }
+
+        /// <summary>
+        /// 新たなFormManagementを作成します。
+        /// ※ このクラス単独では、新たなFormのLaunch, Closeの処理を検知しません
+        /// </summary>
+        /// <param name="_managed_base_forms"></param>
         public GivenFormsManagement(IEnumerable<BaseForm> _managed_base_forms)
         {
             ManagedBaseForms = _managed_base_forms;
+            ManagedMemento = new CommandMemento();
         }
 
         /// <summary>
@@ -55,6 +70,31 @@ namespace WinFormsMVC.Services.Base
             foreach (var target in target_forms)
             {
                 command.Next(target);
+            }
+        }
+
+        /// <summary>
+        /// Memento一覧に従って、フォームを戻します。
+        /// </summary>
+        public void Undo()
+        {
+            var recent_commands = ManagedMemento.PopCommand();
+
+            if (recent_commands == null)
+            {
+                return;
+            }
+
+            foreach (var command in recent_commands)
+            {
+                foreach (var form in ManagedBaseForms)
+                {
+                    if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
+                    {
+                        command.Prev(form);
+                        command.Invalidate();
+                    }
+                }
             }
         }
 
