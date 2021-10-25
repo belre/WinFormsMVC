@@ -20,6 +20,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             set;
         }
 
+        protected string DefaultValidationText
+        {
+            get;
+            set;
+        }
+
         private void Define<T>( ref T instance, T default_instance) where T : class
         {
             if (instance == null)
@@ -53,7 +59,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand<BaseForm>(forms.First(), "Validation Text")
+                CreateDefaultCommand<BaseForm>(forms.First(), DefaultValidationText)
             });
         }
 
@@ -81,7 +87,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.First())
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                     }
                     else
                     {
@@ -115,7 +121,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.Skip(1).First())
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                     }
                     else
                     {
@@ -153,7 +159,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                     else
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                     }
                 }
             });
@@ -185,7 +191,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.Last())
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                     }
                     else
                     {
@@ -253,7 +259,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.Skip(1).First())
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                     }
                     else
                     {
@@ -344,7 +350,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     {
                         ((GenericCommand<BaseForm, TextItem>)command).Validation = (item) =>
                         {
-                            item.Next = "Validation Text";
+                            item.Next = DefaultValidationText;
                             _was_validation = true;
                             return false;
                         };
