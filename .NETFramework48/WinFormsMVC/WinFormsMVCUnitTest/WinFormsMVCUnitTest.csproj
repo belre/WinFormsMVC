@@ -69,6 +69,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SimplyConnectedFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\SingleGivenFormTest.cs" />
     <Compile Include="Test\Services\Base\MementoManagement\PushAndPopTest.cs" />
+    <Compile Include="Test\Services\FormsManagement\LaunchAndCloseTest.cs" />
     <Compile Include="Test\View\BaseFormModel.cs" />
     <Compile Include="Test\View\BaseForm\SimplyConnectedNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />

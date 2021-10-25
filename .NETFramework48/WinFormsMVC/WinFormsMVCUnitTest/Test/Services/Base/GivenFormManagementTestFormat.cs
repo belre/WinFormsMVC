@@ -94,9 +94,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
             {
                 return (T)new GivenFormsManagement(FormList);
             } 
-            else if (typeof(T) == typeof(FormsManagement))
+            else if (typeof(T) == typeof(WinFormsMVC.Services.FormsManagement))
             {
-                return (T)(GivenFormsManagement)new FormsManagement();
+                return (T)(GivenFormsManagement)new WinFormsMVC.Services.FormsManagement();
             }
             else
             {

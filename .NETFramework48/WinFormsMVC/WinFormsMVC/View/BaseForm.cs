@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using WinFormsMVC.Facade;
 
@@ -9,6 +10,7 @@ namespace WinFormsMVC.View
 {
     public partial class BaseForm : Form
     {
+
         protected enum FormTreeStatus
         {
             OK,
@@ -129,5 +131,7 @@ namespace WinFormsMVC.View
                 return Invoker.IsAncestor(parent, count+1);
             }
         }
+
+        
     }
 }
