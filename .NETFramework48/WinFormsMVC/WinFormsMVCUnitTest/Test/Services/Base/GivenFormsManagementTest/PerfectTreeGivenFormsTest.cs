@@ -30,28 +30,20 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void CalledBySelf_RootInvoker_Test(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySelf_RootInvoker_Test(null, (commands, forms) =>
+            base.CalledBySelf_RootInvoker_Test((list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.First(), "Validation Text");
+            }, null);
         }
 
 
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified,
@@ -85,32 +77,21 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
 
         // --- SecondRoot Invoker ---//
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void CalledBySecondLeftInvokerTest(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySecondLeftInvokerTest(null, (commands, forms) =>
+            base.CalledBySecondLeftInvokerTest((list, forms) =>
             {
-
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-
-                Assert.AreEqual(0, throw_count);
-            });
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), "Validation Text");
+                list[0].IsForSelf = false;
+            }, null);
         }
 
 
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void RecursiveFromSecondLeftRootInvokerTest(Action<List<Command>, List<BaseForm>> modified,
@@ -139,50 +120,36 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         // --- SecondRightInvoker--//
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
         public override void CalledBySecondRightInvokerTest(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySecondRightInvokerTest(null, (commands, forms) =>
+            base.CalledBySecondRightInvokerTest((list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                int throw_count = 0;
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-
-                Assert.AreEqual(0, throw_count);
-            });
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), "Validation Text");
+                list[0].IsForSelf = false;
+            }, null);
         }
 
 
         // --- LastInvoker --- //
 
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void CalledBySelf_LastInvoker_Test(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySelf_LastInvoker_Test(null, ((commands, forms) =>
+            base.CalledBySelf_LastInvoker_Test((list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            }));
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), "Validation Text");
+                list[0].IsForSelf = true;
+            }, null);
         }
 
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void CalledBySelf_AllLeftInvokers_Test(Action<List<Command>, List<BaseForm>> modified,
@@ -239,7 +206,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
-        [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void CalledByAllLeftInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
@@ -295,8 +262,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.AreEqual(2, throw_count);
             });
         }
-
-        [TestMethod, TestCategory("正常系")]
+        
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
         public override void CalledByAllRightInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
@@ -353,10 +320,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
-        [TestMethod, TestCategory("異常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void ValidationErrorTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public override void ValidationErrorTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             base.ValidationErrorTest( ((list, forms) =>
             {
@@ -387,10 +354,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
         }
 
-        [TestMethod, TestCategory("異常系")]
+        [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void ValidationNullCheckTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public override void ValidationNullCheckTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             base.ValidationNullCheckTest(((list, forms) =>
             {

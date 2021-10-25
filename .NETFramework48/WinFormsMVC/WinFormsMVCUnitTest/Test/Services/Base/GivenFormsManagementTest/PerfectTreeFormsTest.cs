@@ -260,7 +260,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-                int all_nodes_number = (int)(Math.Pow(2, BaseForm.MaxDepthTree - 2) - 1);
+                int all_nodes_number = (int)(Math.Pow(2, BaseForm.MaxDepthTree - 1) - 1);
                 Assert.AreEqual(all_nodes_number - 1, throw_count);
             });
 
@@ -571,8 +571,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
+                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 1), throw_count);
             });
+
+            AssertForms<GivenFormsManagement>(modified, null, assert);
         }
 
         // --- All Right Invokers ---//
@@ -584,27 +586,27 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
 
 
-            var was_searched_left_method = new Dictionary<BaseForm, bool>();
+            var was_searched_right_method = new Dictionary<BaseForm, bool>();
             Define(ref modified, (list, forms) =>
             {
                 list.First().IsForSelf = false;
-                was_searched_left_method[forms.First()] = true;
+                was_searched_right_method[forms.First()] = true;
 
                 foreach (var form in forms)
                 {
                     if (form != forms.First())
                     {
                         if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
-                                                       && was_searched_left_method[form.Invoker])
+                                                       && was_searched_right_method[form.Invoker])
                         {
                             var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
                             com.IsForSelf = false;
                             list.Add(com);
-                            was_searched_left_method[form] = true;
+                            was_searched_right_method[form] = true;
                         }
                         else
                         {
-                            was_searched_left_method[form] = false;
+                            was_searched_right_method[form] = false;
                         }
                     }
                 }
@@ -620,7 +622,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 int throw_count = 0;
                 foreach (var form in forms)
                 {
-                    if (form.Invoker != null && was_searched_left_method[form.Invoker])
+                    if (form.Invoker != null && was_searched_right_method[form.Invoker])
                     {
                         Assert.AreEqual("Validation Text", form.Text);
                         throw_count++;
@@ -631,7 +633,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 2), throw_count);
+                Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 1), throw_count);
 
             });
 
