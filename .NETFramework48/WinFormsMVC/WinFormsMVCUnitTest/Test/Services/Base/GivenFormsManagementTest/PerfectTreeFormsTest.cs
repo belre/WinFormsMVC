@@ -22,8 +22,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             set;
         }
 
-
-        protected string DefaultValidationText
+        private void Define<T>(ref T instance, T default_instance) where T : class
         {
             get
             {
@@ -527,14 +526,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 foreach (var form in forms)
                 {
-                    if (form == forms.First() ||
-                        form.Children.Count() != 0 && form.Invoker.Children.First() == form
-                                                   && was_searched_left_method[form.Invoker])
+                    if (form != forms.First())
                     {
-
-                        var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
-                        foreach (var com in command_list)
+                        if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
+                                                       && was_searched_left_method[form.Invoker])
                         {
+                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
                             com.IsForSelf = true;
                             list.Add(com);
                         }
@@ -594,12 +591,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
-                            foreach (var com in command_list)
-                            {
-                                com.IsForSelf = false;
-                                list.Add(com);
-                            }
+                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
+                            com.IsForSelf = false;
+                            list.Add(com);
                             was_searched_left_method[form] = true;
                         }
                         else
@@ -659,13 +653,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
                                                        && was_searched_right_method[form.Invoker])
                         {
-                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
-                            foreach (var com in command_list)
-                            {
-                                com.IsForSelf = false;
-                                list.Add(com);
-                            }
-
+                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
+                            com.IsForSelf = false;
+                            list.Add(com);
                             was_searched_right_method[form] = true;
                         }
                         else
