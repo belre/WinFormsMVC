@@ -282,7 +282,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 TypeDictionary[form] = type_list;
             }
 
-            base.CalledByAllLeftInvokersTest(null, null);
+            base.CalledByAllRightInvokersTest(null, null);
         }
 
         [TestMethod, TestCategory("差分")]
