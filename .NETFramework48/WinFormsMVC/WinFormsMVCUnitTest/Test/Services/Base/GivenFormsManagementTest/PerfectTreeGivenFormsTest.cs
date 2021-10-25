@@ -26,7 +26,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), "Validation Text")
+                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), DefaultValidationText)
             });
         }
 
@@ -38,7 +38,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySelf_RootInvoker_Test((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.First(), "Validation Text");
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.First(), DefaultValidationText);
             }, null);
         }
 
@@ -65,7 +65,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                     else
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                         throw_count++;
                     }
                 }
@@ -85,7 +85,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySecondLeftInvokerTest((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), "Validation Text");
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), DefaultValidationText);
                 list[0].IsForSelf = false;
             }, null);
         }
@@ -128,7 +128,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySecondRightInvokerTest((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), "Validation Text");
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), DefaultValidationText);
                 list[0].IsForSelf = false;
             }, null);
         }
@@ -144,7 +144,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySelf_LastInvoker_Test((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), "Validation Text");
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), DefaultValidationText);
                 list[0].IsForSelf = true;
             }, null);
         }
@@ -170,7 +170,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var com = CreateDefaultCommand<BaseFormModel.ChildForm2>(form, "Validation Text");
+                            var com = CreateDefaultCommand<BaseFormModel.ChildForm2>(form, DefaultValidationText);
                             com.IsForSelf = true;
                             list.Add(com);
                             was_searched_left_method[form] = true;
@@ -193,7 +193,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.Skip(1).First())
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                         throw_count++;
                     }
                     else
@@ -226,7 +226,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var com = CreateDefaultCommand<BaseFormModel.ChildForm2>(form, "Validation Text");
+                            var com = CreateDefaultCommand<BaseFormModel.ChildForm2>(form, DefaultValidationText);
                             com.IsForSelf = false;
                             list.Add(com);
                             was_searched_left_method[form] = true;
@@ -249,7 +249,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if ( forms.First().Children.Contains(form))
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                         throw_count++;
                     }
                     else
@@ -283,7 +283,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var com = CreateDefaultCommand<BaseForm>(form, "Validation Text");
+                            var com = CreateDefaultCommand<BaseForm>(form, DefaultValidationText);
                             com.IsForSelf = false;
                             list.Add(com);
                             was_searched_left_method[form] = true;
@@ -306,7 +306,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (forms.First().Children.Contains(form))
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                         throw_count++;
                     }
                     else
@@ -333,7 +333,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     {
                         ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
                         {
-                            item.Next = "Validation Text";
+                            item.Next = DefaultValidationText;
                             _was_validation = true;
                             return false;
                         };

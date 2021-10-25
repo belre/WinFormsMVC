@@ -26,7 +26,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), "Validation Text")
+                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), DefaultValidationText)
             });
         }
 
@@ -92,7 +92,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                     else
                     {
-                        Assert.AreEqual("Validation Text", form.Text);
+                        Assert.AreEqual(DefaultValidationText, form.Text);
                     }
                 }
             });
@@ -112,7 +112,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     {
                         ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
                         {
-                            item.Next = "Validation Text";
+                            item.Next = DefaultValidationText;
                             _was_validation = true;
                             return false;
                         };

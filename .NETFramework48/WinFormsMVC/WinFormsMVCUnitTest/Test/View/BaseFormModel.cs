@@ -104,22 +104,22 @@ namespace WinFormsMVCUnitTest.Test.View
         private static void MakeBinaryTree(WinFormsMVC.View.BaseForm target, WinFormsMVC.View.BaseForm original, List<WinFormsMVC.View.BaseForm> list, int count = 1, bool are_child_forms = false) 
         {
 
-            Type child_type;
-            if (!are_child_forms)
-            {
-                child_type = typeof(WinFormsMVC.View.BaseForm);
-            }
-            else if  (count+1 >= DefinedChildForms.Count())
-            {
-                child_type = DefinedChildForms.Last();
-            }
-            else
-            {
-                child_type = DefinedChildForms.Skip(count+1).First();
-            }
-
             if (count < WinFormsMVC.View.BaseForm.MaxDepthTree)
             {
+                Type child_type;
+                if (!are_child_forms)
+                {
+                    child_type = typeof(WinFormsMVC.View.BaseForm);
+                }
+                else if (count + 1 >= DefinedChildForms.Count())
+                {
+                    child_type = DefinedChildForms.Last();
+                }
+                else
+                {
+                    child_type = DefinedChildForms.Skip(count + 1).First();
+                }
+
                 var child1 = CreateDefaultBaseForm(original, child_type);
                 var child2 = CreateDefaultBaseForm(original, child_type);
 
