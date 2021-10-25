@@ -51,6 +51,30 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         public override void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            base.RecursiveFromRootInvokerTest((list, forms) =>
+            {
+                list.Clear();
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm2>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText));
+
+                foreach (var com in list)
+                {
+                    com.Invoker = forms.First();
+                    com.IsForSelf = false;
+                    com.IsRecursive = true;
+                }
+
+            }, null);
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void RecursiveFromRootInvokerInSingleLevelTest(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
             base.RecursiveFromRootInvokerTest(null, (commands, forms) =>
             {
                 Assert.IsTrue(_was_validation);
@@ -74,9 +98,25 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 Assert.AreEqual(2, throw_count);
             });
-
         }
 
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void RecursiveFromLastInvokerTest(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.RecursiveFromLastInvokerTest(((list, forms) =>
+            {
+                var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText);
+                command.IsForSelf = false;
+                command.IsRecursive = true;
+                command.Invoker = forms.Last();
+
+                list.Clear();
+                list.Add(command);
+            }), null);
+        }
 
         // --- SecondRoot Invoker ---//
         [TestMethod, TestCategory("差分")]
@@ -99,6 +139,30 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         public override void RecursiveFromSecondLeftRootInvokerTest(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            base.RecursiveFromSecondLeftRootInvokerTest((list, forms) =>
+            {
+                list.Clear();
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm2>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText));
+
+                foreach (var com in list)
+                {
+                    com.Invoker = forms.First().Children.First();
+                    com.IsForSelf = false;
+                    com.IsRecursive = true;
+                }
+
+            }, null);
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void RecursiveFromSecondLeftRootInvokerInSingleLevelTest(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
             base.RecursiveFromSecondLeftRootInvokerTest(null, (commands, forms) =>
             {
                 Assert.IsTrue(_was_validation);
@@ -118,7 +182,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 Assert.AreEqual(0, throw_count);
             });
-
         }
 
         // --- SecondRightInvoker--//

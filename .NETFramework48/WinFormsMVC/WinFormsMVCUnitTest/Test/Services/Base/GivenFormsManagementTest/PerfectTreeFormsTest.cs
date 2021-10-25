@@ -31,7 +31,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             }
         }
 
-        private void Define<T>(ref T instance, T default_instance) where T : class
+        protected void Define<T>(ref T instance, T default_instance) where T : class
         {
             if (instance == null)
             {
