@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
-using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 using WinFormsMVCUnitTest.Test.View;
 
@@ -64,7 +63,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelf()
         {
-            AssertAction<GivenFormsManagement>((list, forms) =>
+            AssertAction((list, forms) =>
             {
 
             }, (commands, forms) =>
@@ -81,7 +80,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelfAndUndo()
         {
-            AssertMemorableAction<GivenFormsManagement>((list, forms) =>
+            AssertMemorableAction((list, forms) =>
             {
 
             }, (management, commands, forms) =>
@@ -100,7 +99,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public void CalledByNullInvoker()
         {
-            AssertAction<GivenFormsManagement>((list, forms) =>
+            AssertAction((list, forms) =>
             {
                 (list[0]).Invoker = null;
                 (list[0]).IsForSelf = false;
@@ -119,7 +118,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public void ValidationError()
         {
-            AssertAction<GivenFormsManagement>((list, forms) =>
+            AssertAction((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
                 {
@@ -141,7 +140,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public void ValidationNullCheck()
         {
-            AssertAction<GivenFormsManagement>((list, forms) =>
+            AssertAction((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
             }, (list, forms) =>

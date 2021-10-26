@@ -90,8 +90,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             OrderingCommands.AddRange(commands);
         }
 
-        public T ConstructFormsManagement<T>() where T : GivenFormsManagement
+        public GivenFormsManagement ConstructFormsManagement() 
         {
+            return new GivenFormsManagement(ManagedFormList);
+            
+            /*
             if (typeof(T) == typeof(GivenFormsManagement))
             {
                 return (T)new GivenFormsManagement(ManagedFormList);
@@ -104,36 +107,37 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 throw new NotImplementedException();
             }
+            */
         }
 
 
-        protected void AssertAction<T> ( 
+        protected void AssertAction( 
             Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             modified( OrderingCommands, ManagedFormList);
 
-            var form_management = ConstructFormsManagement<T>();
+            var form_management = ConstructFormsManagement();
             form_management.Run(OrderingCommands);
 
             assert(OrderingCommands, ManagedFormList);
         }
 
-        protected void AssertMemorableAction<T>(
+        protected void AssertMemorableAction(
             Action<List<Command>, List<BaseForm>> modified,
-            Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
+            Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             modified(OrderingCommands, ManagedFormList);
 
-            var form_management = ConstructFormsManagement<T>();
+            var form_management = ConstructFormsManagement();
             form_management.RunAndRecord(OrderingCommands);
 
             assert(form_management, OrderingCommands, ManagedFormList);
         }
 
-        protected void AssertUndo<T>(Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
+        protected void AssertUndo(Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            var form_management = ConstructFormsManagement<T>();
+            var form_management = ConstructFormsManagement();
             form_management.Undo();
 
             assert(form_management, OrderingCommands, ManagedFormList);
