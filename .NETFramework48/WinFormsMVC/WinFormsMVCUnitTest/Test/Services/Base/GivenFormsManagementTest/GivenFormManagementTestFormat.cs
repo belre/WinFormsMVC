@@ -19,6 +19,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         protected bool _was_validation = false;
         protected bool _was_finalize = false;
         protected bool _was_error = false;
+        protected bool _was_next = false;
+        protected bool _was_prev;
 
         private List<BaseForm> ManagedFormList
         {
@@ -38,7 +40,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             get;
         }
 
-
+        private GivenFormsManagement FormManager
+        {
+            get;
+            set;
+        }
 
         public GivenFormManagementTestFormat()
         {
@@ -90,9 +96,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             OrderingCommands.AddRange(commands);
         }
 
-        public GivenFormsManagement ConstructFormsManagement() 
+        public GivenFormsManagement UseFormsManagement() 
         {
-            return new GivenFormsManagement(ManagedFormList);
+            if (FormManager == null)
+            {
+                FormManager = new GivenFormsManagement(ManagedFormList);
+            }
+
+            return FormManager;
             
             /*
             if (typeof(T) == typeof(GivenFormsManagement))
@@ -117,7 +128,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             modified( OrderingCommands, ManagedFormList);
 
-            var form_management = ConstructFormsManagement();
+            var form_management = UseFormsManagement();
             form_management.Run(OrderingCommands);
 
             assert(OrderingCommands, ManagedFormList);
@@ -129,7 +140,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             modified(OrderingCommands, ManagedFormList);
 
-            var form_management = ConstructFormsManagement();
+            var form_management = UseFormsManagement();
             form_management.RunAndRecord(OrderingCommands);
 
             assert(form_management, OrderingCommands, ManagedFormList);
@@ -137,7 +148,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
         protected void AssertUndo(Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            var form_management = ConstructFormsManagement();
+            var form_management = UseFormsManagement();
             form_management.Undo();
 
             assert(form_management, OrderingCommands, ManagedFormList);

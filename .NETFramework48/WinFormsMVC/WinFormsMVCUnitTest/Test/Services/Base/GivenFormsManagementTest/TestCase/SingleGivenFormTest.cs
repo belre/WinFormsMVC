@@ -49,10 +49,15 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     },
                     NextOperation = ((item, form1) =>
                     {
-                        item[form1] = item.Next;
+                        item[form1] = form1.Text;
                         form1.Text = item.Next;
+                        _was_next = true;
                     }),
-                    PrevOperation = ((item, form1) => { form1.Text = item[form1]; }),
+                    PrevOperation = ((item, form1) =>
+                    {
+                        form1.Text = item[form1];
+                        _was_prev = true;
+                    }),
                     FinalOperation = ((item) => { _was_finalize = true; }),
                     ErrorOperation = ((item) => { _was_error = true; })
                 }
@@ -88,11 +93,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
+                Assert.IsTrue(_was_next);
+                Assert.IsFalse(_was_prev);
                 Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(ValidationText, forms.First().Text);
             });
             
-            
+            AssertUndo((management, commands, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsTrue(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue(_was_next);
+                Assert.IsTrue(_was_prev);
+                Assert.IsTrue((commands.First()).WasThroughValidation);
+                Assert.AreEqual(DefaultText, forms.First().Text);
+            });
             
         }
 
