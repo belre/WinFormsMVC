@@ -8,7 +8,7 @@ using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 using WinFormsMVCUnitTest.Test.View;
 
-namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
+namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
     public class SingleGivenFormTest : GivenFormManagementTestFormat
@@ -93,9 +93,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.AreEqual(ValidationText, forms.First().Text);
             });
             
-
-
-
+            
+            
         }
 
         [TestMethod, TestCategory("異常系")]

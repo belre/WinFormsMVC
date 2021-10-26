@@ -11,7 +11,7 @@ using WinFormsMVC.View;
 using WinFormsMVCUnitTest.Test.View;
 using WinFormsMVCUnitTest.Test.View.BaseForm;
 
-namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
+namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
     public class PerfectTreeFormsTest : GivenFormManagementTestFormat

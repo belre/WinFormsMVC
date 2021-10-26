@@ -9,7 +9,7 @@ using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 using WinFormsMVCUnitTest.Test.View;
 
-namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
+namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
     public class IsonatedGivenFormsTest : GivenFormManagementTestFormat

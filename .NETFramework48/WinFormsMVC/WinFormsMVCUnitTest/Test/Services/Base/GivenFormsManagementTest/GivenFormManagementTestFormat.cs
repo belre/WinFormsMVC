@@ -12,7 +12,7 @@ using WinFormsMVC.Services.Base;
 using WinFormsMVC.View;
 using WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest;
 
-namespace WinFormsMVCUnitTest.Test.Services.Base
+namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     public class GivenFormManagementTestFormat
     {
