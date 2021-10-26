@@ -67,6 +67,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.SIMPLE_ACTION;
         }
 
+        protected override void AssertAction(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.AssertSimpleAction(modified, assert);
+        }
+
         // --- RootInvoker --- //
 
         [TestMethod, TestCategory("正常系")]
@@ -82,9 +87,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -100,7 +103,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction( modified, assert);
+            AssertAction( modified, assert);
         }
 
 
@@ -116,9 +119,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -134,7 +135,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -150,9 +151,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -168,7 +167,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
         }
 
 
@@ -186,9 +185,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define( ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -204,7 +201,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -220,9 +217,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define( ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -231,7 +226,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
         }
 
 
@@ -254,9 +249,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -272,7 +265,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -289,9 +282,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -301,7 +292,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
 
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
 
         }
 
@@ -326,9 +317,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation); // Validationはされる
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -337,7 +326,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
         }
 
 
@@ -364,9 +353,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsTrue(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidationError();
                 Assert.IsTrue((list.First()).WasThroughValidation);
                 foreach (var form in forms)
                 {
@@ -375,7 +362,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
 
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
 
         }
 
@@ -397,15 +384,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsFalse(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertNotValidating();
                 Assert.IsFalse((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
             });
 
 
-            AssertSimpleAction(modified, assert);
+            AssertAction(modified, assert);
 
         }
 

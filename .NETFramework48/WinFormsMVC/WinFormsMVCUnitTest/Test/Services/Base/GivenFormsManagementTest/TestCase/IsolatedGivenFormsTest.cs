@@ -58,36 +58,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             UpdateCommands(new List<Command>()
             {
-                new GenericCommand<BaseFormModel.ChildForm1, TextItem>()
-                {
-                    Invoker = forms.First(),
-                    IsForSelf = true,
-                    Validation = (item) =>
-                    {
-                        item.Next = ValidationText;
-                        CommonCommandStatus.WasValidation = true;
-                        return true;
-                    },
-                    NextOperation = ((item, form1) =>
-                    {
-                        CommonCommandStatus.WasNext = true;
-                        item[form1] = form1.Text;
-                        form1.Text = item.Next;
-                    }),
-                    PrevOperation = ((item, form1) =>
-                    {
-                        CommonCommandStatus.WasPrev = true;
-                        form1.Text = item[form1];
-                    }),
-                    FinalOperation = ((item) =>
-                    {
-                        CommonCommandStatus.WasFinalized = true;
-                    }),
-                    ErrorOperation = ((item) =>
-                    {
-                        CommonCommandStatus.WasError = true;
-                    })
-                }
+                CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.First(), ValidationText)
             });
 
             TestActionMode = ActionMode.SIMPLE_ACTION;

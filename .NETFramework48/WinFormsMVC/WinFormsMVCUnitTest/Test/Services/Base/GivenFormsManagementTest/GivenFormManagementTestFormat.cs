@@ -155,11 +155,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 },
                 NextOperation = ((item, form1) =>
                 {
-                    item[form1] = item.Next;
+                    CommonCommandStatus.WasNext = true;
+                    item[form1] = form1.Text;
                     form1.Text = item.Next;
                 }),
                 PrevOperation = ((item, form1) =>
                 {
+                    CommonCommandStatus.WasPrev = true;
                     form1.Text = item[form1];
                 }),
                 FinalOperation = ((item) =>
