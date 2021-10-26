@@ -44,7 +44,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             }
 
 
-            public void AssertError()
+            public void AssertValidationError()
             {
                 Assert.IsTrue(WasValidation);
                 Assert.IsTrue(WasError);

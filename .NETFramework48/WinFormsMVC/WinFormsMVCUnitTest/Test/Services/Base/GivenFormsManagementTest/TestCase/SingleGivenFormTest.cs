@@ -141,7 +141,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 };
             }, (list, forms) =>
             {
-                CommonCommandStatus.AssertError();
+                CommonCommandStatus.AssertValidationError();
                 Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });

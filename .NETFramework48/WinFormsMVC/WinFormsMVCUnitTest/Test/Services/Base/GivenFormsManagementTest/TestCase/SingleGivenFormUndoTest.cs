@@ -93,7 +93,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.ValidationError();
 
-            AssertUndo((commands, forms) => { CommonCommandStatus.AssertError(); });
+            AssertUndo((commands, forms) => { CommonCommandStatus.AssertValidationError(); });
         }
         
     }
