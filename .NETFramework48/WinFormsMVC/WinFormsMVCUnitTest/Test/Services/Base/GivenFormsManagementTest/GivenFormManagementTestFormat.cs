@@ -80,6 +80,15 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 //Assert.IsTrue(WasNext);
                 Assert.IsTrue(WasPrev);
             }
+
+            public void AssertUndoButNotTarget()
+            {
+                //Assert.IsTrue(WasValidation);
+                Assert.IsFalse(WasError);
+                Assert.IsTrue(WasFinalized);
+                //Assert.IsTrue(WasNext);
+                Assert.IsFalse(WasPrev);
+            }
         }
 
         protected CommandExecutionStatus CommonCommandStatus

@@ -100,9 +100,9 @@ namespace WinFormsMVC.Services.Base
                     if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
                     {
                         command.Prev(form);
-                        command.Invalidate();
                     }
                 }
+                command.Invalidate();
             }
         }
 

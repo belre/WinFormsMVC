@@ -67,6 +67,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormTest.cs" />
     <Compile Include="Test\Services\Base\MementoManagement\PushAndPopTest.cs" />
     <Compile Include="Test\Services\FormsManagement\LaunchAndCloseTest.cs" />
