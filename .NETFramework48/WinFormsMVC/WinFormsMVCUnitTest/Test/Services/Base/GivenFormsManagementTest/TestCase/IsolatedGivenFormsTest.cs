@@ -13,16 +13,32 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
     [TestClass]
     public class IsolatedGivenFormsTest : GivenFormManagementTestFormat
     {
+        protected IEnumerable<string> FormText
+        {
+            get;
+        }
+
+        protected Dictionary<BaseForm, string> DefaultTextDictionary
+        {
+            get;
+        }
 
         public IsolatedGivenFormsTest()
         {
-            var forms = new List<BaseForm>()
+            DefaultTextDictionary = new Dictionary<BaseForm, string>();
+
+            Func<BaseForm, string, BaseForm> allocator = (form, s) =>
             {
-                new BaseFormModel.ChildForm1() { Text = "First Text, ChildForm1" },
-                new BaseFormModel.ChildForm2() { Text = "First Text, ChildForm2-1" },
-                new BaseFormModel.ChildForm2() { Text = "First Text, ChildForm2-2" },
-                new BaseFormModel.ChildForm3() { Text = "First Text, ChildForm3" }
+                DefaultTextDictionary[form] = s;
+                form.Text = s;
+                return form;
             };
+
+            var forms = new List<BaseForm>();
+            forms.Add(allocator(new BaseFormModel.ChildForm1(), "First Text, ChildForm1"));
+            forms.Add(allocator(new BaseFormModel.ChildForm2(), "First Text, ChildForm2-1"));
+            forms.Add(allocator(new BaseFormModel.ChildForm2(), "First Text, ChildForm2-2"));
+            forms.Add(allocator(new BaseFormModel.ChildForm3(), "First Text, ChildForm3"));
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()
@@ -93,8 +109,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
+                
+
                 foreach (var form in forms)
                 {
+                    
                     if (form == forms.Skip(1).First())
                     {
                         Assert.AreNotEqual("Validation Text", form.Text);

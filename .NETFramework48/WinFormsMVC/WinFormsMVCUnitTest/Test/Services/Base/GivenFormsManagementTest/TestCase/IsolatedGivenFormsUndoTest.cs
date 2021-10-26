@@ -16,49 +16,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public IsolatedGivenFormsUndoTest()
         {
-            var forms = new List<BaseForm>()
-            {
-                new BaseFormModel.ChildForm1() { Text = "First Text, ChildForm1" },
-                new BaseFormModel.ChildForm2() { Text = "First Text, ChildForm2-1" },
-                new BaseFormModel.ChildForm2() { Text = "First Text, ChildForm2-2" },
-                new BaseFormModel.ChildForm3() { Text = "First Text, ChildForm3" }
-            };
-            UpdateForms(forms);
-
-            UpdateCommands(new List<Command>()
-            {
-                new GenericCommand<BaseFormModel.ChildForm1, TextItem>()
-                {
-                    Invoker = forms.First(),
-                    IsForSelf = true,
-                    Validation = (item) =>
-                    {
-                        item.Next = "Validation Text - ChildForm1";
-                        CommonCommandStatus.WasValidation = true;
-                        return true;
-                    },
-                    NextOperation = ((item, form1) =>
-                    {
-                        CommonCommandStatus.WasNext = true;
-                        item[form1] = form1.Text;
-                        form1.Text = item.Next;
-                    }),
-                    PrevOperation = ((item, form1) =>
-                    {
-                        CommonCommandStatus.WasPrev = true;
-                        form1.Text = item[form1];
-                    }),
-                    FinalOperation = ((item) =>
-                    {
-                        CommonCommandStatus.WasFinalized = true;
-                    }),
-                    ErrorOperation = ((item) =>
-                    {
-                        CommonCommandStatus.WasError = true;
-                    })
-                }
-            });
-
             TestActionMode = ActionMode.SIMPLE_ACTION;
         }
 
@@ -106,7 +63,20 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 CommonCommandStatus.AssertUndoButNotTarget();
                 Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
             }));
+        }
 
+        [TestMethod, TestCategory("差分")]
+
+        public override void CalledBySelf_NullInvoker()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+            base.CalledBySelf_NullInvoker();
+
+            AssertUndo(((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
+            }));
         }
     }
 }
