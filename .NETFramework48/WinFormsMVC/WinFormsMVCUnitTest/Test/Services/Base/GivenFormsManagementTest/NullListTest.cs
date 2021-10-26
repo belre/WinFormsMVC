@@ -41,7 +41,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         }
 
         [TestMethod]
-        public void CalledBySelfTest()
+        public void CalledBySelf()
         {
             var given_form_obj = new GivenFormsManagement(null);
 

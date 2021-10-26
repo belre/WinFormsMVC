@@ -33,10 +33,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public override void CalledBySelf_RootInvoker_Test(Action<List<Command>, List<BaseForm>> modified,
+        public override void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySelf_RootInvoker_Test(null, (commands, forms) =>
+            base.CalledBySelf_RootInvoker(null, (commands, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -54,10 +54,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public override void CalledBySelf_LastInvoker_Test(Action<List<Command>, List<BaseForm>> modified,
+        public override void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySelf_LastInvoker_Test(null, (commands, forms) =>
+            base.CalledBySelf_LastInvoker(null, (commands, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -74,10 +74,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public override void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified,
+        public override void RecursiveFromRootInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.RecursiveFromRootInvokerTest(null, (commands, forms) =>
+            base.RecursiveFromRootInvoker(null, (commands, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -101,10 +101,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public override void ValidationErrorTest(Action<List<Command>, List<BaseForm>> modified,
+        public override void ValidationError(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.ValidationErrorTest((list, forms) =>
+            base.ValidationError((list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -124,9 +124,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public override void ValidationNullCheckTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public override void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.ValidationNullCheckTest((list, forms) =>
+            base.ValidationNullCheck((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)list[0]).Validation = null;
             }, null);

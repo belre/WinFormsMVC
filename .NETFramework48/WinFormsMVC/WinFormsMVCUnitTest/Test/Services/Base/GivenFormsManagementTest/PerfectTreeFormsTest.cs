@@ -118,7 +118,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledBySelf_RootInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             Define(ref modified, (list, forms) =>
             {
@@ -152,7 +152,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledByRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledByRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -190,7 +190,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void RecursiveFromRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void RecursiveFromRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             Define(ref modified, (list, forms) =>
             {
@@ -230,7 +230,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledBySecondLeftInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySecondLeftInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -275,7 +275,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void RecursiveFromSecondLeftRootInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void RecursiveFromSecondLeftRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -328,7 +328,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledBySecondRightInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySecondRightInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
 
@@ -373,7 +373,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledBySelf_LastInvoker_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             
             Define(ref modified, (list, forms) =>
@@ -409,7 +409,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledByLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledByLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -438,7 +438,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void RecursiveFromLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void RecursiveFromLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -471,7 +471,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledByFirstAndLastInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -516,7 +516,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledBySelf_AllLeftInvokers_Test(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledBySelf_AllLeftInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             var was_searched_left_method = new Dictionary<BaseForm, bool>();
 
@@ -579,7 +579,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledByAllLeftInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledByAllLeftInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             var was_searched_left_method = new Dictionary<BaseForm, bool>();
 
@@ -645,7 +645,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledByAllRightInvokersTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledByAllRightInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
 
@@ -715,7 +715,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void CalledByNullInvokerTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -752,7 +752,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void ValidationErrorTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
             Define(ref modified, (list, forms) =>
@@ -792,7 +792,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public virtual void ValidationNullCheckTest(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public virtual void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
 
 
