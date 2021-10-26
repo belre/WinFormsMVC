@@ -10,10 +10,10 @@ using WinFormsMVCUnitTest.Test.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public class SimplyConnectedFormsUndoTest : SimplyConnectedFormsTest
+    public class SimplyConnectedGivenFormsUndoTest : SimplyConnectedGivenFormsTest
     {
 
-        public SimplyConnectedFormsUndoTest()
+        public SimplyConnectedGivenFormsUndoTest()
         {
         }
 
@@ -33,7 +33,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             AssertUndo(((commands, forms) =>
             {
-                CommonCommandStatus.AssertUndo();
+                CommonCommandStatus.AssertUndoButNotTarget();
 
                 foreach (var form in forms)
                 {
@@ -76,7 +76,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             AssertUndo((commands, forms) =>
             {
-                CommonCommandStatus.AssertUndo();
+                CommonCommandStatus.AssertUndoButNotTarget();
 
                 foreach (var form in forms)
                 {
