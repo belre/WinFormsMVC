@@ -79,9 +79,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -113,9 +113,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -147,9 +147,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -183,9 +183,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define( ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -217,9 +217,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define( ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -251,9 +251,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -286,9 +286,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -323,9 +323,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation); // Validationはされる
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation); // Validationはされる
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -352,7 +352,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                         ((GenericCommand<BaseForm, TextItem>)command).Validation = (item) =>
                         {
                             item.Next = DefaultValidationText(0);
-                            _was_validation = true;
+                            CommonCommandStatus.WasValidation = true;
                             return false;
                         };
                     }
@@ -361,9 +361,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsTrue(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsTrue(CommonCommandStatus.WasError);
                 Assert.IsTrue((list.First()).WasThroughValidation);
                 foreach (var form in forms)
                 {
@@ -394,9 +394,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                Assert.IsFalse(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsFalse(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsFalse((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
             });

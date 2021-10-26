@@ -44,22 +44,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Validation = (item) =>
                     {
                         item.Next = ValidationText;
-                        _was_validation = true;
+                        CommonCommandStatus.WasValidation = true;
                         return true;
                     },
                     NextOperation = ((item, form1) =>
                     {
                         item[form1] = form1.Text;
                         form1.Text = item.Next;
-                        _was_next = true;
+                        CommonCommandStatus.WasNext = true;
                     }),
                     PrevOperation = ((item, form1) =>
                     {
                         form1.Text = item[form1];
-                        _was_prev = true;
+                        CommonCommandStatus.WasPrev = true;
                     }),
-                    FinalOperation = ((item) => { _was_finalize = true; }),
-                    ErrorOperation = ((item) => { _was_error = true; })
+                    FinalOperation = ((item) => { CommonCommandStatus.WasFinalized = true; }),
+                    ErrorOperation = ((item) => { CommonCommandStatus.WasError = true; })
                 }
             });
         }
@@ -73,10 +73,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             }, (commands, forms) =>
             {
-
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(ValidationText, forms.First().Text);
             });
@@ -90,23 +87,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             }, (management, commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue(_was_next);
-                Assert.IsFalse(_was_prev);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(ValidationText, forms.First().Text);
             });
             
             AssertUndo((management, commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsTrue(_was_finalize);
-                Assert.IsFalse(_was_error);
-                Assert.IsTrue(_was_next);
-                Assert.IsTrue(_was_prev);
-                Assert.IsTrue((commands.First()).WasThroughValidation);
+                CommonCommandStatus.AssertUndo();
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });
             
@@ -121,10 +109,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 (list[0]).IsForSelf = false;
             }, (list, forms) =>
             {
-
-                Assert.IsTrue(_was_validation);         // Validationはされる
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);         // 該当データがいないのでテキストは同じ
             });
@@ -139,15 +124,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
                 {
                     item.Next = ValidationText;
-                    _was_validation = true;
+                    CommonCommandStatus.WasValidation = true;
                     return false;
                 };
             }, (list, forms) =>
             {
-
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsTrue(_was_error);
+                CommonCommandStatus.AssertError();
                 Assert.IsTrue((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });
@@ -161,10 +143,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
             }, (list, forms) =>
             {
-
-                Assert.IsFalse(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                CommonCommandStatus.AssertNotValidating();
                 Assert.IsFalse((list.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });

@@ -16,11 +16,76 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     public class GivenFormManagementTestFormat
     {
-        protected bool _was_validation = false;
-        protected bool _was_finalize = false;
-        protected bool _was_error = false;
-        protected bool _was_next = false;
-        protected bool _was_prev;
+        protected class CommandExecutionStatus
+        {
+            public bool WasValidation  = false;
+            public bool WasFinalized = false;
+            public bool WasError = false;
+            public bool WasNext = false;
+            public bool WasPrev = false;
+
+            public void Clear()
+            {
+                WasValidation = false;
+                WasFinalized = false;
+                WasError = false;
+                WasNext = false;
+                WasPrev = false;
+            }
+
+            public void AssertNotValidating()
+            {
+                Assert.IsFalse(WasValidation);
+                Assert.IsFalse(WasError);
+                Assert.IsFalse(WasFinalized);
+                Assert.IsFalse(WasNext);
+                Assert.IsFalse(WasPrev);
+            }
+
+
+            public void AssertError()
+            {
+                Assert.IsTrue(WasValidation);
+                Assert.IsTrue(WasError);
+                Assert.IsFalse(WasFinalized);
+                Assert.IsFalse(WasNext);
+                Assert.IsFalse(WasPrev);
+            }
+
+            public void AssertValidated()
+            {
+                Assert.IsTrue(WasValidation);
+                Assert.IsFalse(WasError);
+                Assert.IsFalse(WasFinalized);
+                Assert.IsTrue(WasNext);
+                Assert.IsFalse(WasPrev);
+            }
+
+
+            public void AssertValidatedButNotTarget()
+            {
+                Assert.IsTrue(WasValidation);
+                Assert.IsFalse(WasError);
+                Assert.IsFalse(WasFinalized);
+                Assert.IsFalse(WasNext);
+                Assert.IsFalse(WasPrev);
+            }
+
+            public void AssertUndo()
+            {
+                //Assert.IsTrue(WasValidation);
+                Assert.IsFalse(WasError);
+                Assert.IsTrue(WasFinalized);
+                //Assert.IsTrue(WasNext);
+                Assert.IsTrue(WasPrev);
+            }
+        }
+
+        protected CommandExecutionStatus CommonCommandStatus
+        {
+            get;
+        }
+
 
         private List<BaseForm> ManagedFormList
         {
@@ -50,6 +115,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             ManagedFormList = new List<BaseForm>();
             OrderingCommands = new List<Command>();
+            CommonCommandStatus = new CommandExecutionStatus();
         }
 
         protected Command CreateDefaultCommand<T>(BaseForm invoker, string validation_text) where T : BaseForm
@@ -61,7 +127,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Validation = (item) =>
                 {
                     item.Next = validation_text;
-                    _was_validation = true;
+                    CommonCommandStatus.WasValidation = true;
                     return true;
                 },
                 NextOperation = ((item, form1) =>
@@ -75,11 +141,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 }),
                 FinalOperation = ((item) =>
                 {
-                    _was_finalize = true;
+                    CommonCommandStatus.WasFinalized = true;
                 }),
                 ErrorOperation = ((item) =>
                 {
-                    _was_error = true;
+                    CommonCommandStatus.WasError = true;
                 })
             };
         }
@@ -94,6 +160,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             OrderingCommands.Clear();
             OrderingCommands.AddRange(commands);
+
         }
 
         public GivenFormsManagement UseFormsManagement() 
@@ -138,6 +205,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             Action<List<Command>, List<BaseForm>> modified,
             Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            CommonCommandStatus.Clear();
+
             modified(OrderingCommands, ManagedFormList);
 
             var form_management = UseFormsManagement();

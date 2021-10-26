@@ -38,9 +38,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.CalledBySelf_RootInvoker(null, (commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -59,9 +59,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.CalledBySelf_LastInvoker(null, (commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -79,9 +79,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.RecursiveFromRootInvoker(null, (commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 foreach (var form in forms)
@@ -113,7 +113,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                         ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
                         {
                             item.Next = DefaultValidationText(0);
-                            _was_validation = true;
+                            CommonCommandStatus.WasValidation = true;
                             return false;
                         };
                     }

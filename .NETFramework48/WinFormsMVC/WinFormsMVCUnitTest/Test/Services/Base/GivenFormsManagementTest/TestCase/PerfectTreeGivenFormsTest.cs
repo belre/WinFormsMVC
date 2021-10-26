@@ -77,9 +77,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.RecursiveFromRootInvoker(null, (commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 int throw_count = 0;
@@ -165,9 +165,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.RecursiveFromSecondLeftRootInvoker(null, (commands, forms) =>
             {
-                Assert.IsTrue(_was_validation);
-                Assert.IsFalse(_was_finalize);
-                Assert.IsFalse(_was_error);
+                Assert.IsTrue(CommonCommandStatus.WasValidation);
+                Assert.IsFalse(CommonCommandStatus.WasFinalized);
+                Assert.IsFalse(CommonCommandStatus.WasError);
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 var is_ancestor_target = new Dictionary<BaseForm, bool>();
@@ -299,7 +299,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                         ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
                         {
                             item.Next = DefaultValidationText(0);
-                            _was_validation = true;
+                            CommonCommandStatus.WasValidation = true;
                             return false;
                         };
                     }
