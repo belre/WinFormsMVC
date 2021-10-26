@@ -67,7 +67,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertAction<GivenFormsManagement>((list, forms) =>
             {
 
-            }, null, (commands, forms) =>
+            }, (commands, forms) =>
             {
 
                 Assert.IsTrue(_was_validation);
@@ -84,7 +84,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertMemorableAction<GivenFormsManagement>((list, forms) =>
             {
 
-            }, null, (management, commands, forms) =>
+            }, (management, commands, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -105,7 +105,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             {
                 (list[0]).Invoker = null;
                 (list[0]).IsForSelf = false;
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
 
                 Assert.IsTrue(_was_validation);         // Validationはされる
@@ -128,7 +128,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     _was_validation = true;
                     return false;
                 };
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
 
                 Assert.IsTrue(_was_validation);
@@ -145,7 +145,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
 
                 Assert.IsFalse(_was_validation);

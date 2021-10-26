@@ -66,7 +66,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             AssertAction<GivenFormsManagement>((list, forms) =>
             {
 
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -87,7 +87,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
 
                 Assert.IsTrue(_was_validation);
@@ -123,7 +123,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -146,7 +146,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsFalse(_was_validation);
                 Assert.IsFalse(_was_finalize);
@@ -169,7 +169,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
@@ -193,7 +193,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                 }
 
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
@@ -218,7 +218,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 }
 
 
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation); // Validationはされる
                 Assert.IsFalse(_was_finalize);
@@ -242,7 +242,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         (command).IsRecursive = true;
                     }
                 }
-            }, null, (list, forms) =>
+            }, (list, forms) =>
             {
                 Assert.IsTrue(_was_validation);         // Validationはされる
                 Assert.IsFalse(_was_finalize);
