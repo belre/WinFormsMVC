@@ -62,7 +62,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.CalledBySelf();
 
-            AssertUndo((commands, forms) => { CommonCommandStatus.AssertUndo(); });
+            AssertUndo((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndo();
+                Assert.AreEqual(DefaultText, forms.First().Text);
+            });
         }
 
         [TestMethod, TestCategory("差分")]

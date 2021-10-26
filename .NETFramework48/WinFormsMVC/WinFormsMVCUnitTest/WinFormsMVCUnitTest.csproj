@@ -61,7 +61,8 @@
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
     <Compile Include="Test\Request\Item\TextItem\BackupTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\GivenFormManagementTestFormat.cs" />
-    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsonatedGivenFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsUndoTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\NullListTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsTest.cs" />
