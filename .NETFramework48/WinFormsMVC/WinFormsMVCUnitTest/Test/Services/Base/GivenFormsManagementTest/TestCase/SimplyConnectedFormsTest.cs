@@ -391,7 +391,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
 
             AssertAction(modified, assert);
-
         }
 
     }

@@ -15,23 +15,75 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public SimplyConnectedFormsUndoTest()
         {
-            DefaultBaseForm = new WinFormsMVC.View.BaseForm()
-            {
-                Text = "Default BaseForm"
-            };
+            TestActionMode = ActionMode.SIMPLE_ACTION;
+        }
 
-            var forms = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree);
-            UpdateForms(forms);
+        protected override void AssertAction(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.AssertMemorableAction(modified, assert);
+        }
 
-            UpdateCommands(new List<Command>()
-            {
-                CreateDefaultCommand<BaseForm>(forms.First(), DefaultValidationText(0))
-            });
-
-
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledBySelf_RootInvoker(modified, assert);
+
+            AssertUndo(((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndo();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            }));
         }
 
 
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledByRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledByRootInvoker(modified, assert);
+
+            AssertUndo(((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndo();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+
+                }
+            }));
+        }
+
+
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledBySelf_LastInvoker(modified, assert);
+
+            AssertUndo((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndo();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            });
+        }
     }
 }
