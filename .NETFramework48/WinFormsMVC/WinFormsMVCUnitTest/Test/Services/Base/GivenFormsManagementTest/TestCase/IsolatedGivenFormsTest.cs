@@ -23,6 +23,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             get;
         }
 
+        protected string ValidationText
+        {
+            get
+            {
+                return "Validation Text";
+            }
+        }
+
         protected override void AssertAction(
             Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
@@ -56,7 +64,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     IsForSelf = true,
                     Validation = (item) =>
                     {
-                        item.Next = "Validation Text - ChildForm1";
+                        item.Next = ValidationText;
                         CommonCommandStatus.WasValidation = true;
                         return true;
                     },
@@ -96,7 +104,17 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 CommonCommandStatus.AssertValidated();
                 Assert.IsTrue(list.First().WasThroughValidation);
-                Assert.AreEqual("Validation Text - ChildForm1", forms.First().Text);
+                foreach (var form in forms)
+                {
+                    if (form == forms.First())
+                    {
+                        Assert.AreEqual(ValidationText, form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                    }
+                }
             });
         }
 
@@ -105,7 +123,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                
                 list.First().Invoker = forms.First();
                 list.First().IsForSelf = false;
 
@@ -117,16 +134,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
                 Assert.IsTrue((list.First()).WasThroughValidation);
-
-                
-
                 foreach (var form in forms)
                 {
-                    
-                    if (form == forms.Skip(1).First())
-                    {
-                        Assert.AreNotEqual("Validation Text", form.Text);
-                    }
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
             });
         }
@@ -154,7 +164,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 CommonCommandStatus.AssertValidationError();
 
                 Assert.IsTrue(list.First().WasThroughValidation);
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
             });
         }
 
@@ -175,7 +188,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 CommonCommandStatus.AssertNotValidating();
                 Assert.IsFalse(list.First().WasThroughValidation);
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
             });
         }
 
@@ -196,7 +212,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue(list.First().WasThroughValidation);
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);         // 該当データがいないのでテキストは同じ
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);        // 該当データがいないのでテキストは同じ
+                }
+       
             });
         }
 
@@ -219,7 +239,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
                 Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);         // 該当データがいないのでテキストは同じ
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);        // 該当データがいないのでテキストは同じ
+                }
             });
         }
 
@@ -243,7 +266,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
                 Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text); // 該当データがいないのでテキストは同じ            });
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);       
+                }
             });
         }
 
@@ -266,7 +293,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
                 Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);         // 該当データがいないのでテキストは同じ          });
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
             });
 
         }

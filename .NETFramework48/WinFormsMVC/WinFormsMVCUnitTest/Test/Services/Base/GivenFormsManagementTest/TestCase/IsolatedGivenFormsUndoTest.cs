@@ -33,7 +33,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             AssertUndo((commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
             });
         }
 
@@ -44,11 +47,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             base.CalledBy2Invokers();
 
-            AssertUndo(((commands, forms) =>
+            AssertUndo((commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
-            }));
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
 
         }
 
@@ -58,11 +64,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             base.CalledByExistedInvoker();
 
-            AssertUndo(((commands, forms) =>
+            AssertUndo((commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
-            }));
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
         }
 
         [TestMethod, TestCategory("差分")]
@@ -72,11 +81,85 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             base.CalledBySelf_NullInvoker();
 
-            AssertUndo(((commands, forms) =>
+            AssertUndo((commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
-                Assert.AreEqual("First Text, ChildForm1", forms.First().Text);
-            }));
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
+        }
+
+        [TestMethod, TestCategory("差分")]
+
+        public override void CalledByNullInvoker()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledByNullInvoker();
+
+            AssertUndo((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
+        }
+
+
+        [TestMethod, TestCategory("差分")]
+        public override void RecursiveFromExistedInvoker()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.RecursiveFromExistedInvoker();
+
+
+            AssertUndo((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
+        }
+
+        [TestMethod, TestCategory("差分")]
+        public override void ValidationError()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.ValidationError();
+
+            AssertUndo((commands, forms) =>
+            {
+                CommonCommandStatus.AssertValidationError();
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
+        }
+
+        [TestMethod, TestCategory("差分")]
+        public override void ValidationNullCheck()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.ValidationNullCheck();
+
+            AssertUndo((commands, forms) =>
+            {
+                CommonCommandStatus.AssertNotValidating();
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
+                }
+            });
         }
     }
 }
