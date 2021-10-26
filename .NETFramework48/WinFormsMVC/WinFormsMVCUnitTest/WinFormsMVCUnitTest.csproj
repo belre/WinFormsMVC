@@ -64,6 +64,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\NullListTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsTest.cs" />
