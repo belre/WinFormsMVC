@@ -85,5 +85,64 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
         }
+
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledByLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledByLastInvoker(modified, assert);
+
+            AssertUndo(((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            }));
+        }
+
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledByFirstAndLastInvoker(modified, assert);
+            
+            AssertUndo(((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndo();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            }));
+        }
+
+
+        public override void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.CalledByNullInvoker(modified, assert);
+
+
+            AssertUndo(((commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            }));
+        }
     }
 }

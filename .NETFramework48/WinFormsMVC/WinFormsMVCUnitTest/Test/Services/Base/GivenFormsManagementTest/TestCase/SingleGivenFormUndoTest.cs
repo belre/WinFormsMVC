@@ -15,7 +15,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
     {
         public SingleGivenFormUndoTest()
         {
-           
+            
             TestActionMode = ActionMode.MEMORABLE_ACTION;
         }
 
