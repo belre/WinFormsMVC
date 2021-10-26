@@ -49,9 +49,8 @@ namespace WinFormsMVC.Services
         /// <summary>
         /// 窓口を表すクラスです。
         /// </summary>
-        public ViewFacade Facade
+        internal ViewFacade Facade
         {
-            get { return _facade; }
             set { _facade = value; }
         }
 

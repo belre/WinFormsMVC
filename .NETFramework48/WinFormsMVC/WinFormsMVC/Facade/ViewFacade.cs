@@ -21,7 +21,7 @@ namespace WinFormsMVC.Facade
         /// <summary>
         /// 現在管理しているFormの管理オブジェクトを返します。
         /// </summary>
-        public FormsManagement FormManager { get; }
+        protected FormsManagement FormManager { get; }
 
         public ViewFacade(FormsManagement form_manager)
         {
