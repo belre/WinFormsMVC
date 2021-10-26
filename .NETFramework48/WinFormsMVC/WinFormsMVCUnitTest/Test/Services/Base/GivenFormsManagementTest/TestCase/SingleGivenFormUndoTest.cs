@@ -52,18 +52,15 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.MEMORABLE_ACTION;
         }
 
+        protected override void AssertAction(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.AssertMemorableAction(modified, assert);
+        }
+
         [TestMethod, TestCategory("差分")]
         public override void CalledBySelf()
         {
-            AssertMemorableAction((list, forms) =>
-            {
-
-            }, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertValidated();
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-                Assert.AreEqual(ValidationText, forms.First().Text);
-            });
+            base.CalledBySelf();
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertUndo(); });
         }
@@ -72,17 +69,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public override void CalledByNullInvoker()
         {
-            AssertMemorableAction((list, forms) =>
-            {
-                (list[0]).Invoker = null;
-                (list[0]).IsForSelf = false;
-            }, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertValidatedButNotTarget();
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-                Assert.AreEqual(DefaultText, forms.First().Text);         // 該当データがいないのでテキストは同じ
-            });
-
+            base.CalledByNullInvoker();
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertUndoButNotTarget(); });
         }
 
@@ -90,39 +77,20 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public override void ValidationNullCheck()
         {
-            AssertMemorableAction((list, forms) =>
-            {
-                ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
-            }, (list, forms) =>
-            {
-                CommonCommandStatus.AssertNotValidating();
-                Assert.IsFalse((list.First()).WasThroughValidation);
-                Assert.AreEqual(DefaultText, forms.First().Text);
-            });
+            base.ValidationNullCheck();
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertNotValidating(); });
         }
 
+        
         [TestMethod, TestCategory("差分")]
 
         public override void ValidationError()
         {
-            AssertMemorableAction((list, forms) =>
-            {
-                ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
-                {
-                    item.Next = ValidationText;
-                    CommonCommandStatus.WasValidation = true;
-                    return false;
-                };
-            }, (list, forms) =>
-            {
-                CommonCommandStatus.AssertError();
-                Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual(DefaultText, forms.First().Text);
-            });
+            base.ValidationError();
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertError(); });
         }
+        
     }
 }

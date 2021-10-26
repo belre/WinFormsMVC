@@ -211,6 +211,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             */
         }
 
+        protected virtual void AssertAction(
+            Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+
+        }
+
         protected void AssertSimpleAction( 
             Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)

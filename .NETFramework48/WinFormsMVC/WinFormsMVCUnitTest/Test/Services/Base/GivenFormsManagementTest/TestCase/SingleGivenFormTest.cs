@@ -67,11 +67,18 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.SIMPLE_ACTION;
         }
 
+        protected override void AssertAction(
+            Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            AssertSimpleAction(modified, assert);
+        }
+
 
         [TestMethod, TestCategory("正常系")]
         public virtual void CalledBySelf()
         {
-            AssertSimpleAction((list, forms) =>
+            AssertAction((list, forms) =>
             {
 
             }, (commands, forms) =>
@@ -108,7 +115,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public virtual void CalledByNullInvoker()
         {
-            AssertSimpleAction((list, forms) =>
+            AssertAction((list, forms) =>
             {
                 (list[0]).Invoker = null;
                 (list[0]).IsForSelf = false;
@@ -124,7 +131,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public virtual void ValidationError()
         {
-            AssertSimpleAction((list, forms) =>
+            AssertAction((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
                 {
@@ -143,7 +150,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public virtual void ValidationNullCheck()
         {
-            AssertSimpleAction((list, forms) =>
+            AssertAction((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
             }, (list, forms) =>
