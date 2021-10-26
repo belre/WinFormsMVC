@@ -62,6 +62,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 CreateDefaultCommand<BaseForm>(forms.First(), DefaultValidationText(0))
             });
+
+
+            TestActionMode = ActionMode.SIMPLE_ACTION;
         }
 
         // --- RootInvoker --- //
@@ -97,7 +100,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction( modified, assert);
+            AssertSimpleAction( modified, assert);
         }
 
 
@@ -131,7 +134,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -165,7 +168,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
         }
 
 
@@ -201,7 +204,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -228,7 +231,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
         }
 
 
@@ -269,7 +272,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -298,7 +301,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
 
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
 
         }
 
@@ -334,7 +337,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 }
             });
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
         }
 
 
@@ -372,7 +375,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
 
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
 
         }
 
@@ -402,7 +405,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
 
 
-            AssertAction(modified, assert);
+            AssertSimpleAction(modified, assert);
 
         }
 

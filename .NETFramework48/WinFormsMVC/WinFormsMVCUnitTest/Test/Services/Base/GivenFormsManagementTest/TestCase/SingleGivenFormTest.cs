@@ -62,13 +62,16 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     ErrorOperation = ((item) => { CommonCommandStatus.WasError = true; })
                 }
             });
+
+
+            TestActionMode = ActionMode.SIMPLE_ACTION;
         }
 
 
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelf()
         {
-            AssertAction((list, forms) =>
+            AssertSimpleAction((list, forms) =>
             {
 
             }, (commands, forms) =>
@@ -79,31 +82,33 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
         }
 
+        /*
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelfAndUndo()
         {
             AssertMemorableAction((list, forms) =>
             {
 
-            }, (management, commands, forms) =>
+            }, ( commands, forms) =>
             {
                 CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(ValidationText, forms.First().Text);
             });
             
-            AssertUndo((management, commands, forms) =>
+            AssertUndo(( commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });
             
         }
+        */
 
         [TestMethod, TestCategory("異常系")]
         public void CalledByNullInvoker()
         {
-            AssertAction((list, forms) =>
+            AssertSimpleAction((list, forms) =>
             {
                 (list[0]).Invoker = null;
                 (list[0]).IsForSelf = false;
@@ -119,7 +124,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public void ValidationError()
         {
-            AssertAction((list, forms) =>
+            AssertSimpleAction((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
                 {
@@ -138,7 +143,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("異常系")]
         public void ValidationNullCheck()
         {
-            AssertAction((list, forms) =>
+            AssertSimpleAction((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
             }, (list, forms) =>

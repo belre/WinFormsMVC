@@ -16,6 +16,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 {
     public class GivenFormManagementTestFormat
     {
+
         protected class CommandExecutionStatus
         {
             public bool WasValidation  = false;
@@ -86,6 +87,18 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             get;
         }
 
+        protected enum ActionMode
+        {
+            UNDEFINED,
+            SIMPLE_ACTION,
+            MEMORABLE_ACTION
+        };
+
+        protected ActionMode TestActionMode
+        {
+            get;
+            set;
+        }
 
         private List<BaseForm> ManagedFormList
         {
@@ -116,6 +129,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             ManagedFormList = new List<BaseForm>();
             OrderingCommands = new List<Command>();
             CommonCommandStatus = new CommandExecutionStatus();
+            TestActionMode = ActionMode.UNDEFINED;
         }
 
         protected Command CreateDefaultCommand<T>(BaseForm invoker, string validation_text) where T : BaseForm
@@ -188,11 +202,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             */
         }
 
-
-        protected void AssertAction( 
+        protected void AssertSimpleAction( 
             Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            Assert.AreEqual(ActionMode.SIMPLE_ACTION, TestActionMode);
+
             modified( OrderingCommands, ManagedFormList);
 
             var form_management = UseFormsManagement();
@@ -203,8 +218,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
         protected void AssertMemorableAction(
             Action<List<Command>, List<BaseForm>> modified,
-            Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            Assert.AreEqual(ActionMode.MEMORABLE_ACTION, TestActionMode);
+
             CommonCommandStatus.Clear();
 
             modified(OrderingCommands, ManagedFormList);
@@ -212,15 +229,17 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             var form_management = UseFormsManagement();
             form_management.RunAndRecord(OrderingCommands);
 
-            assert(form_management, OrderingCommands, ManagedFormList);
+            assert(OrderingCommands, ManagedFormList);
         }
 
-        protected void AssertUndo(Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        protected void AssertUndo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
+            Assert.AreEqual(ActionMode.MEMORABLE_ACTION, TestActionMode);
+
             var form_management = UseFormsManagement();
             form_management.Undo();
 
-            assert(form_management, OrderingCommands, ManagedFormList);
+            assert(OrderingCommands, ManagedFormList);
         }
 
     }

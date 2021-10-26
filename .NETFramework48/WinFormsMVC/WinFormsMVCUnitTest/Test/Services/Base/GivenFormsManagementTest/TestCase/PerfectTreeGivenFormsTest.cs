@@ -30,6 +30,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), DefaultValidationText(0))
             });
+
+
+            TestActionMode = ActionMode.SIMPLE_ACTION;
         }
 
         [TestMethod, TestCategory("差分")]
