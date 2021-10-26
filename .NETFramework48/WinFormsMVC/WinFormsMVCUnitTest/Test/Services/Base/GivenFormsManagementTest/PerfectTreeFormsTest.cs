@@ -22,13 +22,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             set;
         }
 
-        protected string DefaultValidationText
+        protected string DefaultValidationText(int seq)
         {
-            get
-            {
-                return "Validation Text";
-            }
+            return string.Format("{0} - {1}", "Validation Text", seq);
         }
+
 
         protected void Define<T>(ref T instance, T default_instance) where T : class
         {
@@ -98,7 +96,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand<BaseForm>(forms.First(), DefaultValidationText)
+                CreateDefaultCommand<BaseForm>(forms.First(), DefaultValidationText(0))
             });
 
             TypeDictionary = new Dictionary<BaseForm, List<Type>>();
@@ -136,7 +134,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.First())
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                     }
                     else
                     {
@@ -172,7 +170,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (forms.First() == form.Invoker)
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -214,7 +212,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                     else
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                 }
@@ -252,7 +250,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form.Invoker == forms.First().Children.First())
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -306,7 +304,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     else if (is_ancestor_target[form.Invoker])
                     {
                         is_ancestor_target[form] = true;
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -350,7 +348,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form.Invoker == forms.First().Children.Last())
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -393,7 +391,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form == forms.Last())
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                     }
                     else
                     {
@@ -496,7 +494,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form.Invoker == forms.First())
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -531,7 +529,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form == forms.First() || form.Children.Count() != 0 && form.Invoker.Children.First() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
+                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
                             {
                                 com.IsForSelf = true;
@@ -561,7 +559,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (was_searched_left_method[form])
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -595,7 +593,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
                                                        && was_searched_left_method[form.Invoker])
                         {
-                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
+                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
                             {
                                 com.IsForSelf = false;
@@ -625,7 +623,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form.Invoker != null && was_searched_left_method[form.Invoker])
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -662,7 +660,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
                                                        && was_searched_right_method[form.Invoker])
                         {
-                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText);
+                            var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
                             {
                                 com.IsForSelf = false;
@@ -691,7 +689,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (form.Invoker != null && was_searched_right_method[form.Invoker])
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                     else
@@ -763,7 +761,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     {
                         ((GenericCommand<BaseForm, TextItem>)command).Validation = (item) =>
                         {
-                            item.Next = DefaultValidationText;
+                            item.Next = DefaultValidationText(0);
                             _was_validation = true;
                             return false;
                         };

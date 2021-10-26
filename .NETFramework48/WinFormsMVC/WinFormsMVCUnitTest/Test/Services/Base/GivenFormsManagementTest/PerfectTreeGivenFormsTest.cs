@@ -28,7 +28,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             UpdateCommands(new List<Command>()
             {
-                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), DefaultValidationText)
+                CreateDefaultCommand<BaseFormModel.ChildForm2>(forms.First(), DefaultValidationText(0))
             });
         }
 
@@ -40,7 +40,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySelf_RootInvoker((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.First(), DefaultValidationText);
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.First(), DefaultValidationText(0));
             }, null);
         }
 
@@ -54,10 +54,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             base.RecursiveFromRootInvoker((list, forms) =>
             {
                 list.Clear();
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm2>(DefaultBaseForm, DefaultValidationText));
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText));
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText));
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm2>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0)));
 
                 foreach (var com in list)
                 {
@@ -91,7 +91,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     }
                     else
                     {
-                        Assert.AreEqual(DefaultValidationText, form.Text);
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
                     }
                 }
@@ -108,7 +108,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.RecursiveFromLastInvoker(((list, forms) =>
             {
-                var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText);
+                var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0));
                 command.IsForSelf = false;
                 command.IsRecursive = true;
                 command.Invoker = forms.Last();
@@ -127,7 +127,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySecondLeftInvoker((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), DefaultValidationText);
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), DefaultValidationText(0));
                 list[0].IsForSelf = false;
             }, null);
         }
@@ -142,10 +142,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             base.RecursiveFromSecondLeftRootInvoker((list, forms) =>
             {
                 list.Clear();
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm2>(DefaultBaseForm, DefaultValidationText));
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText));
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText));
-                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm2>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0)));
 
                 foreach (var com in list)
                 {
@@ -193,7 +193,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySecondRightInvoker((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), DefaultValidationText);
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), DefaultValidationText(0));
                 list[0].IsForSelf = false;
             }, null);
         }
@@ -209,7 +209,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             base.CalledBySelf_LastInvoker((list, forms) =>
             {
-                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), DefaultValidationText);
+                list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), DefaultValidationText(0));
                 list[0].IsForSelf = true;
             }, null);
         }
@@ -298,7 +298,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     {
                         ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
                         {
-                            item.Next = DefaultValidationText;
+                            item.Next = DefaultValidationText(0);
                             _was_validation = true;
                             return false;
                         };

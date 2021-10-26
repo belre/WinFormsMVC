@@ -121,5 +121,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
 
             assert(DefaultCommands, FormList);
         }
+
+        protected void AssertFormsWithMemento<T>(
+            Action<List<Command>, List<BaseForm>> modified,
+            Action<T, List<BaseForm>> launcher,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
+        {
+            modified(DefaultCommands, FormList);
+
+            var form_management = ConstructFormsManagement<T>();
+            if (launcher != null)
+            {
+                launcher(form_management, FormList);
+            }
+            form_management.RunAndRecord(DefaultCommands);
+
+            assert(DefaultCommands, FormList);
+        }
     }
 }
