@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsMVC.View;
 
@@ -43,23 +45,57 @@ namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
 
 
         [TestMethod]
-        public void LaunchInitFromUnknownFormTest()
+        public void LaunchInitFromUnknownForm()
         {
-            _form_manager.LaunchForm(new BaseForm(), SingleModelessForm, false);
+            var form = SingleModelessForm;
+            _form_manager.LaunchForm(new BaseForm(), form, false);
+            Assert.IsTrue(_form_manager.IsExistForm(form));
+            Assert.IsFalse(_form_manager.IsExistForm(SingleModelessForm));
         }
 
 
         [TestMethod]
-        public void LaunchInitModelessFormTest()
+        public void LaunchInit()
         {
-            _form_manager.LaunchForm(null, SingleModelessForm, false);
+            var form = SingleModelessForm;
+            _form_manager.LaunchForm(null, form, false);
+            Assert.IsTrue(_form_manager.IsExistForm(form));
+            Assert.IsFalse(_form_manager.IsExistForm(SingleModelessForm));
         }
 
         [TestMethod]
-        public void LaunchInitModalFormTest()
+        public void LaunchInitModalForm()
         {
+            var form = SingleModalForm;
             _form_manager.LaunchForm(null, SingleModalForm, true);
+            Assert.IsFalse(_form_manager.IsExistForm(form));        // ModalFormの場合、閉じるまで、スレッドがロックされるため
+            Assert.IsFalse(_form_manager.IsExistForm(SingleModalForm));
         }
+
+        [TestMethod]
+        public void LaunchModalFormOnAnotherThread()
+        {
+            var form = SingleModelessForm;
+            Task.Run(() =>
+            {
+                _form_manager.LaunchForm(null, form, true);
+
+            });
+
+            
+            Thread.Sleep(20);
+
+            Assert.IsTrue(_form_manager.IsExistForm(form));        // ModalFormの場合、閉じるまで、スレッドがロックされるため
+            Assert.IsTrue(_form_manager.IsLoadForms);
+            Assert.IsFalse(_form_manager.IsExistForm(SingleModalForm));
+
+            form.Close();
+            Thread.Sleep(20);
+            Assert.IsFalse(_form_manager.IsLoadForms);
+            Assert.IsFalse(_form_manager.IsExistForm(form));
+
+        }
+
 
     }
 }

@@ -26,6 +26,13 @@ namespace WinFormsMVC.Services
             }
         }
 
+        public bool IsLoadForms
+        {
+            get
+            {
+                return ManagedBaseForms.Count() != 0;
+            }
+        }
 
         /// <summary>
         /// 管理されているBaseFormの一覧です。
@@ -88,6 +95,11 @@ namespace WinFormsMVC.Services
             base.Run(command_list);
 
             ManagedMementoManagement.PushCommand(command_list);
+        }
+
+        public bool IsExistForm(BaseForm target)
+        {
+            return _managed_baseform.Contains(target);
         }
 
         /// <summary>
