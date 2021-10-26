@@ -23,6 +23,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             get;
         }
 
+        protected override void AssertAction(
+            Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            AssertSimpleAction(modified, assert);
+        }
+
         public IsolatedGivenFormsTest()
         {
             DefaultTextDictionary = new Dictionary<BaseForm, string>();
@@ -55,11 +62,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     },
                     NextOperation = ((item, form1) =>
                     {
-                        item[form1] = item.Next;
+                        CommonCommandStatus.WasNext = true;
+                        item[form1] = form1.Text;
                         form1.Text = item.Next;
                     }),
                     PrevOperation = ((item, form1) =>
                     {
+                        CommonCommandStatus.WasPrev = true;
                         form1.Text = item[form1];
                     }),
                     FinalOperation = ((item) =>
