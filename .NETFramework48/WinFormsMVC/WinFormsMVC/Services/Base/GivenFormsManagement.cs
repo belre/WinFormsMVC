@@ -19,10 +19,9 @@ namespace WinFormsMVC.Services.Base
         /// <summary>
         /// コマンド履歴のオブジェクトです。
         /// </summary>
-        public MementoManagement ManagedMementoManagement
+        public MementoManagement ManagedMemento
         {
             get;
-            protected set;
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace WinFormsMVC.Services.Base
         public GivenFormsManagement(IEnumerable<BaseForm> _managed_base_forms)
         {
             ManagedBaseForms = _managed_base_forms;
-            ManagedMementoManagement = new MementoManagement();
+            ManagedMemento = new MementoManagement();
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace WinFormsMVC.Services.Base
         {
             Run(command_list);
 
-            ManagedMementoManagement.PushCommand(command_list);
+            ManagedMemento.PushCommand(command_list);
         }
 
 
@@ -87,7 +86,7 @@ namespace WinFormsMVC.Services.Base
         /// </summary>
         public void Undo()
         {
-            var recent_commands = ManagedMementoManagement.PopCommand();
+            var recent_commands = ManagedMemento.PopCommand();
 
             if (recent_commands == null)
             {
