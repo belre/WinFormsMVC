@@ -38,6 +38,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
             get;
         }
 
+
+
         public GivenFormManagementTestFormat()
         {
             FormList = new List<BaseForm>();
@@ -105,7 +107,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
         }
 
 
-        protected void AssertForms<T> ( 
+        protected void AssertAction<T> ( 
             Action<List<Command>, List<BaseForm>> modified, 
             Action<T, List<BaseForm>> launcher,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
@@ -122,10 +124,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
             assert(DefaultCommands, FormList);
         }
 
-        protected void AssertFormsWithMemento<T>(
+        protected void AssertMemorableAction<T>(
             Action<List<Command>, List<BaseForm>> modified,
             Action<T, List<BaseForm>> launcher,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
+            Action<GivenFormsManagement, IEnumerable<Command>, IEnumerable<BaseForm>> assert) where T : GivenFormsManagement
         {
             modified(DefaultCommands, FormList);
 
@@ -136,7 +138,19 @@ namespace WinFormsMVCUnitTest.Test.Services.Base
             }
             form_management.RunAndRecord(DefaultCommands);
 
-            assert(DefaultCommands, FormList);
+            assert(form_management, DefaultCommands, FormList);
         }
+
+        protected void AssertUndo<T>(Action<T, List<BaseForm>> launcher) where T : GivenFormsManagement
+        {
+            var form_management = ConstructFormsManagement<T>();
+            if (launcher != null)
+            {
+                launcher(form_management, FormList);
+            }
+
+
+        }
+
     }
 }

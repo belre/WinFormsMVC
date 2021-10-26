@@ -63,7 +63,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelf()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
 
             }, null, (list, forms) =>
@@ -79,7 +79,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         public void CalledBy2Invokers()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 
                 list.First().Invoker = forms.First();
@@ -108,7 +108,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         public void ValidationError()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -136,7 +136,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         public void ValidationNullCheck()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -159,7 +159,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         public void InvokerBySelf_Null()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -182,7 +182,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         public void CalledByNullInvoker()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -206,7 +206,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         public void CalledByExistedInvoker()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 foreach (var command in list)
                 {
@@ -231,7 +231,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         public void RecursiveFromExistedInvoker()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 foreach (var command in list)
                 {

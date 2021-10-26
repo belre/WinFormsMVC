@@ -13,11 +13,27 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
     [TestClass]
     public class SingleGivenFormTest : GivenFormManagementTestFormat
     {
+        public virtual string ValidationText
+        {
+            get
+            {
+                return "Validation Text";
+            }
+        }
+
+        public virtual string DefaultText
+        {
+            get
+            {
+                return "First Text";
+            }
+        }
+
         public SingleGivenFormTest()
         {
             var forms = new List<BaseForm>()
             {
-                new BaseFormModel.ChildForm1() { Text = "First Text" }
+                new BaseFormModel.ChildForm1() { Text = DefaultText }
             };
             UpdateForms(forms);
 
@@ -28,7 +44,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     IsForSelf = true,
                     Validation = (item) =>
                     {
-                        item.Next = "Validation Text";
+                        item.Next = ValidationText;
                         _was_validation = true;
                         return true;
                     },
@@ -48,25 +64,44 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("正常系")]
         public void CalledBySelf()
         {
-
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
 
-            }, null, (list, forms) =>
+            }, null, (commands, forms) =>
             {
 
                 Assert.IsTrue(_was_validation);
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
-                Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual("Validation Text", forms.First().Text);
+                Assert.IsTrue((commands.First()).WasThroughValidation);
+                Assert.AreEqual(ValidationText, forms.First().Text);
             });
+        }
+
+        [TestMethod, TestCategory("正常系")]
+        public void CalledBySelfAndUndo()
+        {
+            AssertMemorableAction<GivenFormsManagement>((list, forms) =>
+            {
+
+            }, null, (management, commands, forms) =>
+            {
+                Assert.IsTrue(_was_validation);
+                Assert.IsFalse(_was_finalize);
+                Assert.IsFalse(_was_error);
+                Assert.IsTrue((commands.First()).WasThroughValidation);
+                Assert.AreEqual(ValidationText, forms.First().Text);
+            });
+            
+
+
+
         }
 
         [TestMethod, TestCategory("異常系")]
         public void CalledByNullInvoker()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 (list[0]).Invoker = null;
                 (list[0]).IsForSelf = false;
@@ -77,7 +112,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
                 Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual("First Text", forms.First().Text);         // 該当データがいないのでテキストは同じ
+                Assert.AreEqual(DefaultText, forms.First().Text);         // 該当データがいないのでテキストは同じ
             });
 
         }
@@ -85,11 +120,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         [TestMethod, TestCategory("異常系")]
         public void ValidationError()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
                 {
-                    item.Next = "Validation Text";
+                    item.Next = ValidationText;
                     _was_validation = true;
                     return false;
                 };
@@ -100,14 +135,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_finalize);
                 Assert.IsTrue(_was_error);
                 Assert.IsTrue((list.First()).WasThroughValidation);
-                Assert.AreEqual("First Text", forms.First().Text);
+                Assert.AreEqual(DefaultText, forms.First().Text);
             });
         }
 
         [TestMethod, TestCategory("異常系")]
         public void ValidationNullCheck()
         {
-            AssertForms<GivenFormsManagement>((list, forms) =>
+            AssertAction<GivenFormsManagement>((list, forms) =>
             {
                 ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
             }, null, (list, forms) =>
@@ -117,7 +152,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(_was_finalize);
                 Assert.IsFalse(_was_error);
                 Assert.IsFalse((list.First()).WasThroughValidation);
-                Assert.AreEqual("First Text", forms.First().Text);
+                Assert.AreEqual(DefaultText, forms.First().Text);
             });
 
         }

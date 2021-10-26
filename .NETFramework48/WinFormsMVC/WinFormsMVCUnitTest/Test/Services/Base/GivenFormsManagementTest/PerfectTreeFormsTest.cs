@@ -144,7 +144,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -182,7 +182,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.AreEqual(2, throw_count);
             });
 
-            AssertForms<GivenFormsManagement>( modified, null, assert );
+            AssertAction<GivenFormsManagement>( modified, null, assert );
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -220,7 +220,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         // --- SecondRoot Invoker ---//
@@ -264,7 +264,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -318,7 +318,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.AreEqual(all_nodes_number - 1, throw_count);
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         // --- SecondRightInvoker --- ///
@@ -361,7 +361,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -401,7 +401,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }                
 
         [TestMethod, TestCategory("正常系")]
@@ -430,7 +430,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 }
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -460,7 +460,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -506,7 +506,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         // ---All Left Invokers---
@@ -571,7 +571,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.AreEqual(BaseForm.MaxDepthTree - 1, throw_count);
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -635,7 +635,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.AreEqual(2 * (BaseForm.MaxDepthTree - 1), throw_count);
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         // --- All Right Invokers ---//
@@ -703,7 +703,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -743,7 +743,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
 
@@ -784,7 +784,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
 
             });
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
@@ -816,7 +816,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             });
 
 
-            AssertForms<GivenFormsManagement>(modified, null, assert);
+            AssertAction<GivenFormsManagement>(modified, null, assert);
         }
     }
 }
