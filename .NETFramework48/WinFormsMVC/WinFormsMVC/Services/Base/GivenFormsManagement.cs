@@ -93,7 +93,7 @@ namespace WinFormsMVC.Services.Base
                 return;
             }
 
-            foreach (var command in recent_commands)
+            foreach (var command in recent_commands.Reverse())
             {
                 foreach (var form in ManagedBaseForms)
                 {
