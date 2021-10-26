@@ -52,6 +52,15 @@ namespace WinFormsMVC.Services.Base
             }
         }
 
+
+        public virtual void RunAndRecord(IEnumerable<Request.Command> command_list)
+        {
+            Run(command_list);
+
+            ManagedMementoManagement.PushCommand(command_list);
+        }
+
+
         /// <summary>
         /// Memento一覧に従ってフォームを更新します。
         /// </summary>

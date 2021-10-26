@@ -90,13 +90,6 @@ namespace WinFormsMVC.Services
         }
 
 
-        public virtual void RunAndRecord(IEnumerable<Request.Command> command_list) 
-        {
-            base.Run(command_list);
-
-            ManagedMementoManagement.PushCommand(command_list);
-        }
-
         public bool IsExistForm(BaseForm target)
         {
             return _managed_baseform.Contains(target);
