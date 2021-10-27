@@ -250,7 +250,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             assert(OrderingCommands, ManagedFormList);
         }
 
-        protected void AssertUndo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        protected virtual void AssertUndo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             Assert.AreEqual(ActionMode.MEMORABLE_ACTION, TestActionMode);
 

@@ -22,16 +22,18 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.AssertMemorableAction(modified, assert);
         }
 
+
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
-        public override void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        public override void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
             base.CalledBySelf_RootInvoker(modified, assert);
 
-            AssertUndo(((commands, forms) =>
+            AssertUndo((commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
 
@@ -39,7 +41,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
-            }));
+            });
         }
 
 

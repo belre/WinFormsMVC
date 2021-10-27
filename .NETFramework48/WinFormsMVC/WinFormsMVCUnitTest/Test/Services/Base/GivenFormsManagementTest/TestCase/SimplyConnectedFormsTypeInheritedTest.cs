@@ -8,9 +8,9 @@ using WinFormsMVC.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public class SimplyConnectedFormsUndoTypeInheritedTest : SimplyConnectedFormsUndoTest
+    public class SimplyConnectedFormsTypeInheritedTest : SimplyConnectedFormsTest
     {
-        public SimplyConnectedFormsUndoTypeInheritedTest()
+        public SimplyConnectedFormsTypeInheritedTest()
         {
             var command = CreateDefaultCommand<BaseForm>(BaseFormList.First(), DefaultValidationText(0));
             command.IsIncludingInheritedType = true;

@@ -36,7 +36,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public override void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySelf_RootInvoker(null, (commands, forms) =>
+
+            Define(ref assert, (commands, forms) =>
             {
                 Assert.IsTrue(CommonCommandStatus.WasValidation);
                 Assert.IsFalse(CommonCommandStatus.WasFinalized);
@@ -48,6 +49,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.CalledBySelf_RootInvoker(modified, assert);
         }
 
 
@@ -57,7 +60,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public override void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.CalledBySelf_LastInvoker(null, (commands, forms) =>
+            Define(ref assert, (commands, forms) =>
             {
                 Assert.IsTrue(CommonCommandStatus.WasValidation);
                 Assert.IsFalse(CommonCommandStatus.WasFinalized);
@@ -69,6 +72,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.CalledBySelf_LastInvoker(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -77,7 +82,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public override void RecursiveFromRootInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.RecursiveFromRootInvoker(null, (commands, forms) =>
+            Define(ref assert, (commands, forms) =>
             {
                 Assert.IsTrue(CommonCommandStatus.WasValidation);
                 Assert.IsFalse(CommonCommandStatus.WasFinalized);
@@ -96,6 +101,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     }
                 }
             });
+
+            base.RecursiveFromRootInvoker(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
@@ -104,21 +111,18 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public override void ValidationError(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.ValidationError((list, forms) =>
+
+            Define(ref modified, (list, forms) =>
             {
-                foreach (var command in list)
+                ((CommandValidator<TextItem>)list.First()).Validation = item =>
                 {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm2, TextItem>))
-                    {
-                        ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
-                        {
-                            item.Next = DefaultValidationText(0);
-                            CommonCommandStatus.WasValidation = true;
-                            return false;
-                        };
-                    }
-                }
-            }, null);
+                    item.Next = DefaultValidationText(0);
+                    CommonCommandStatus.WasValidation = true;
+                    return false;
+                };
+            });
+
+            base.ValidationError(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
@@ -126,11 +130,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [DataRow(null, null)]
         public override void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.ValidationNullCheck((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
-                ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)list[0]).Validation = null;
-            }, null);
+                ((CommandValidator<TextItem>)list.First()).Validation = null;
+            });
 
+            base.ValidationNullCheck(modified, assert);
         }
 
     }
