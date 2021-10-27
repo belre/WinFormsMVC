@@ -27,14 +27,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
 
-        protected void Define<T>( ref T instance, T default_instance) where T : class
-        {
-            if (instance == null)
-            {
-                instance = default_instance;
-            }
-        }
-
         private bool IsValidTestCalling(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {

@@ -91,6 +91,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             }
         }
 
+
         protected CommandExecutionStatus CommonCommandStatus
         {
             get;
@@ -139,6 +140,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             OrderingCommands = new List<Command>();
             CommonCommandStatus = new CommandExecutionStatus();
             TestActionMode = ActionMode.UNDEFINED;
+        }
+
+        protected void Define<T>(ref T instance, T default_instance) where T : class
+        {
+            if (instance == null)
+            {
+                instance = default_instance;
+            }
         }
 
         protected Command CreateDefaultCommand<T>(BaseForm invoker, string validation_text) where T : BaseForm

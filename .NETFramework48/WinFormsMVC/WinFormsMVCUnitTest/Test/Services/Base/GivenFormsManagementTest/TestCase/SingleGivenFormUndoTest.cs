@@ -24,11 +24,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        public override void CalledBySelf()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledBySelf(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledBySelf();
+            base.CalledBySelf(modified, assert);
 
             AssertUndo((commands, forms) =>
             {
@@ -38,34 +40,37 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-
-        public override void CalledByNullInvoker()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledByNullInvoker();
+            base.CalledByNullInvoker(modified, assert);
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertUndoButNotTarget(); });
         }
 
         [TestMethod, TestCategory("差分")]
-
-        public override void ValidationNullCheck()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.ValidationNullCheck();
+            base.ValidationNullCheck(modified, assert);
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertNotValidating(); });
         }
 
         
         [TestMethod, TestCategory("差分")]
-
-        public override void ValidationError()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.ValidationError();
+            base.ValidationError(modified, assert);
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertValidationError(); });
         }

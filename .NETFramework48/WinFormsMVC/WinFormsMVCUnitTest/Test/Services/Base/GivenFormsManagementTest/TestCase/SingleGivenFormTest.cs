@@ -54,91 +54,83 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
 
         [TestMethod, TestCategory("正常系")]
-        public virtual void CalledBySelf()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledBySelf(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
-            {
-
-            }, (commands, forms) =>
+            Define(ref modified, (list, forms) => { });
+            Define(ref assert, (commands, forms) =>
             {
                 CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(ValidationText, forms.First().Text);
             });
-        }
 
-        /*
-        [TestMethod, TestCategory("正常系")]
-        public void CalledBySelfAndUndo()
-        {
-            AssertMemorableAction((list, forms) =>
-            {
-
-            }, ( commands, forms) =>
-            {
-                CommonCommandStatus.AssertValidated();
-                Assert.IsTrue((commands.First()).WasThroughValidation);
-                Assert.AreEqual(ValidationText, forms.First().Text);
-            });
-            
-            AssertUndo(( commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-                Assert.AreEqual(DefaultText, forms.First().Text);
-            });
-            
+            AssertAction(modified, assert);
         }
-        */
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void CalledByNullInvoker()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
-            {
+            Define(ref modified, (list, forms) => {
                 (list.First()).Invoker = null;
                 (list.First()).IsForSelf = false;
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (commands, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
-                Assert.IsTrue((list.First()).WasThroughValidation);
+                Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);         // 該当データがいないのでテキストは同じ
             });
 
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void ValidationError()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
-            {
+            Define(ref modified, (list, forms) => {
                 ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
                 {
                     item.Next = ValidationText;
                     CommonCommandStatus.WasValidation = true;
                     return false;
                 };
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (commands, forms) =>
             {
                 CommonCommandStatus.AssertValidationError();
-                Assert.IsTrue((list.First()).WasThroughValidation);
+                Assert.IsTrue((commands.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });
+
+
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void ValidationNullCheck()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
-            {
+            Define(ref modified, (list, forms) => {
                 ((CommandValidator<TextItem>)list.First()).Validation = null;
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (commands, forms) =>
             {
                 CommonCommandStatus.AssertNotValidating();
-                Assert.IsFalse((list.First()).WasThroughValidation);
+                Assert.IsFalse((commands.First()).WasThroughValidation);
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });
 
+            AssertAction(modified, assert);
         }
-
     }
 }
