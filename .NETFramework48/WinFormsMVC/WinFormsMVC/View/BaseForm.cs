@@ -33,7 +33,7 @@ namespace WinFormsMVC.View
         /// <summary>
         /// ViewとFacadeの窓口クラスを表します。
         /// </summary>
-        public ViewFacade Facade { get; set; }
+        public ViewFacadeCore FacadeCore { get; set; }
 
         public IEnumerable<BaseForm> Children
         {

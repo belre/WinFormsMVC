@@ -40,13 +40,13 @@ namespace WinFormsMVCSample
 
             private void button1_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
                 controller.Launch<Form3>(this);
             }
 
             private void button2_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
 
                 controller.SendStoredMessage( new Command[] {
                     new GenericCommand<Form3, TextItem> {
@@ -88,13 +88,13 @@ namespace WinFormsMVCSample
 
             private void button3_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
                 controller.Undo(IsUndoEnable);
             }
 
             private void button4_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
                 controller.Launch<Form4>(this);
             }
 
@@ -114,7 +114,7 @@ namespace WinFormsMVCSample
                 {
                     _is_now_drawing = false;
 
-                    var controller = Facade.GetController<Form2Controller>(this);
+                    var controller = FacadeCore.GetController<Form2Controller>(this);
                     controller.SendStoredMessage( new Command[]
                     {
                         new GenericCommand<Form2, ImageItem>()
@@ -154,7 +154,7 @@ namespace WinFormsMVCSample
 
             private void button5_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
 
                 controller.SendStoredMessage(new Command[]
                 {
@@ -181,7 +181,7 @@ namespace WinFormsMVCSample
 
             private void button6_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
                 controller.GetTimeStamp(NotifyTimeStamp);
             }
 
@@ -193,7 +193,7 @@ namespace WinFormsMVCSample
 
             private void Form2_Load(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
                 button3.Enabled = controller.IsAvailableUndo;
             }
 
@@ -204,7 +204,7 @@ namespace WinFormsMVCSample
 
             private void button7_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
 
                 controller.SendSimpleMessage(new Command[]
                 {
@@ -227,14 +227,14 @@ namespace WinFormsMVCSample
 
             private void button8_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
 
                 controller.StampTextIntoImage(BeNotifiedImage, pictureBox1.Image);
             }
 
             private void BeNotifiedImage(Image image)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
                 controller.SendSimpleMessage(new Command[]
                 {
                     new GenericCommand<Form4, ImageItem>()
@@ -255,7 +255,7 @@ namespace WinFormsMVCSample
 
             private void button9_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form2Controller>(this);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
 
                 controller.SendStoredMessage(new Command[] {
                     new GenericCommand<Form2, TextItem> {

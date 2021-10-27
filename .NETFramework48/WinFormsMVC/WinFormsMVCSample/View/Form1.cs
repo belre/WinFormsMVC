@@ -27,7 +27,7 @@ namespace WinFormsMVCSample
 
             private void button1_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form1Controller>(this);
+                var controller = FacadeCore.GetController<Form1Controller>(this);
                 controller.Launch<Form2>(this);
                 //controller.LaunchForm2(this);
 
@@ -40,7 +40,7 @@ namespace WinFormsMVCSample
 
             private void button2_Click_1(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form1Controller>(this);
+                var controller = FacadeCore.GetController<Form1Controller>(this);
                 controller.SendStoredMessage( new Command[]
                 {
                     new GenericCommand<Form3, TextItem>()
@@ -67,7 +67,7 @@ namespace WinFormsMVCSample
 
             private void button3_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form1Controller>(this);
+                var controller = FacadeCore.GetController<Form1Controller>(this);
                 controller.LaunchWithLock<SPWFolderForm>(this, OnClosedFolderBrowser<SPWFolderForm>, (spw_form) =>
                 {
                     spw_form.RootDrive = @"F:\usrdata";
@@ -80,7 +80,7 @@ namespace WinFormsMVCSample
 
                 if (form.DialogResult == DialogResult.OK)
                 {
-                    var controller = Facade.GetController<Form1Controller>(this);
+                    var controller = FacadeCore.GetController<Form1Controller>(this);
                     controller.SendStoredMessage(new Command[]
                     {
                         new GenericCommand<Form3, TextItem>()

@@ -18,7 +18,7 @@ namespace WinFormsMVCSample
     {
         protected FormsManagement _form_manager;
  
-        protected ViewFacade _facade;
+        protected ViewFacadeCore FacadeCore;
         protected T _root_form;
 
         public UserApplicationContext()
@@ -27,7 +27,7 @@ namespace WinFormsMVCSample
             try
             {
                 _form_manager = new FormsManagement();
-                _facade = new ViewFacade(_form_manager);
+                FacadeCore = new ViewFacade(_form_manager);
 
                 _root_form = (T)typeof(T).GetConstructor(new Type[0]).Invoke(new object[0]);
                 _root_form.Closed += new EventHandler(OnFormClosed);

@@ -42,16 +42,16 @@ namespace WinFormsMVC.Services
         /// <summary>
         /// BaseFormとControllerを接続する窓口役(Facade)を表します。
         /// </summary>
-        private ViewFacade _facade;
+        private ViewFacadeCore _facadeCore;
 
 
 
         /// <summary>
         /// 窓口を表すクラスです。
         /// </summary>
-        internal ViewFacade Facade
+        internal ViewFacadeCore FacadeCore
         {
-            set { _facade = value; }
+            set { _facadeCore = value; }
         }
 
 
@@ -75,7 +75,7 @@ namespace WinFormsMVC.Services
         {
             _managed_baseform.Add(target);
             target.Invoker = source;
-            target.Facade = _facade;
+            target.FacadeCore = _facadeCore;
             target.Closed += OnFormClosed;
 
             if (is_modal)

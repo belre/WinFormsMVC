@@ -60,7 +60,7 @@ namespace WinFormsMVCSample
 
             private void button1_Click(object sender, EventArgs e)
             {
-                var controller = Facade.GetController<Form3Controller>(this);
+                var controller = FacadeCore.GetController<Form3Controller>(this);
                 controller.Launch<Form2>(this);
             }
         }

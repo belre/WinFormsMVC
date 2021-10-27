@@ -57,6 +57,7 @@
     <Compile Include="Test\Controller\BaseController\SecondAttributeReflectionTest.cs" />
     <Compile Include="Test\Controller\BaseController\FirstAttributeReflectionTest.cs" />
     <Compile Include="Test\Controller\BaseController\NoAttributeReflectionTest.cs" />
+    <Compile Include="Test\Facade\ViewFacade\GetControllerTest.cs" />
     <Compile Include="Test\Request\GenericCommand\OperationTest.cs" />
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
     <Compile Include="Test\Request\Item\TextItem\BackupTest.cs" />
@@ -99,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\" />
-    <Folder Include="Test\Facade\ViewFacade\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
