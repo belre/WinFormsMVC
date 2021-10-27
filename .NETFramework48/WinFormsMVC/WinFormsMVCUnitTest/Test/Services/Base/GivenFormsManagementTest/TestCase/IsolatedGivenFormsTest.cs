@@ -117,7 +117,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                ((CommandValidator<TextItem>)list[0]).Validation = (item) =>
+                ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
                 {
                     item.Next = "Validation Text";
                     CommonCommandStatus.WasValidation = true;
@@ -141,7 +141,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                ((CommandValidator<TextItem>)list[0]).Validation = null;
+                ((CommandValidator<TextItem>)list.First()).Validation = null;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertNotValidating();
@@ -158,7 +158,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                list[0].Invoker = null;
+                list.First().Invoker = null;
 
             }, (list, forms) =>
             {
@@ -177,8 +177,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                list[0].Invoker = null;
-                list[0].IsForSelf = false;
+                list.First().Invoker = null;
+                list.First().IsForSelf = false;
  
             }, (list, forms) =>
             {
@@ -197,8 +197,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                list[0].Invoker = forms.Last();
-                list[0].IsForSelf = false;
+                list.First().Invoker = forms.Last();
+                list.First().IsForSelf = false;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
@@ -217,9 +217,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                list[0].Invoker = forms.Last();
-                list[0].IsForSelf = false;
-                list[0].IsRecursive = true;
+                list.First().Invoker = forms.Last();
+                list.First().IsForSelf = false;
+                list.First().IsRecursive = true;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();

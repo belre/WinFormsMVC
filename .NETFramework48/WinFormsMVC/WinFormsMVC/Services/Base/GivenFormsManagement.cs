@@ -135,7 +135,7 @@ namespace WinFormsMVC.Services.Base
         {
             if (command.IsIncludingInheritedType)
             {
-                return form.GetType().IsSubclassOf(command.FormType);
+                return form.GetType().IsSubclassOf(command.FormType) || form.GetType() == command.FormType;
 
             }
             else
