@@ -111,7 +111,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = (item) =>
+                ((CommandValidator<TextItem>)list[0]).Validation = (item) =>
                 {
                     item.Next = ValidationText;
                     CommonCommandStatus.WasValidation = true;
@@ -130,7 +130,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)list[0]).Validation = null;
+                ((CommandValidator<TextItem>)list[0]).Validation = null;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertNotValidating();

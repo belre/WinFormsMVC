@@ -69,7 +69,7 @@ namespace WinFormsMVC.Services.Base
             var target_forms = new List<BaseForm>();
             foreach (var form in ManagedBaseForms)
             {
-                if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
+                if (IsMatchInvoker(form, command) && IsMatchType(form, command))
                 {
                     target_forms.Add(form);
                 }
@@ -97,7 +97,7 @@ namespace WinFormsMVC.Services.Base
             {
                 foreach (var form in ManagedBaseForms)
                 {
-                    if (IsMatchInvoker(form, command) && form.GetType() == command.FormType)
+                    if (IsMatchInvoker(form, command) && IsMatchType(form, command))
                     {
                         command.Prev(form);
                     }
@@ -131,6 +131,17 @@ namespace WinFormsMVC.Services.Base
             }
         }
 
+        protected virtual bool IsMatchType(BaseForm form, Command command)
+        {
+            if (command.IsIncludingInheritedType)
+            {
+                return form.GetType().IsSubclassOf(command.FormType);
 
+            }
+            else
+            {
+                return form.GetType() == command.FormType;
+            }
+        }
     }
 }

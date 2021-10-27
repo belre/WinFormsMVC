@@ -64,6 +64,7 @@
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\CommandItem.cs" />
     <Compile Include="Request\AsyncCommand.cs" />
+    <Compile Include="Request\CommandValidator.cs" />
     <Compile Include="Request\GenericCommand.cs" />
     <Compile Include="Request\GenericCommandItem.cs" />
     <Compile Include="Request\Item\ImageItem.cs" />

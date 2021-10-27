@@ -16,7 +16,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public SingleGivenFormUndoTest()
         {
             
-            TestActionMode = ActionMode.MEMORABLE_ACTION;
         }
 
         protected override void AssertAction(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
@@ -27,6 +26,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
         public override void CalledBySelf()
         {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
             base.CalledBySelf();
 
             AssertUndo((commands, forms) =>
@@ -40,6 +41,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public override void CalledByNullInvoker()
         {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
             base.CalledByNullInvoker();
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertUndoButNotTarget(); });
         }
@@ -48,6 +51,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public override void ValidationNullCheck()
         {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
             base.ValidationNullCheck();
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertNotValidating(); });
@@ -58,6 +63,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         public override void ValidationError()
         {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
             base.ValidationError();
 
             AssertUndo((commands, forms) => { CommonCommandStatus.AssertValidationError(); });

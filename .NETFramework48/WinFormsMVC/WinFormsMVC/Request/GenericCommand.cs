@@ -9,7 +9,7 @@ namespace WinFormsMVC.Request
     /// </summary>
     /// <typeparam name="TargetForm">対象とするフォーム</typeparam>
     /// <typeparam name="Item">何を送信するか(テキスト、画像など)</typeparam>
-    public class GenericCommand<TargetForm, Item> : Command where TargetForm : BaseForm where Item : CommandItem
+    public class GenericCommand<TargetForm, Item> : CommandValidator<Item> where TargetForm : BaseForm where Item : CommandItem
     {
         protected enum OperationStatus
         {
@@ -70,10 +70,7 @@ namespace WinFormsMVC.Request
             Status = OperationStatus.NO_VALIDATION;
         }
 
-        /// <summary>
-        /// データ検証を行うときに実行される処理です。
-        /// </summary>
-        public Func< Item, bool> Validation { get; set; }
+
 
         /// <summary>
         /// 「実行」「やり直し」で行なわれる処理です。
@@ -85,15 +82,6 @@ namespace WinFormsMVC.Request
         /// </summary>
         public Action<Item, TargetForm> PrevOperation { get; set; }
 
-        /// <summary>
-        /// 「元に戻す」の後に行なわれる処理です。
-        /// </summary>
-        public Action<Item> FinalOperation { get; set; }
-
-        /// <summary>
-        /// データ検証に失敗したときに実行される処理です。
-        /// </summary>
-        public Action<Item>  ErrorOperation { get; set; }
 
         /// <summary>
         /// データ検証を実行します。

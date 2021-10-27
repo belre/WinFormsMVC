@@ -39,6 +39,13 @@ namespace WinFormsMVC.Request
         /// </summary>
         public bool IsRecursive { get; set; }
 
+
+        /// <summary>
+        /// FormTypeで指定されたクラスが継承されているものも含むかどうかを表します.
+        /// </summary>
+        public bool IsIncludingInheritedType { get; set; }
+
+
         /// <summary>
         /// データ反映
         /// </summary>

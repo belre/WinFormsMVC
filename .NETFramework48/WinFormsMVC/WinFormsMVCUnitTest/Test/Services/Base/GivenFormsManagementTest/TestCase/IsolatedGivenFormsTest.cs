@@ -117,18 +117,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                foreach (var command in list)
+                ((CommandValidator<TextItem>)list[0]).Validation = (item) =>
                 {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
-                    {
-                        ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)command).Validation = (item) =>
-                        {
-                            item.Next = "Validation Text";
-                            CommonCommandStatus.WasValidation = true;
-                            return false;
-                        };
-                    }
-                }
+                    item.Next = "Validation Text";
+                    CommonCommandStatus.WasValidation = true;
+                    return false;
+                };
 
             }, (list, forms) =>
             {
@@ -147,14 +141,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
-                    {
-                        ((GenericCommand<BaseFormModel.ChildForm1, TextItem>)command).Validation = null;
-                    }
-                }
-
+                ((CommandValidator<TextItem>)list[0]).Validation = null;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertNotValidating();
@@ -171,13 +158,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
-                    {
-                        command.Invoker = null;
-                    }
-                }
+                list[0].Invoker = null;
 
             }, (list, forms) =>
             {
@@ -196,15 +177,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
-                    {
-                        (command).Invoker = null;
-                        (command).IsForSelf = false;
-                    }
-                }
-
+                list[0].Invoker = null;
+                list[0].IsForSelf = false;
+ 
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
@@ -222,16 +197,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
-                    {
-                        (command).Invoker = forms.Last();
-                        (command).IsForSelf = false;
-                    }
-                }
-
-
+                list[0].Invoker = forms.Last();
+                list[0].IsForSelf = false;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
@@ -250,15 +217,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm1, TextItem>))
-                    {
-                        (command).Invoker = forms.Last();
-                        (command).IsForSelf = false;
-                        (command).IsRecursive = true;
-                    }
-                }
+                list[0].Invoker = forms.Last();
+                list[0].IsForSelf = false;
+                list[0].IsRecursive = true;
             }, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
