@@ -737,19 +737,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                foreach (var command in list)
+                ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
                 {
-                    if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
-                    {
-                        ((GenericCommand<BaseForm, TextItem>)command).Validation = (item) =>
-                        {
-                            item.Next = DefaultValidationText(0);
-                            CommonCommandStatus.WasValidation = true;
-                            return false;
-                        };
-                    }
-                }
-
+                    item.Next = DefaultValidationText(0);
+                    CommonCommandStatus.WasValidation = true;
+                    return false;
+                };
             });
 
             Define(ref assert, (list, forms) =>
@@ -777,13 +770,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
-                    {
-                        ((GenericCommand<BaseForm, TextItem>)command).Validation = null;
-                    }
-                }
+                ((CommandValidator<TextItem>)list.First()).Validation = null;
 
             });
 

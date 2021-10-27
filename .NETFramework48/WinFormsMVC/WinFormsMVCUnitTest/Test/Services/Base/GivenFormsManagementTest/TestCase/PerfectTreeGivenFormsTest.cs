@@ -78,7 +78,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public virtual void RecursiveFromRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.RecursiveFromRootInvoker(null, (commands, forms) =>
+            Define(ref assert, (commands, forms) =>
             {
                 Assert.IsTrue(CommonCommandStatus.WasValidation);
                 Assert.IsFalse(CommonCommandStatus.WasFinalized);
@@ -101,6 +101,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
                 Assert.AreEqual(2, throw_count);
             });
+
+            base.RecursiveFromRootInvoker(modified, assert);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -166,7 +168,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public virtual void RecursiveFromSecondLeftRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.RecursiveFromSecondLeftRootInvoker(null, (commands, forms) =>
+            Define(ref assert, (commands, forms) =>
             {
                 Assert.IsTrue(CommonCommandStatus.WasValidation);
                 Assert.IsFalse(CommonCommandStatus.WasFinalized);
@@ -185,6 +187,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
                 Assert.AreEqual(0, throw_count);
             });
+
+            base.RecursiveFromSecondLeftRootInvoker(modified, assert);
         }
 
         // --- SecondRightInvoker--//
@@ -295,18 +299,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.ValidationError( ((list, forms) =>
             {
-                foreach (var command in list)
+                ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
                 {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm2, TextItem>))
-                    {
-                        ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = (item) =>
-                        {
-                            item.Next = DefaultValidationText(0);
-                            CommonCommandStatus.WasValidation = true;
-                            return false;
-                        };
-                    }
-                }
+                    item.Next = DefaultValidationText(0);
+                    CommonCommandStatus.WasValidation = true;
+                    return false;
+                };
             }), null);
         }
 
@@ -317,13 +315,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             base.ValidationNullCheck(((list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseFormModel.ChildForm2, TextItem>))
-                    {
-                        ((GenericCommand<BaseFormModel.ChildForm2, TextItem>)command).Validation = null;
-                    }
-                }
+                ((CommandValidator<TextItem>)list.First()).Validation = null;
             }), null);
 
         }
