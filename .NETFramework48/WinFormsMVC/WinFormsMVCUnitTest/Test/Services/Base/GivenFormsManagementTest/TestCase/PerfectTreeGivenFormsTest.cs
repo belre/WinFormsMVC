@@ -168,9 +168,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref assert, (commands, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 var is_ancestor_target = new Dictionary<BaseForm, bool>();
