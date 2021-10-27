@@ -320,8 +320,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                ((GenericCommand<BaseForm, TextItem>)list.First()).Invoker = forms.First().Children.Last();
-                ((GenericCommand<BaseForm, TextItem>)list.First()).IsForSelf = false;
+                ((CommandValidator<TextItem>)list.First()).Invoker = forms.First().Children.Last();
+                ((CommandValidator<TextItem>)list.First()).IsForSelf = false;
             });
 
             Define(ref assert, (list, forms) =>
@@ -692,15 +692,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                foreach (var command in list)
-                {
-                    if (command.GetType() == typeof(GenericCommand<BaseForm, TextItem>))
-                    {
-                        (command).Invoker = null;
-                        (command).IsForSelf = false;
-                    }
-                }
-
+                list.First().Invoker = null;
+                list.First().IsForSelf = false;
             });
 
             Define(ref assert, (list, forms) =>

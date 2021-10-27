@@ -59,7 +59,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 foreach (var form in forms)
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-
                 }
             }));
         }

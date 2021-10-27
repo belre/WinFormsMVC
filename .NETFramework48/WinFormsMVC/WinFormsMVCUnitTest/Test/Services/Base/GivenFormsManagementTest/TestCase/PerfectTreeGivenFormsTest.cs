@@ -80,9 +80,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref assert, (commands, forms) =>
             {
-                Assert.IsTrue(CommonCommandStatus.WasValidation);
-                Assert.IsFalse(CommonCommandStatus.WasFinalized);
-                Assert.IsFalse(CommonCommandStatus.WasError);
+                CommonCommandStatus.AssertValidated();
                 Assert.IsTrue((commands.First()).WasThroughValidation);
 
                 int throw_count = 0;
@@ -120,7 +118,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
                 list.Clear();
                 list.Add(command);
-            }), null);
+            }), assert);
         }
 
         // --- SecondRoot Invoker ---//
@@ -134,7 +132,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), DefaultValidationText(0));
                 list[0].IsForSelf = false;
-            }, null);
+            }, assert);
         }
 
 
@@ -159,7 +157,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     com.IsRecursive = true;
                 }
 
-            }, null);
+            }, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
@@ -202,7 +200,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), DefaultValidationText(0));
                 list[0].IsForSelf = false;
-            }, null);
+            }, assert);
         }
 
 
@@ -218,7 +216,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), DefaultValidationText(0));
                 list[0].IsForSelf = true;
-            }, null);
+            }, assert);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -242,7 +240,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             }
 
 
-            base.CalledBySelf_AllLeftInvokers(null, null);
+            base.CalledBySelf_AllLeftInvokers(modified, assert);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -265,7 +263,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 TypeDictionary[form] = type_list;
             }
 
-            base.CalledByAllLeftInvokers(null, null);
+            base.CalledByAllLeftInvokers(modified, assert);
         }
         
         [TestMethod, TestCategory("差分")]
@@ -289,7 +287,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 TypeDictionary[form] = type_list;
             }
 
-            base.CalledByAllRightInvokers(null, null);
+            base.CalledByAllRightInvokers(modified, assert);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -297,7 +295,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [DataRow(null, null)]
         public override void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.ValidationError( ((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
                 {
@@ -305,7 +303,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     CommonCommandStatus.WasValidation = true;
                     return false;
                 };
-            }), null);
+            });
+
+            base.ValidationError( modified, assert);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -313,10 +313,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [DataRow(null, null)]
         public override void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.ValidationNullCheck(((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 ((CommandValidator<TextItem>)list.First()).Validation = null;
-            }), null);
+            });
+
+
+            base.ValidationNullCheck(modified, assert);
 
         }
     }
