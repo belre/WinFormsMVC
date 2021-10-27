@@ -37,7 +37,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             base.CalledBySelf_RootInvoker(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -46,6 +46,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -59,7 +61,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledByRootInvoker(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -68,6 +70,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
+
         }
 
         [TestMethod, TestCategory("差分")]
@@ -83,7 +88,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.RecursiveFromRootInvoker(modified, assert);
 
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -92,6 +97,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -105,7 +112,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.RecursiveFromRootInvokerInSingleLevel(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -114,6 +121,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -127,7 +136,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledBySelf_LastInvoker(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -136,6 +145,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -149,7 +160,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             
             base.CalledByLastInvoker(modified, assert);
 
-            base.AssertUndo(((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
 
@@ -157,7 +168,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
-            }));
+            });
+
+            base.AssertUndo(assert_undo);
 
         }
 
@@ -172,7 +185,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.RecursiveFromLastInvoker(modified, assert);
 
-            base.AssertUndo(((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
 
@@ -180,7 +193,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
-            }));
+            });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -194,7 +209,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledByFirstAndLastInvoker(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -203,6 +218,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -216,7 +233,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledBySecondLeftInvoker(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -225,6 +242,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
 
         }
 
@@ -240,7 +259,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledBySecondRightInvoker(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -249,6 +268,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+
+            base.AssertUndo(assert_undo);
 
         }
 
@@ -264,8 +286,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.RecursiveFromSecondLeftRootInvoker(modified, assert);
 
-
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -274,6 +295,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -288,7 +311,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.RecursiveFromSecondLeftRootInvokerInSingleLevel(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
 
@@ -297,6 +320,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -310,7 +335,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledByAllLeftInvokers(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -319,6 +345,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -331,7 +359,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
             base.CalledByAllRightInvokers(modified, assert);
-            base.AssertUndo((commands, forms) =>
+
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -340,6 +369,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
 
@@ -355,7 +386,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledBySelf_AllLeftInvokers(modified, assert);
 
-            base.AssertUndo((commands, forms) =>
+
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
 
@@ -364,6 +396,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
             });
+
+            base.AssertUndo(assert_undo);
         }
 
 
@@ -379,7 +413,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.CalledByNullInvoker(modified, assert);
 
-            base.AssertUndo(((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndoButNotTarget();
 
@@ -387,7 +421,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
-            }));
+            });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -401,7 +437,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             
             base.ValidationError(modified, assert);
 
-            base.AssertUndo(((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertValidationError();
 
@@ -409,7 +445,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
-            }));
+            });
+
+            base.AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
@@ -423,7 +461,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             base.ValidationNullCheck(modified, assert);
 
-            base.AssertUndo(((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertNotValidating();
 
@@ -431,7 +469,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultBaseForm.Text, form.Text);
                 }
-            }));
+            });
+
+            base.AssertUndo(assert_undo);
 
         }
     }
