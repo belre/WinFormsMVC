@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using WinFormsMVC.Request;
 using WinFormsMVC.View;
+using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public class IsolatedGivenFormsUndoTypeInheritedTest : IsolatedGivenFormsUndoTest
+    public class SingleGivenFormTypeInheritedTest : SingleGivenFormTest
     {
-        public IsolatedGivenFormsUndoTypeInheritedTest()
+        public SingleGivenFormTypeInheritedTest()
         {
             var command = CreateDefaultCommand<BaseForm>(BaseFormList.First(), ValidationText);
             command.IsIncludingInheritedType = true;
@@ -20,5 +21,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 command
             });
         }
+
     }
 }

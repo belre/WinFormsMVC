@@ -63,7 +63,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\GivenFormManagementTestFormat.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsTest.cs" />
-    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsUndoTypeInheritedTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\NullListTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsTypeInheritedTest.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedFormsTest.cs" />
-    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormUndoTypeInheritedTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormTest.cs" />
     <Compile Include="Test\Services\Base\MementoManagement\PushAndPopTest.cs" />

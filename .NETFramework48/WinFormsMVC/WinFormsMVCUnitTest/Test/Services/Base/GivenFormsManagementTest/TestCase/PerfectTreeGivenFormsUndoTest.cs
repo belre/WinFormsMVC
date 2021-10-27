@@ -29,8 +29,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             base.CalledBySelf_RootInvoker(modified, assert);
@@ -48,8 +50,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByRootInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -68,8 +72,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void RecursiveFromRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void RecursiveFromRootInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -90,8 +96,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void RecursiveFromRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void RecursiveFromRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -110,8 +118,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -130,8 +140,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
@@ -151,8 +163,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void RecursiveFromLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void RecursiveFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -171,8 +185,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -191,8 +207,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledBySecondLeftInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledBySecondLeftInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -213,8 +231,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledBySecondRightInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledBySecondRightInvoker(Action<List<Command>, List<BaseForm>> modified, 
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -234,8 +254,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void RecursiveFromSecondLeftRootInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void RecursiveFromSecondLeftRootInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -256,9 +278,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-
-        public override void RecursiveFromSecondLeftRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void RecursiveFromSecondLeftRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -278,8 +301,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByAllLeftInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByAllLeftInvokers(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -298,8 +323,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByAllRightInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByAllRightInvokers(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -318,8 +345,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledBySelf_AllLeftInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledBySelf_AllLeftInvokers(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -340,8 +369,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -361,8 +392,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void ValidationError(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
@@ -381,8 +414,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 

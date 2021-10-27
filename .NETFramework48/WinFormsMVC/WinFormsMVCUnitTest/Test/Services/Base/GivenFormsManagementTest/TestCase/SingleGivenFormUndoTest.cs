@@ -23,56 +23,88 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.AssertMemorableAction(modified, assert);
         }
 
+        protected override void AssertUndo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.AssertUndo(assert);
+        }
+
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledBySelf(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledBySelf(Action<List<Command>, List<BaseForm>> modified, 
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledBySelf(modified, assert);
+            CalledBySelf(modified, assert);
 
-            AssertUndo((commands, forms) =>
+            Define(ref assert_undo, (commands, forms) =>
             {
                 CommonCommandStatus.AssertUndo();
                 Assert.AreEqual(DefaultText, forms.First().Text);
             });
+
+            AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, 
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
             base.CalledByNullInvoker(modified, assert);
-            AssertUndo((commands, forms) => { CommonCommandStatus.AssertUndoButNotTarget(); });
+
+            Define(ref assert_undo, (commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+            });
+
+            AssertUndo(assert_undo);
         }
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, 
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
             base.ValidationNullCheck(modified, assert);
 
-            AssertUndo((commands, forms) => { CommonCommandStatus.AssertNotValidating(); });
+            Define(ref assert_undo, (commands, forms) =>
+            {
+                CommonCommandStatus.AssertNotValidating();
+            });
+            
+            AssertUndo(assert_undo);
         }
 
         
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
-        [DataRow(null, null)]
-        public override void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        [DataRow(null, null, null)]
+        public virtual void ValidationError(
+            Action<List<Command>, List<BaseForm>> modified, 
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
             base.ValidationError(modified, assert);
 
-            AssertUndo((commands, forms) => { CommonCommandStatus.AssertValidationError(); });
+            Define(ref assert_undo, (commands, forms) =>
+            {
+                CommonCommandStatus.AssertValidationError();
+            });
+
+            AssertUndo(assert_undo);
         }
         
     }
