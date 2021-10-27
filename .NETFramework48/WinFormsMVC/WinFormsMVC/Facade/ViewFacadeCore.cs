@@ -18,6 +18,9 @@ namespace WinFormsMVC.Facade
     /// </summary>
     public class ViewFacadeCore
     {
+        /// <summary>
+        /// 現在管理しているオブジェクトの一覧です.
+        /// </summary>
         protected Dictionary<Type, object> ConstructorArgsTemplate;
 
 

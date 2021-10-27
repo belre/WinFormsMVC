@@ -14,6 +14,11 @@ namespace WinFormsMVC.Facade
         /// </summary>
         protected FormsManagement FormManager { get; }
 
+        /// <summary>
+        /// モデルを追加する場合、ここで
+        /// 宣言を追加し、プロパティを追加するなど対処します.
+        /// </summary>
+        /// <param name="form_manager"></param>
         public ViewFacade(FormsManagement form_manager)
         {
             FormManager = form_manager;
@@ -22,6 +27,5 @@ namespace WinFormsMVC.Facade
             ConstructorArgsTemplate = new Dictionary<Type, object>();
             ConstructorArgsTemplate[typeof(FormsManagement)] = FormManager;
         }
-
     }
 }
