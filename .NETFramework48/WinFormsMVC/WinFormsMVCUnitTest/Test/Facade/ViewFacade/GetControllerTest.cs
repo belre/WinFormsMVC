@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using WinFormsMVC.Controller;
+using WinFormsMVC.Controller.Attribute;
 using WinFormsMVC.Services;
 using WinFormsMVC.View;
 
@@ -46,19 +47,51 @@ namespace WinFormsMVCUnitTest.Test.Facade.ViewFacade
             }
         }
 
-        public class Test3Controller : BaseController
+        public class PrivateOnlyTestController : BaseController
         {
-            public static string DefaultText
+           
+            private PrivateOnlyTestController()
             {
-                get
-                {
-                    return "Test3Controller";
-                }
+                
+            }
+        }
+
+        public class SingleExplicitCtorTestController : BaseController
+        {
+            [CalledAsController]
+            public SingleExplicitCtorTestController()
+            {
+
+            }
+        }
+
+        public class SingleExplicitAndImplicitCtorTestController : BaseController
+        {
+            [CalledAsController]
+            public SingleExplicitAndImplicitCtorTestController()
+            {
+
             }
 
-            public string GetText()
+            public SingleExplicitAndImplicitCtorTestController(int x)
             {
-                return DefaultText;
+                
+            }
+        }
+
+        public class DoubleExplicitCtorTestController : BaseController
+        {
+            [CalledAsController]
+            public DoubleExplicitCtorTestController()
+            {
+
+            }
+
+
+            [CalledAsController]
+            public DoubleExplicitCtorTestController(int x)
+            {
+
             }
         }
 
@@ -86,7 +119,7 @@ namespace WinFormsMVCUnitTest.Test.Facade.ViewFacade
         }
 
         [TestMethod]
-        public void GetTest2Controller()
+        public void LaunchFormAsTest2()
         {
             var initiated_form = new BaseForm();
             initiated_form.Load += (sender, args) =>
@@ -104,6 +137,63 @@ namespace WinFormsMVCUnitTest.Test.Facade.ViewFacade
             
             Assert.AreEqual(Test2Controller.DefaultText, controller.GetText());
 
+        }
+
+        [TestMethod]
+        public void GetPrivateOnlyTestController()
+        {
+            var initiated_form = new BaseForm();
+            initiated_form.Load += (sender, args) =>
+            {
+                initiated_form.WindowState = FormWindowState.Minimized;
+            };
+
+            Assert.ThrowsException<NotImplementedException>( () => 
+            {
+                var controller = Facade.GetController<PrivateOnlyTestController>(initiated_form);
+            });
+        }
+
+        [TestMethod]
+        public void GetSingleExplicitCtorTestController()
+        {
+            var initiated_form = new BaseForm();
+            initiated_form.Load += (sender, args) =>
+            {
+                initiated_form.WindowState = FormWindowState.Minimized;
+            };
+
+            var controller = Facade.GetController<SingleExplicitCtorTestController>(initiated_form);
+        }
+
+        [TestMethod]
+
+        public void GetSingleExplicitAndImplicitCtorTestController()
+        {
+            var initiated_form = new BaseForm();
+            initiated_form.Load += (sender, args) =>
+            {
+                initiated_form.WindowState = FormWindowState.Minimized;
+            };
+
+            var controller = Facade.GetController<SingleExplicitAndImplicitCtorTestController>(initiated_form);
+
+        }
+
+        [TestMethod]
+
+        public void GetDoubleExplicitCtorTestController()
+        {
+            var initiated_form = new BaseForm();
+            initiated_form.Load += (sender, args) =>
+            {
+                initiated_form.WindowState = FormWindowState.Minimized;
+            };
+
+            Assert.ThrowsException<NotImplementedException>(() =>
+            {
+                var controller = Facade.GetController<DoubleExplicitCtorTestController>(initiated_form);
+            });
         }
 
     }

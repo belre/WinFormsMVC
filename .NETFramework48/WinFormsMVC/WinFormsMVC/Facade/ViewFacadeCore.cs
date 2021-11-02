@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -56,6 +57,10 @@ namespace WinFormsMVC.Facade
         {
             // 想定しているクラスの追加
             var ctor = BaseController.GetRuntimeConstructor(typeof(T));
+            if (ctor == null)
+            {
+                throw new NotImplementedException("クラス例外です.");
+            }
 
             // Controllerを動的に生成
             var inst = Activator.CreateInstance(typeof(T).Assembly.GetName().Name,

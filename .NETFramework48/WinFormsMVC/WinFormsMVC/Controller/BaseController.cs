@@ -49,7 +49,14 @@ namespace WinFormsMVC.Controller
             }
             else
             {
-                return ctors.First();
+                if (ctors.Length == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ctors.First();
+                }
             }
         }
 
