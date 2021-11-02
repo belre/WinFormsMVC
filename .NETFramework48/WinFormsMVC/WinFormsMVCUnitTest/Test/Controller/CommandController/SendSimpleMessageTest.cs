@@ -9,22 +9,11 @@ using WinFormsMVCUnitTest.Test.View;
 namespace WinFormsMVCUnitTest.Test.Controller.CommandController
 {
     [TestClass]
-    public class SendSimpleMessageTest
+    public class SendSimpleMessageTest : FacadeAndFormManagementTestFormat
     {
-        protected FormsManagement Manager
-        {
-            get;
-        }
-
-        protected WinFormsMVC.Facade.ViewFacade Facade
-        {
-            get;
-        }
-
         public SendSimpleMessageTest()
         {
-            Manager = new FormsManagement();
-            Facade = new WinFormsMVC.Facade.ViewFacade(Manager);
+
         }
 
         [TestMethod]
@@ -60,6 +49,22 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
             Assert.AreEqual(form_initiate.Text, form_second.Text);
         }
 
+        [TestMethod]
+        public void SendNullAsSimpleMessage()
+        {
+            var form_initiate = new BaseForm();
+            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            Manager.LaunchForm(null, form_initiate, false);
+            form_initiate.Text = "Hello";
+
+            var form_second = new BaseForm();
+            BaseFormModel.AddInitialAttributes(form_second, false);
+            Manager.LaunchForm(form_initiate, form_second, false);
+
+            var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form_initiate);
+            Assert.ThrowsException<NullReferenceException>( () => controller.SendSimpleMessage(null));
+
+        }
 
     }
 }

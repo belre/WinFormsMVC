@@ -26,7 +26,7 @@ namespace WinFormsMVC.Controller
         /// Undoの処理を通知するためのDelagateです。
         /// </summary>
         /// <param name="is_enable"></param>
-        public delegate void NotifyIsAvailableUndo(bool is_enable);
+        public delegate void AsNotifiedAfterSomeAction(bool is_available_undo);
 
         /// <summary>
         /// いま「元に戻す」の動作が可能であるかを表します.
@@ -52,11 +52,11 @@ namespace WinFormsMVC.Controller
         /// 履歴を記録してコマンドを送信します。
         /// </summary>
         /// <param name="commands"></param>
-        /// <param name="notify_undo_func"></param>
-        public void SendStoredMessage(Command[] commands, NotifyIsAvailableUndo notify_undo_func)
+        /// <param name="notifyAfterSomeAction"></param>
+        public void SendStoredMessage(Command[] commands, AsNotifiedAfterSomeAction notifyAfterSomeAction)
         {
             _manager.RunAndRecord(commands);
-            ReflectMemento(notify_undo_func);
+            ReflectMemento(notifyAfterSomeAction);
         }
 
         /// <summary>
@@ -68,10 +68,10 @@ namespace WinFormsMVC.Controller
             _manager.Run(commands);
         }
 
-        public void Undo(NotifyIsAvailableUndo notify_undo_func)
+        public void Undo(AsNotifiedAfterSomeAction asNotifiedUndoFunc)
         {
             _manager.Undo();
-            ReflectMemento(notify_undo_func);
+            ReflectMemento(asNotifiedUndoFunc);
         }
 
         public void Launch<T>(BaseForm self_form) where T : BaseForm
@@ -118,11 +118,11 @@ namespace WinFormsMVC.Controller
             _manager.LaunchForm(self_form, create_instance, true);
         }
 
-        private void ReflectMemento(NotifyIsAvailableUndo notify_undo_func)
+        private void ReflectMemento(AsNotifiedAfterSomeAction asNotifiedUndoFunc)
         {
-            if (notify_undo_func != null)
+            if (asNotifiedUndoFunc != null)
             {
-                notify_undo_func(IsAvailableUndo);
+                asNotifiedUndoFunc(IsAvailableUndo);
             }
         }
     }
