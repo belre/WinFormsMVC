@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace WinFormsMVCUnitTest.Test.View
 {
@@ -137,5 +138,18 @@ namespace WinFormsMVCUnitTest.Test.View
             }
 
         }
+
+        public static void AddInitialAttributes(WinFormsMVC.View.BaseForm form, bool is_modal)
+        {
+            if (is_modal)
+            {
+                form.Load += (sender, args) => { form.Close(); };
+            }
+            else
+            {
+                form.Load += (sender, e) => { form.WindowState = FormWindowState.Minimized; };
+            }
+        }
+
     }
 }

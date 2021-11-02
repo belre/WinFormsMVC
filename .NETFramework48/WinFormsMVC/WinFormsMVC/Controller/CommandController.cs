@@ -118,7 +118,7 @@ namespace WinFormsMVC.Controller
             _manager.LaunchForm(self_form, create_instance, true);
         }
 
-        public void ReflectMemento(NotifyIsAvailableUndo notify_undo_func)
+        private void ReflectMemento(NotifyIsAvailableUndo notify_undo_func)
         {
             if (notify_undo_func != null)
             {

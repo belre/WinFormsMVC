@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsMVC.View;
+using WinFormsMVCUnitTest.Test.View;
 
 namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
 {
@@ -20,7 +21,7 @@ namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
                 {
                     Text = "Test Text"
                 };
-                default_form.Load += (sender, e) => { default_form.WindowState = FormWindowState.Minimized; };
+                BaseFormModel.AddInitialAttributes(default_form, false);
 
                 return default_form;
             }
@@ -31,7 +32,7 @@ namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
             get
             {
                 var default_form = SingleModelessForm;
-                default_form.Load += (sender, args) => { default_form.Close(); };
+                BaseFormModel.AddInitialAttributes(default_form, true);
                 return default_form;
             }
         }
@@ -40,9 +41,6 @@ namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
         {
             _form_manager = new WinFormsMVC.Services.FormsManagement();
         }
-
- 
-
 
         [TestMethod]
         public void LaunchInitFromUnknownForm()

@@ -24,6 +24,8 @@ namespace WinFormsMVC.Facade
             FormManager = form_manager;
             FormManager.FacadeCore = this;
 
+
+            // FormManager as Constructor Arguments
             ConstructorArgsTemplate = new Dictionary<Type, object>();
             ConstructorArgsTemplate[typeof(FormsManagement)] = FormManager;
         }

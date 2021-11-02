@@ -57,6 +57,7 @@
     <Compile Include="Test\Controller\BaseController\SecondAttributeReflectionTest.cs" />
     <Compile Include="Test\Controller\BaseController\FirstAttributeReflectionTest.cs" />
     <Compile Include="Test\Controller\BaseController\NoAttributeReflectionTest.cs" />
+    <Compile Include="Test\Controller\CommandController\SendSimpleMessageTest.cs" />
     <Compile Include="Test\Facade\ViewFacade\GetControllerTest.cs" />
     <Compile Include="Test\Request\GenericCommand\OperationTest.cs" />
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
