@@ -24,7 +24,7 @@ namespace WinFormsMVC
 
 3. 画面を操作する場合、Controllerを使用する。
 
-例１．コントローラを取得し、新たなフォーム(Form2クラス)を作成する場合
+**例１．コントローラを取得し、新たなフォーム(Form2クラス)を作成する場合**
 
 コントローラ側
 ```C#
@@ -50,7 +50,6 @@ namespace WinFormsMVCSample.Controller
 
 ```C#
 // Form1の定義
-/* ボタンイベント */
 private void button1_Click(object sender, EventArgs e)
 {
     var controller = FacadeCore.GetController<Form1Controller>(this);
@@ -58,12 +57,11 @@ private void button1_Click(object sender, EventArgs e)
 }
 ```
 
-例２．コントローラを取得し、Form2クラスに指定されたラベルの文字列を変更する場合
+**例２．コントローラを取得し、Form2クラスに指定されたラベルの文字列を変更する場合**
 
 コントローラ側は例１と同じ
 
 ビュー側(Form1)
-
 ```C#
 // Form1の定義の途中
 private void button2_Click_1(object sender, EventArgs e)
@@ -118,5 +116,18 @@ namespace WinFormsMVCSample
 }
 ```
 
+**例３．「元に戻す」を実行する**
 
+SendStoredMessageメソッドが実行された場合、現在のデフォルトで**元に戻す**(Undo)の操作を実行することが出来る。
+
+ビュー側(Form2)
+
+```C#
+// Form2の定義の途中
+private void button3_Click(object sender, EventArgs e)
+{
+    var controller = FacadeCore.GetController<Form2Controller>(this);
+    controller.Undo(IsUndoEnable);
+}
+```
 
