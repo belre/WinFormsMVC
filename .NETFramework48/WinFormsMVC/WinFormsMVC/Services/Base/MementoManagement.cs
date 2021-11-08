@@ -107,5 +107,10 @@ namespace WinFormsMVC.Services.Base
         {
             return Mememtoes.Count != 0;
         }
+
+        public bool IsAvailableRedo()
+        {
+            return RemovingMememtoes.Count != 0;
+        }
     }
 }

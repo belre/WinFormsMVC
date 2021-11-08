@@ -36,6 +36,7 @@ namespace WinFormsMVCSample
                 InitializeComponent();
 
                 pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                IsUndoAndRedoEnable(false, false);
             }
 
             private void button1_Click(object sender, EventArgs e)
@@ -83,13 +84,13 @@ namespace WinFormsMVCSample
                             form4.Message = item[form4];
                         }
                     }
-                }, IsUndoEnable);
+                }, IsUndoAndRedoEnable);
             }
 
             private void button3_Click(object sender, EventArgs e)
             {
                 var controller = FacadeCore.GetController<Form2Controller>(this);
-                controller.Undo(IsUndoEnable);
+                controller.Undo(IsUndoAndRedoEnable);
             }
 
             private void button4_Click(object sender, EventArgs e)
@@ -136,7 +137,7 @@ namespace WinFormsMVCSample
                                 form2.pictureBox1.Image = item[form2];
                             }
                         }
-                    }, IsUndoEnable);
+                    }, IsUndoAndRedoEnable);
                 }
             }
 
@@ -176,7 +177,7 @@ namespace WinFormsMVCSample
                             form4.DisplayedImage = item[form4];
                         }
                     }
-                }, IsUndoEnable);
+                }, IsUndoAndRedoEnable);
             }
 
             private void button6_Click(object sender, EventArgs e)
@@ -197,9 +198,10 @@ namespace WinFormsMVCSample
                 button3.Enabled = controller.IsAvailableUndo;
             }
 
-            private void IsUndoEnable(bool is_available_undo)
+            private void IsUndoAndRedoEnable(bool is_available_undo, bool is_available_redo)
             {
                 button3.Enabled = is_available_undo;
+                button10.Enabled = is_available_redo;
             }
 
             private void button7_Click(object sender, EventArgs e)
@@ -276,13 +278,13 @@ namespace WinFormsMVCSample
                             form2.MessageFromClone = item[form2];
                         }
                     }
-                }, IsUndoEnable);
+                }, IsUndoAndRedoEnable);
             }
 
             private void button10_Click(object sender, EventArgs e)
             {
                 var controller = FacadeCore.GetController<Form2Controller>(this);
-                controller.Redo(IsUndoEnable);
+                controller.Redo(IsUndoAndRedoEnable);
             }
         }
     }

@@ -13,6 +13,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
     {
         private int _count_notified_after_action = 0;
         private bool _is_available_undo = false;
+        private bool _is_available_redo = false;
 
         public SendStoredMessageAndUndoTest()
         {
@@ -308,10 +309,11 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
             Assert.ThrowsException<NullReferenceException>(() => controller.SendStoredMessage(null, null));
         }
 
-        private void NotifyAfterSomeAction(bool is_available_undo)
+        private void NotifyAfterSomeAction(bool is_available_undo, bool is_available_redo)
         {
             _count_notified_after_action++;
             _is_available_undo = is_available_undo;
+            _is_available_redo = is_available_redo;
         }
 
     }

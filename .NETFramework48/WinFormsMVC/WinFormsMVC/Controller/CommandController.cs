@@ -26,7 +26,7 @@ namespace WinFormsMVC.Controller
         /// Undoの処理を通知するためのDelagateです。
         /// </summary>
         /// <param name="is_enable"></param>
-        public delegate void AsNotifiedAfterSomeAction(bool is_available_undo);
+        public delegate void AsNotifiedAfterSomeAction(bool is_available_undo, bool is_available_redo);
 
         /// <summary>
         /// いま「元に戻す」の動作が可能であるかを表します.
@@ -36,6 +36,14 @@ namespace WinFormsMVC.Controller
             get
             {
                 return _manager.ManagedMemento.IsAvalableUndo();
+            }
+        }
+
+        public bool IsAvailableRedo
+        {
+            get
+            {
+                return _manager.ManagedMemento.IsAvailableRedo();
             }
         }
 
@@ -129,7 +137,7 @@ namespace WinFormsMVC.Controller
         {
             if (asNotifiedUndoFunc != null)
             {
-                asNotifiedUndoFunc(IsAvailableUndo);
+                asNotifiedUndoFunc(IsAvailableUndo, IsAvailableRedo);
             }
         }
     }
