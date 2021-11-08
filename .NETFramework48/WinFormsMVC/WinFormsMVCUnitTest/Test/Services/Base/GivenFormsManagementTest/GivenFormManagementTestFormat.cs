@@ -174,7 +174,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         CommonCommandStatus.Clear();
                     }
 
-
                     if (status.PreviousOperation == ValidationStatus.Operations.NO_VALIDATION || 
                         status.PreviousOperation == ValidationStatus.Operations.ERROR_WITH_VALIDATING)
                     {

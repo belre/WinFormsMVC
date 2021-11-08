@@ -29,6 +29,12 @@ namespace WinFormsMVC.Request
             set;
         }
 
+        public string Comment
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// バックアップデータの保存
         /// </summary>

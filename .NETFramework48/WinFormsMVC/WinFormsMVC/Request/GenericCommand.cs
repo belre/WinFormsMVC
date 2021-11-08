@@ -103,7 +103,7 @@ namespace WinFormsMVC.Request
                     HandleValidationError();
                 }
 
-                Status.CommitValidation();
+                Status.CommitNextValidation();
 
                 return ret;
             }

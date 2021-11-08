@@ -8,8 +8,7 @@ namespace WinFormsMVC.Request
 {
     public class ValidationStatus
     {
-
-        public enum Operations
+       public enum Operations
         {
             NO_VALIDATION,
             VALIDATED,
@@ -36,13 +35,6 @@ namespace WinFormsMVC.Request
             protected set;
         }
         
-
-        public string Comment
-        {
-            get;
-            set;
-        }
-
         public ValidationStatus()
         {
             ExecutedCount = 0;
@@ -55,7 +47,7 @@ namespace WinFormsMVC.Request
             PreviousOperation = operation_status;
         }
 
-        internal void CommitValidation()
+        internal void CommitNextValidation()
         {
             PreviousExecutedCount = ExecutedCount;
         }
