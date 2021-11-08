@@ -18,15 +18,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             
         }
 
-        protected override void AssertAction(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        protected override void AssertAction(
+            Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            base.AssertMemorableAction(modified, assert);
+            AssertMemorableAction(modified, assert);
         }
 
-        protected override void AssertUndo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
-        {
-            base.AssertUndo(assert);
-        }
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
@@ -46,23 +44,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             });
 
             AssertUndo(assert_undo);
-        }
-
-        [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null)]
-        public virtual void CalledBySelfAndRedo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_redo)
-        {
-            TestActionMode = ActionMode.MEMORABLE_ACTION;
-
-            CalledBySelf(null, null, null);
-            
-            Define(ref assert_redo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertValidatedOnRedo();
-            });
-
-            AssertRedo(assert_redo);
         }
 
 

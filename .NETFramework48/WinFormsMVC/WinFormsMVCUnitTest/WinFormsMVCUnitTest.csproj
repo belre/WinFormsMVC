@@ -67,6 +67,7 @@
     <Compile Include="Test\Request\Item\GenericBackupTest.cs" />
     <Compile Include="Test\Request\Item\TextItem\BackupTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\GivenFormManagementTestFormat.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\IRedoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\IsolatedGivenFormsTypeInheritedTest.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedFormsUndoAndRedoTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedGivenFormsUndoAndRedoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedFormsTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedGivenFormsTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedGivenFormsUndoTest.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedGivenFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SimplyConnectedFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormTypeInheritedTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormUndoAndRedoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormUndoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormTest.cs" />
     <Compile Include="Test\Services\Base\MementoManagement\PushAndPopTest.cs" />

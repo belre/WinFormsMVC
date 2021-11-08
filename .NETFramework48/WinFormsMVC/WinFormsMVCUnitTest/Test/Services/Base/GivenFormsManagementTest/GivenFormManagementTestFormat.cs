@@ -64,13 +64,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 Assert.IsFalse(WasPrev);
             }
 
-            public void AssertValidatedOnRedo()
+            public void AssertWasRedo()
             {
-                Assert.IsTrue(WasValidation);
-                Assert.IsFalse(WasError);
-                Assert.IsFalse(WasFinalized);
-                Assert.IsTrue(WasNext);
-                Assert.IsFalse(WasPrev);
                 Assert.IsTrue(WasRedo);
             }
 
@@ -137,6 +132,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         private List<Command> OrderingCommands
         {
             get;
+        }
+
+        protected IEnumerable<Command> CommandList
+        {
+            get
+            {
+                return OrderingCommands;
+            }
         }
 
         private GivenFormsManagement FormManager
