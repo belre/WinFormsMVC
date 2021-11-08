@@ -21,7 +21,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.MementoManagement
                 {
                     new GenericCommand<BaseForm, TextItem>()
                     {
-                        Validation = (item, status) =>
+                        Validation = (item) =>
                         {
                             item.Next = "Test Text 1";
                             return true;

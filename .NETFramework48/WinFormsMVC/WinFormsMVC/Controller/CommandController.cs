@@ -74,6 +74,13 @@ namespace WinFormsMVC.Controller
             ReflectMemento(asNotifiedUndoFunc);
         }
 
+
+        public void Redo(AsNotifiedAfterSomeAction asNotifiedUndoFunc)
+        {
+            _manager.Redo();
+            ReflectMemento(asNotifiedUndoFunc);
+        }
+
         public void Launch<T>(BaseForm self_form) where T : BaseForm
         {
             Launch<T>(self_form, null, null);

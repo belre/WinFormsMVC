@@ -47,16 +47,16 @@ namespace WinFormsMVCSample
                     {
                         Invoker = this,
                         IsRecursive = true,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = "Hello World";
                             return true;
                         },
-                        PrevOperation = ( item, form3) =>
+                        PrevOperation = ( item, status, form3) =>
                         {
                             form3.RootMessage = item[form3];
                         },
-                        NextOperation = ( item, form3) =>
+                        NextOperation = ( item, status, form3) =>
                         {
                             item[form3] = form3.RootMessage;
                             form3.RootMessage = item.Next;
@@ -87,16 +87,16 @@ namespace WinFormsMVCSample
                         {
                             Invoker = this,
                             IsRecursive = true,
-                            Validation = ( item, status) =>
+                            Validation = ( item) =>
                             {
                                 item.Next = form.FilePath;
                                 return true;
                             },
-                            PrevOperation = ( item, form3) =>
+                            PrevOperation = ( item, status, form3) =>
                             {
                                 form3.FolderPath = item[form3];
                             },
-                            NextOperation = ( item, form3) =>
+                            NextOperation = ( item, status, form3) =>
                             {
                                 item[form3] = form3.FolderPath;
                                 form3.FolderPath = item.Next;

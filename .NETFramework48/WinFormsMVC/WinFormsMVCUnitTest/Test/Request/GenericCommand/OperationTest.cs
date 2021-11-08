@@ -23,23 +23,23 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
         {
             _default_command = new GenericCommand<BaseForm, TextItem>()
             {
-                Validation = ((item, status) =>
+                Validation = ((item) =>
                 {
                     _was_validated = true;
                     return true;
                 }),
-                NextOperation = ((item, form) =>
+                NextOperation = ((item, status, form) =>
                 {
                     form.Text = "Next Text";
                     _was_done_next = true;
                 }),
-                PrevOperation = ((item, form) =>
+                PrevOperation = ((item, status, form) =>
                 {
                     form.Text = "Previous Text";
                     _was_done_prev = true;
                 }),
-                FinalOperation = ((item, status) => { _was_done_finalize = true; }),
-                ErrorOperation = ((item, status) => { _was_done_error_handling = true; })
+                FinalOperation = ((item) => { _was_done_finalize = true; }),
+                ErrorOperation = ((item) => { _was_done_error_handling = true; })
             };
         }
 
@@ -87,7 +87,7 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
             var base_form = new BaseForm();
             base_form.Text = "First Text";
 
-            ((GenericCommand<BaseForm, TextItem>) _default_command).Validation = (item, status) =>
+            ((GenericCommand<BaseForm, TextItem>) _default_command).Validation = (item) =>
             {
                 _was_validated = true;
                 return false;

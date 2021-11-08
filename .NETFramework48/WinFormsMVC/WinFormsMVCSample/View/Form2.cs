@@ -51,34 +51,34 @@ namespace WinFormsMVCSample
                 controller.SendStoredMessage( new Command[] {
                     new GenericCommand<Form3, TextItem> {
                         Invoker=this,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        NextOperation = ( item, form3) =>
+                        NextOperation = ( item, status, form3) =>
                         {
                             item[form3] = form3.Message;
                             form3.Message = item.Next;
                         },
-                        PrevOperation = ( item, form3) =>
+                        PrevOperation = ( item, status, form3) =>
                         {
                             form3.Message = item[form3];
                         }
                     },
                     new GenericCommand<Form4, TextItem>() {
                         Invoker = this,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        NextOperation = ( item, form4) =>
+                        NextOperation = ( item, status, form4) =>
                         {
                             item[form4] = form4.Message;
                             form4.Message = item.Next;
                         },
-                        PrevOperation = ( item, form4) =>
+                        PrevOperation = ( item, status, form4) =>
                         {
                             form4.Message = item[form4];
                         }
@@ -121,17 +121,17 @@ namespace WinFormsMVCSample
                         {
                             Invoker = this,
                             IsForSelf = true,
-                            Validation = ( item, status) =>
+                            Validation = ( item) =>
                             {
                                 item.Next = (Image)pictureBox1.Image.Clone();
                                 return true;
                             },
-                            NextOperation = ( item, form2) =>
+                            NextOperation = ( item, status, form2) =>
                             {
                                 item[form2] = (Image)_before_edit_image.Clone();
                                 form2.pictureBox1.Image = item.Next;
                             },
-                            PrevOperation = ( item, form2) =>
+                            PrevOperation = ( item, status, form2) =>
                             {
                                 form2.pictureBox1.Image = item[form2];
                             }
@@ -161,17 +161,17 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
                         },
-                        NextOperation = ( item, form4) =>
+                        NextOperation = ( item, status, form4) =>
                         {
                             item[form4] = (Image)form4.DisplayedImage.Clone();
                             form4.DisplayedImage = item.Next;
                         },
-                        PrevOperation = ( item, form4) =>
+                        PrevOperation = ( item, status, form4) =>
                         {
                             form4.DisplayedImage = item[form4];
                         }
@@ -211,12 +211,12 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
                         },
-                        NextOperation = ( item, form4) =>
+                        NextOperation = ( item, status, form4) =>
                         {
                             item[form4] = (Image)form4.DisplayedImage.Clone();
                             form4.DisplayedImage = item.Next;
@@ -240,12 +240,12 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = image;
                             return true;
                         },
-                        NextOperation = ( item, form4) =>
+                        NextOperation = ( item, status, form4) =>
                         {
                             form4.DisplayedImage = item.Next;
                         }
@@ -261,22 +261,28 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
                         IsRecursive=true,
-                        Validation = ( item, status) =>
+                        Validation = ( item) =>
                         {
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        NextOperation = ( item, form2) =>
+                        NextOperation = ( item, status, form2) =>
                         {
                             item[form2] = form2.MessageFromClone;
                             form2.MessageFromClone = item.Next;
                         },
-                        PrevOperation = ( item, form2) =>
+                        PrevOperation = ( item, status, form2) =>
                         {
                             form2.MessageFromClone = item[form2];
                         }
                     }
                 }, IsUndoEnable);
+            }
+
+            private void button10_Click(object sender, EventArgs e)
+            {
+                var controller = FacadeCore.GetController<Form2Controller>(this);
+                controller.Redo(IsUndoEnable);
             }
         }
     }

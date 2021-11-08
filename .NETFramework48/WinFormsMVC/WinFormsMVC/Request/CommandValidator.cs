@@ -8,7 +8,7 @@ namespace WinFormsMVC.Request
 {
     public abstract class CommandValidator<Item> : Command where Item : CommandItem
     {
-        protected ValidationStatus Status
+        protected TransitionStatus Status
         {
             get;
             set;
@@ -17,17 +17,17 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// データ検証を行うときに実行される処理です。
         /// </summary>
-        public Func<Item, ValidationStatus, bool> Validation { get; set; }
+        public Func<Item, bool> Validation { get; set; }
 
         /// <summary>
         /// 「元に戻す」の後に行なわれる処理です。
         /// </summary>
-        public Action<Item, ValidationStatus> FinalOperation { get; set; }
+        public Action<Item> FinalOperation { get; set; }
 
         /// <summary>
         /// データ検証に失敗したときに実行される処理です。
         /// </summary>
-        public Action<Item, ValidationStatus> ErrorOperation { get; set; }
+        public Action<Item> ErrorOperation { get; set; }
 
 
     }

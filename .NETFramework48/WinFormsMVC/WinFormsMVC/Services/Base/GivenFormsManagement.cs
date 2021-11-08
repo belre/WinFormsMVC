@@ -103,7 +103,7 @@ namespace WinFormsMVC.Services.Base
                         command.Prev(form);
                     }
                 }
-                command.Invalidate();
+                //command.Invalidate();
             }
         }
 
@@ -121,10 +121,25 @@ namespace WinFormsMVC.Services.Base
 
             foreach (var command in adapt_command)
             {
-                if (command.RestoreValidation())
+                var target_forms = new List<BaseForm>();
+                foreach (var form in ManagedBaseForms)
                 {
-                    Update(command);
+                    if (IsMatchInvoker(form, command) && IsMatchType(form, command))
+                    {
+                        target_forms.Add(form);
+                    }
                 }
+
+                foreach (var target in target_forms)
+                {
+                    command.Restore(target);
+                    //command.Next(target);
+                }
+
+                //if (command.Restore())
+                //{
+                //Update(command);
+                //}
             }
         }
 

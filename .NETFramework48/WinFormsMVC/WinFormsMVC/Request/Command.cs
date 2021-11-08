@@ -58,7 +58,7 @@ namespace WinFormsMVC.Request
         /// やり直し実行時のデータ反映
         /// </summary>
         /// <returns></returns>
-        public abstract bool RestoreValidation();
+        public abstract bool Restore(BaseForm form);
 
         /// <summary>
         /// 元に戻す

@@ -85,9 +85,9 @@ namespace WinFormsMVC.Request
         }
 
 
-        public override bool RestoreValidation()
+        public override bool Restore(BaseForm form)
         {
-            return Command.RestoreValidation();
+            return Command.Restore(form);
         }
 
         /// <summary>

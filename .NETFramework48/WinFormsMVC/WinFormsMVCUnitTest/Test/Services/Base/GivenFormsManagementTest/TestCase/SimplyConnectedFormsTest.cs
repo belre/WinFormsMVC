@@ -329,7 +329,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) =>
             {
-                ((CommandValidator<TextItem>)list.First()).Validation = (item, status) =>
+                ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
                 {
                     item.Next = DefaultValidationText(0);
                     CommonCommandStatus.WasValidation = true;

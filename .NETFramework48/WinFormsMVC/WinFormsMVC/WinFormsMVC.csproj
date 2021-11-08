@@ -63,7 +63,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Request\Command.cs" />
-    <Compile Include="Request\ValidationStatus.cs" />
+    <Compile Include="Request\TransitionStatus.cs" />
     <Compile Include="Request\CommandItem.cs" />
     <Compile Include="Request\AsyncCommand.cs" />
     <Compile Include="Request\CommandValidator.cs" />

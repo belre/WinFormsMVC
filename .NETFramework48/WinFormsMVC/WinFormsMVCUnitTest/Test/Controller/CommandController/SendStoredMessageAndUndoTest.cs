@@ -38,12 +38,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item, status) =>
+                    Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
                     },
-                    NextOperation = (item, form) =>
+                    NextOperation = (item, status, form) =>
                     {
                         form.Text = item.Next;
                     }
@@ -78,17 +78,17 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item, status) =>
+                    Validation = (item) =>
                     {
                         item.Next = "Excuse me";
                         return true;
                     },
-                    NextOperation = (item, form) =>
+                    NextOperation = (item, status, form) =>
                     {
                         item[form] = form.Text;
                         form.Text = item.Next;
                     },
-                    PrevOperation = (item, form) =>
+                    PrevOperation = (item, status, form) =>
                     {
                         form.Text = item[form];
                     }
@@ -99,17 +99,17 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item, status) =>
+                    Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
                     },
-                    NextOperation = (item, form) =>
+                    NextOperation = (item, status, form) =>
                     {
                         item[form] = form.Text;
                         form.Text = item.Next;
                     },
-                    PrevOperation = (item, form) =>
+                    PrevOperation = (item, status, form) =>
                     {
                         form.Text = item[form];
                     }
@@ -144,12 +144,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item, status) =>
+                    Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
                     },
-                    NextOperation = (item, form) =>
+                    NextOperation = (item, status, form) =>
                     {
                         form.Text = item.Next;
                     }
@@ -185,17 +185,17 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item, status) =>
+                    Validation = (item) =>
                     {
                         item.Next = "abcdefg";
                         return true;
                     },
-                    NextOperation = (item, form) =>
+                    NextOperation = (item, status, form) =>
                     {
                         item[form] = form.Text;
                         form.Text = item.Next;
                     }, 
-                    PrevOperation = (item, form) =>
+                    PrevOperation = (item, status, form) =>
                     {
                         form.Text = item[form];
                     }
@@ -203,17 +203,17 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item, status) =>
+                    Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
                     },
-                    NextOperation = (item, form) =>
+                    NextOperation = (item, status, form) =>
                     {
                         item[form] = form.Text;
                         form.Text = item.Next;
                     },
-                    PrevOperation = (item, form) =>
+                    PrevOperation = (item, status, form) =>
                     {
                         form.Text = item[form];
                     }
@@ -252,17 +252,17 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                     new GenericCommand<BaseForm, TextItem>()
                     {
                         Invoker = form_initiate,
-                        Validation = (item, status) =>
+                        Validation = (item) =>
                         {
                             item.Next = string.Format("Message {0}", i);
                             return true;
                         },
-                        NextOperation = (item, form) =>
+                        NextOperation = (item, status, form) =>
                         {
                             item[form] = form.Text;
                             form.Text = item.Next;
                         },
-                        PrevOperation = (item, form) =>
+                        PrevOperation = (item, status, form) =>
                         {
                             form.Text = item[form];
                         }
