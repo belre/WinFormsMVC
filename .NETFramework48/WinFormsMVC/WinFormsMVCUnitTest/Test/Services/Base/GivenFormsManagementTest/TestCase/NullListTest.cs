@@ -22,7 +22,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Invoker = new BaseForm(),
                     IsForSelf = true,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = "Validation Text - ChildForm1";
                         return true;

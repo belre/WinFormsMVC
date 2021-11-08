@@ -50,6 +50,24 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
+        [DataRow(null)]
+        public virtual void CalledBySelfAndRedo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_redo)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            CalledBySelf(null, null, null);
+            
+            Define(ref assert_redo, (commands, forms) =>
+            {
+                CommonCommandStatus.AssertValidatedOnRedo();
+            });
+
+            AssertRedo(assert_redo);
+        }
+
+
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
         [DataRow(null, null, null)]
         public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, 
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,

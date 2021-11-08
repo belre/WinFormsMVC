@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsMVC.Request;
@@ -111,16 +112,20 @@ namespace WinFormsMVC.Services.Base
         /// </summary>
         public void Redo()
         {
+            var adapt_command = ManagedMemento.RestoreCommand();
 
-
-            /*
-            var recent_commands = ManagedMemento.RemovingMememtoes.First();
-
-            if (recent_commands == null)
+            if (adapt_command == null)
             {
                 return;
             }
-            */
+
+            foreach (var command in adapt_command)
+            {
+                if (command.RestoreValidation())
+                {
+                    Update(command);
+                }
+            }
         }
 
         /// <summary>

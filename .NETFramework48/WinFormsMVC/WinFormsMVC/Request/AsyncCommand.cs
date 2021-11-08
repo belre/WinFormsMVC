@@ -84,6 +84,12 @@ namespace WinFormsMVC.Request
             return Command.Validate();
         }
 
+
+        public override bool RestoreValidation()
+        {
+            return Command.RestoreValidation();
+        }
+
         /// <summary>
         /// 非同期の処理として実行
         /// </summary>

@@ -51,7 +51,7 @@ namespace WinFormsMVCSample
                 controller.SendStoredMessage( new Command[] {
                     new GenericCommand<Form3, TextItem> {
                         Invoker=this,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = textBox1.Text;
                             return true;
@@ -68,7 +68,7 @@ namespace WinFormsMVCSample
                     },
                     new GenericCommand<Form4, TextItem>() {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = textBox1.Text;
                             return true;
@@ -121,7 +121,7 @@ namespace WinFormsMVCSample
                         {
                             Invoker = this,
                             IsForSelf = true,
-                            Validation = ( item) =>
+                            Validation = ( item, status) =>
                             {
                                 item.Next = (Image)pictureBox1.Image.Clone();
                                 return true;
@@ -161,7 +161,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
@@ -211,7 +211,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
@@ -240,7 +240,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = image;
                             return true;
@@ -261,7 +261,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
                         IsRecursive=true,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = textBox1.Text;
                             return true;

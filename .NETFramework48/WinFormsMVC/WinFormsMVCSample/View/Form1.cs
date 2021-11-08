@@ -47,7 +47,7 @@ namespace WinFormsMVCSample
                     {
                         Invoker = this,
                         IsRecursive = true,
-                        Validation = ( item) =>
+                        Validation = ( item, status) =>
                         {
                             item.Next = "Hello World";
                             return true;
@@ -87,7 +87,7 @@ namespace WinFormsMVCSample
                         {
                             Invoker = this,
                             IsRecursive = true,
-                            Validation = ( item) =>
+                            Validation = ( item, status) =>
                             {
                                 item.Next = form.FilePath;
                                 return true;

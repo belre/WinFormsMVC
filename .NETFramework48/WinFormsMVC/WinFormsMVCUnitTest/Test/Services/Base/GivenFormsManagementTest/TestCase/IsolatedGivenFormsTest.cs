@@ -117,7 +117,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             AssertAction((list, forms) =>
             {
-                ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
+                ((CommandValidator<TextItem>)list.First()).Validation = (item, status) =>
                 {
                     item.Next = "Validation Text";
                     CommonCommandStatus.WasValidation = true;

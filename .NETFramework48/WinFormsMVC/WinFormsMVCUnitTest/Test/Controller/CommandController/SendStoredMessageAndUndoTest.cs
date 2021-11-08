@@ -38,7 +38,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
@@ -78,7 +78,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = "Excuse me";
                         return true;
@@ -99,7 +99,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
@@ -144,7 +144,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
@@ -185,7 +185,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = "abcdefg";
                         return true;
@@ -203,7 +203,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
-                    Validation = (item) =>
+                    Validation = (item, status) =>
                     {
                         item.Next = form_initiate.Text;
                         return true;
@@ -252,7 +252,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                     new GenericCommand<BaseForm, TextItem>()
                     {
                         Invoker = form_initiate,
-                        Validation = (item) =>
+                        Validation = (item, status) =>
                         {
                             item.Next = string.Format("Message {0}", i);
                             return true;

@@ -11,15 +11,7 @@ namespace WinFormsMVC.Request
     /// <typeparam name="Item">何を送信するか(テキスト、画像など)</typeparam>
     public class GenericCommand<TargetForm, Item> : CommandValidator<Item> where TargetForm : BaseForm where Item : CommandItem
     {
-        protected enum OperationStatus
-        {
-            NO_VALIDATION,
-            VALIDATED,
-            ERROR_WITH_VALIDATING,
-            DONE_FINALIZE
-        };
-
-        protected OperationStatus Status
+        protected ValidationStatus.Operations CurrentOperations
         {
             get;
             set;
@@ -29,7 +21,7 @@ namespace WinFormsMVC.Request
         {
             get
             {
-                return Status != OperationStatus.NO_VALIDATION;
+                return CurrentOperations != Request.ValidationStatus.Operations.NO_VALIDATION;
             }
         }
 
@@ -67,7 +59,8 @@ namespace WinFormsMVC.Request
                 throw new TypeInitializationException(typeof(Item).Name, new Exception("コマンドアイテムが異常です"));
             }
 
-            Status = OperationStatus.NO_VALIDATION;
+            CurrentOperations = Request.ValidationStatus.Operations.NO_VALIDATION;
+            Status = new ValidationStatus();
         }
 
 
@@ -89,28 +82,28 @@ namespace WinFormsMVC.Request
         /// <returns></returns>
         public override bool Validate()
         {
-            if (Status == OperationStatus.NO_VALIDATION)
+            if (CurrentOperations == Request.ValidationStatus.Operations.NO_VALIDATION)
             {
                 if (Validation == null)
                 {
                     return false;
                 }
 
-
                 // Validation状態で処理を変える
-
-                bool ret = Validation(StoredItem); ;
+                bool ret = Validation(StoredItem, Status);
 
                 // Validateの結果によってStatusを変える
                 if (ret)
                 {
-                    Status = OperationStatus.VALIDATED;
+                    CurrentOperations = Request.ValidationStatus.Operations.VALIDATED;
                 }
                 else
                 {
-                    Status = OperationStatus.ERROR_WITH_VALIDATING;
+                    CurrentOperations = Request.ValidationStatus.Operations.ERROR_WITH_VALIDATING;
                     HandleValidationError();
                 }
+
+                Status.CommitValidation();
 
                 return ret;
             }
@@ -120,13 +113,27 @@ namespace WinFormsMVC.Request
             }
         }
 
+        public override bool RestoreValidation()
+        {
+            if (CurrentOperations == Request.ValidationStatus.Operations.DONE_FINALIZE || 
+                CurrentOperations == Request.ValidationStatus.Operations.ERROR_WITH_VALIDATING )
+            {
+                Status.StageNextValidation(CurrentOperations);
+                CurrentOperations = Request.ValidationStatus.Operations.NO_VALIDATION;
+
+                return Validate();
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// 元に戻すを実行します。
         /// </summary>
         /// <param name="form"></param>
         public override void Prev(BaseForm form)
         {
-            if (Status == OperationStatus.VALIDATED)
+            if (CurrentOperations == Request.ValidationStatus.Operations.VALIDATED)
             {
                 if (PrevOperation != null)
                 {
@@ -141,7 +148,7 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Next(BaseForm form)
         {
-            if (Status == OperationStatus.VALIDATED)
+            if (CurrentOperations == Request.ValidationStatus.Operations.VALIDATED)
             {
                 if (NextOperation != null)
                 {
@@ -157,12 +164,12 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Invalidate()
         {
-            if (Status == OperationStatus.VALIDATED)
+            if (CurrentOperations == Request.ValidationStatus.Operations.VALIDATED)
             {
                 if (FinalOperation != null)
                 {
-                    FinalOperation(StoredItem);
-                    Status = OperationStatus.DONE_FINALIZE;
+                    FinalOperation(StoredItem, Status);
+                    CurrentOperations = Request.ValidationStatus.Operations.DONE_FINALIZE;
                 }
             }
         }
@@ -172,11 +179,11 @@ namespace WinFormsMVC.Request
         /// </summary>
         protected override void HandleValidationError()
         {
-            if (Status != OperationStatus.NO_VALIDATION)
+            if (CurrentOperations != Request.ValidationStatus.Operations.NO_VALIDATION)
             {
                 if (ErrorOperation != null)
                 {
-                    ErrorOperation(StoredItem);
+                    ErrorOperation(StoredItem, Status);
                 }
             }
         }

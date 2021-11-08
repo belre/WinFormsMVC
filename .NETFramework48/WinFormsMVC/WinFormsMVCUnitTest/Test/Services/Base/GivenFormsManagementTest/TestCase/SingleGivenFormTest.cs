@@ -95,7 +95,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public virtual void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
             Define(ref modified, (list, forms) => {
-                ((CommandValidator<TextItem>)list.First()).Validation = (item) =>
+                ((CommandValidator<TextItem>)list.First()).Validation = (item, status) =>
                 {
                     item.Next = ValidationText;
                     CommonCommandStatus.WasValidation = true;

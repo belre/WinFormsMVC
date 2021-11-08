@@ -46,12 +46,19 @@ namespace WinFormsMVC.Request
         public bool IsIncludingInheritedType { get; set; }
 
 
+
         /// <summary>
         /// データ反映
         /// </summary>
         /// <returns>成功時はtrue</returns>
         public abstract bool Validate();
 
+
+        /// <summary>
+        /// やり直し実行時のデータ反映
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool RestoreValidation();
 
         /// <summary>
         /// 元に戻す
