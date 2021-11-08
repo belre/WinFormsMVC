@@ -13,7 +13,7 @@ using WinFormsMVCUnitTest.Test.View.BaseForm;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public class PerfectTreeFormsRedoTest : PerfectTreeFormsTest
+    public sealed class PerfectTreeFormsRedoTest : PerfectTreeFormsTest
     {
         public bool IsUndoLock
         {
@@ -53,14 +53,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-
-
-        public virtual void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified, 
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        public  void CalledBySelf_RootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
-            base.CalledBySelf_RootInvoker(modified, assert);
+            base.CalledBySelf_RootInvoker(null, null);
             AssertUndo(((commands, forms) => { }));
 
             base.CalledBySelf_RootInvoker(null, null);
@@ -69,7 +65,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        public virtual void CalledByRootInvoker()
+        public  void CalledByRootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -82,7 +78,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        public virtual void RecursiveFromRootInvoker()
+        public  void RecursiveFromRootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -98,7 +94,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledBySelf_LastInvoker()
+        public  void CalledBySelf_LastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -113,7 +109,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledByLastInvoker()
+        public  void CalledByLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
@@ -129,7 +125,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void RecursiveFromLastInvoker()
+        public  void RecursiveFromLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -144,7 +140,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledByFirstAndLastInvoker()
+        public  void CalledByFirstAndLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -159,7 +155,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledBySecondLeftInvoker()
+        public  void CalledBySecondLeftInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -176,7 +172,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledBySecondRightInvoker()
+        public  void CalledBySecondRightInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -191,7 +187,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void RecursiveFromSecondLeftRootInvoker()
+        public  void RecursiveFromSecondLeftRootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -207,7 +203,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledByAllLeftInvokers()
+        public  void CalledByAllLeftInvokers()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -222,7 +218,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
 
 
-        public virtual void CalledByAllRightInvokers()
+        public  void CalledByAllRightInvokers()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -236,7 +232,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
 
         [TestMethod, TestCategory("差分")]
-        public virtual void CalledBySelf_AllLeftInvokers()
+        public  void CalledBySelf_AllLeftInvokers()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
@@ -250,7 +246,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
 
         [TestMethod, TestCategory("差分")]
-        public virtual void CalledByNullInvoker()
+        public  void CalledByNullInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
@@ -263,7 +259,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        public virtual void ValidationError()
+        public  void ValidationError()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
@@ -277,7 +273,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        public virtual void ValidationNullCheck()
+        public  void ValidationNullCheck()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 

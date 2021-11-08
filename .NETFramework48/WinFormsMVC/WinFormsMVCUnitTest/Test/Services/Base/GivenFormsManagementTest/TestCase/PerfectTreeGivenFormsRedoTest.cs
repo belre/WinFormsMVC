@@ -13,7 +13,7 @@ using WinFormsMVCUnitTest.Test.View.BaseForm;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public class PerfectTreeGivenFormsRedoTest : PerfectTreeGivenFormsTest
+    public sealed class PerfectTreeGivenFormsRedoTest : PerfectTreeGivenFormsTest
     {
 
         public bool IsUndoLock
@@ -55,450 +55,283 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledBySelf_RootInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledBySelf_RootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
-            base.CalledBySelf_RootInvoker(modified, assert);
+            base.CalledBySelf_RootInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledBySelf_RootInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledByRootInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledByRootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledByRootInvoker(modified, assert);
+            base.CalledByRootInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
-
+            base.CalledByRootInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void RecursiveFromRootInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void RecursiveFromRootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
 
-            base.RecursiveFromRootInvoker(modified, assert);
+            base.RecursiveFromRootInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.RecursiveFromRootInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void RecursiveFromRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void RecursiveFromRootInvokerInSingleLevel()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.RecursiveFromRootInvokerInSingleLevel(modified, assert);
+            base.RecursiveFromRootInvokerInSingleLevel(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.RecursiveFromRootInvokerInSingleLevel(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledBySelf_LastInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledBySelf_LastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledBySelf_LastInvoker(modified, assert);
+            base.CalledBySelf_LastInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledBySelf_LastInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledByLastInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledByLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
-            base.CalledByLastInvoker(modified, assert);
+            base.CalledByLastInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndoButNotTarget();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledByLastInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
 
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void RecursiveFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void RecursiveFromLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.RecursiveFromLastInvoker(modified, assert);
+            base.RecursiveFromLastInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndoButNotTarget();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.RecursiveFromLastInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledByFirstAndLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledByFirstAndLastInvoker(modified, assert);
+            base.CalledByFirstAndLastInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledByFirstAndLastInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledBySecondLeftInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledBySecondLeftInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledBySecondLeftInvoker(modified, assert);
+            base.CalledBySecondLeftInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledBySecondLeftInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
 
         }
 
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledBySecondRightInvoker(Action<List<Command>, List<BaseForm>> modified, 
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledBySecondRightInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledBySecondRightInvoker(modified, assert);
+            base.CalledBySecondRightInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-
-            base.AssertUndo(assert_undo);
+            base.CalledBySecondRightInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
 
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void RecursiveFromSecondLeftRootInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void RecursiveFromSecondLeftRootInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
 
-            base.RecursiveFromSecondLeftRootInvoker(modified, assert);
+            base.RecursiveFromSecondLeftRootInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.RecursiveFromSecondLeftRootInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void RecursiveFromSecondLeftRootInvokerInSingleLevel(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void RecursiveFromSecondLeftRootInvokerInSingleLevel()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
 
-            base.RecursiveFromSecondLeftRootInvokerInSingleLevel(modified, assert);
+            base.RecursiveFromSecondLeftRootInvokerInSingleLevel(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndoButNotTarget();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.RecursiveFromSecondLeftRootInvokerInSingleLevel(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledByAllLeftInvokers(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledByAllLeftInvokers()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledByAllLeftInvokers(modified, assert);
+            base.CalledByAllLeftInvokers(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledByAllLeftInvokers(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledByAllRightInvokers(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledByAllRightInvokers()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledByAllRightInvokers(modified, assert);
+            base.CalledByAllRightInvokers(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledByAllRightInvokers(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledBySelf_AllLeftInvokers(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledBySelf_AllLeftInvokers()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
 
-            base.CalledBySelf_AllLeftInvokers(modified, assert);
+            base.CalledBySelf_AllLeftInvokers(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndo();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledBySelf_AllLeftInvokers(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void CalledByNullInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
 
-            base.CalledByNullInvoker(modified, assert);
+            base.CalledByNullInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertUndoButNotTarget();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.CalledByNullInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void ValidationError(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void ValidationError()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
             
-            base.ValidationError(modified, assert);
+            base.ValidationError(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertValidationError();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.ValidationError(null, null);
+            AssertRedo((commands, forms) => { });
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
         [TestMethod, TestCategory("差分")]
-        [DataTestMethod]
-        [DataRow(null, null, null)]
-        public virtual void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
-            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        
+        
+        public void ValidationNullCheck()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.ValidationNullCheck(modified, assert);
+            base.ValidationNullCheck(null, null);
+            AssertUndo(((commands, forms) => { }));
 
-            Define(ref assert_undo, (commands, forms) =>
-            {
-                CommonCommandStatus.AssertNotValidating();
-
-                foreach (var form in forms)
-                {
-                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
-                }
-            });
-
-            base.AssertUndo(assert_undo);
+            base.ValidationNullCheck(null, null);
+            AssertRedo((commands, forms) => { });
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
 
         }
     }

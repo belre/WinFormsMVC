@@ -15,6 +15,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
     [TestClass]
     public class PerfectTreeFormsTest : GivenFormManagementTestFormat
     {
+        protected Dictionary<BaseForm, bool> BaseFormAllocateTree
+        {
+            get;
+        }
+
         protected WinFormsMVC.View.BaseForm DefaultBaseForm
         {
             get;
@@ -99,6 +104,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 };
             }
 
+            BaseFormAllocateTree = new Dictionary<BaseForm, bool>();
 
             TestActionMode = ActionMode.SIMPLE_ACTION;
         }
@@ -495,18 +501,18 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [DataRow(null, null)]
         public virtual void CalledBySelf_AllLeftInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            var was_searched_left_method = new Dictionary<BaseForm, bool>();
+            //var was_searched_left_method = new Dictionary<BaseForm, bool>();
 
             Define(ref modified, (list, forms) =>
             {
-                was_searched_left_method[forms.First()] = true;
+                BaseFormAllocateTree[forms.First()] = true;
 
                 foreach (var form in forms)
                 {
 
                     {
                         if (form == forms.First() || form.Children.Count() != 0 && form.Invoker.Children.First() == form
-                                                       && was_searched_left_method[form.Invoker])
+                                                       && BaseFormAllocateTree[form.Invoker])
                         {
                             var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
@@ -514,11 +520,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                                 com.IsForSelf = true;
                                 list.Add(com);
                             }
-                            was_searched_left_method[form] = true;
+                            BaseFormAllocateTree[form] = true;
                         }
                         else
                         {
-                            was_searched_left_method[form] = false;
+                            BaseFormAllocateTree[form] = false;
                         }
 
                     }
@@ -534,7 +540,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 int throw_count = 0;
                 foreach (var form in forms)
                 {
-                    if (was_searched_left_method[form])
+                    if (BaseFormAllocateTree[form])
                     {
                         Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
@@ -556,19 +562,17 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [DataRow(null, null)]
         public virtual void CalledByAllLeftInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            var was_searched_left_method = new Dictionary<BaseForm, bool>();
-
             Define(ref modified, (list, forms) =>
             {
                 list.First().IsForSelf = false;
-                was_searched_left_method[forms.First()] = true;
+                BaseFormAllocateTree[forms.First()] = true;
 
                 foreach (var form in forms)
                 {
                     if (form != forms.First())
                     {
                         if (form.Children.Count() != 0 && form.Invoker.Children.First() == form
-                                                       && was_searched_left_method[form.Invoker])
+                                                       && BaseFormAllocateTree[form.Invoker])
                         {
                             var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
@@ -578,11 +582,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                                 list.Add(com);
                             }
 
-                            was_searched_left_method[form] = true;
+                            BaseFormAllocateTree[form] = true;
                         }
                         else
                         {
-                            was_searched_left_method[form] = false;
+                            BaseFormAllocateTree[form] = false;
                         }
                     }
                 }
@@ -596,7 +600,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 int throw_count = 0;
                 foreach (var form in forms)
                 {
-                    if (form.Invoker != null && was_searched_left_method[form.Invoker])
+                    if (form.Invoker != null && BaseFormAllocateTree[form.Invoker])
                     {
                         Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
@@ -620,20 +624,17 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [DataRow(null, null)]
         public virtual void CalledByAllRightInvokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-
-
-            var was_searched_right_method = new Dictionary<BaseForm, bool>();
             Define(ref modified, (list, forms) =>
             {
                 list.First().IsForSelf = false;
-                was_searched_right_method[forms.First()] = true;
+                BaseFormAllocateTree[forms.First()] = true;
 
                 foreach (var form in forms)
                 {
                     if (form != forms.First())
                     {
                         if (form.Children.Count() != 0 && form.Invoker.Children.Last() == form
-                                                       && was_searched_right_method[form.Invoker])
+                                                       && BaseFormAllocateTree[form.Invoker])
                         {
                             var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
@@ -642,11 +643,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                                 com.Invoker = form;
                                 list.Add(com);
                             }
-                            was_searched_right_method[form] = true;
+                            BaseFormAllocateTree[form] = true;
                         }
                         else
                         {
-                            was_searched_right_method[form] = false;
+                            BaseFormAllocateTree[form] = false;
                         }
                     }
                 }
@@ -660,7 +661,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 int throw_count = 0;
                 foreach (var form in forms)
                 {
-                    if (form.Invoker != null && was_searched_right_method[form.Invoker])
+                    if (form.Invoker != null && BaseFormAllocateTree[form.Invoker])
                     {
                         Assert.AreEqual(DefaultValidationText(0), form.Text);
                         throw_count++;
