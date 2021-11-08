@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinFormsMVC.Request;
 using WinFormsMVC.View;
 
 namespace WinFormsMVC.Services.Base
@@ -22,9 +23,15 @@ namespace WinFormsMVC.Services.Base
         /// </summary>
         public List<IEnumerable<Request.Command>> Mememtoes { get; }
 
+        /// <summary>
+        /// 削除しようとしているMementoのコマンド一覧を表します。
+        /// </summary>
+        public List<IEnumerable<Request.Command>> RemovingMememtoes { get; }
+
         public MementoManagement()
         {
             Mememtoes = new List<IEnumerable<Request.Command>>();
+            RemovingMememtoes = new List<IEnumerable<Command>>();
         }
 
         /// <summary>
@@ -34,6 +41,7 @@ namespace WinFormsMVC.Services.Base
         public void PushCommand(IEnumerable<Request.Command> abstractCommand)
         {
             Mememtoes.Add(abstractCommand);
+            RemovingMememtoes.Clear();
 
             if (Mememtoes.Count > MAX_MEMEMTO_NUMBER)
             {
@@ -45,12 +53,19 @@ namespace WinFormsMVC.Services.Base
         /// コマンドを削除します。
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Request.Command> PopCommand()
+        public IEnumerable<Request.Command> PopLatestCommand()
         {
             if (Mememtoes.Count != 0)
             {
                 var target = Mememtoes.Last();
                 Mememtoes.Remove(target);
+
+                RemovingMememtoes.Insert(0, target);
+                if (RemovingMememtoes.Count > MAX_MEMEMTO_NUMBER)
+                {
+                    RemovingMememtoes.Remove(RemovingMememtoes.Last());
+                }
+
                 return target;
             }
             else

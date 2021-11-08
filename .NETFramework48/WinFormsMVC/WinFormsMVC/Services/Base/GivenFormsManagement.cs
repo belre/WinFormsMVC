@@ -86,7 +86,7 @@ namespace WinFormsMVC.Services.Base
         /// </summary>
         public void Undo()
         {
-            var recent_commands = ManagedMemento.PopCommand();
+            var recent_commands = ManagedMemento.PopLatestCommand();
 
             if (recent_commands == null)
             {
