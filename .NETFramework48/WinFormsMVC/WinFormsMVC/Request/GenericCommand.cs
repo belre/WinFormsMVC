@@ -72,7 +72,10 @@ namespace WinFormsMVC.Request
             Status = new TransitionStatus();
         }
 
-
+        /// <summary>
+        /// 初期化で行なわれる処理です。
+        /// </summary>
+        public Action<Item, TransitionStatus, TargetForm> InitOperation { get; set; }
 
         /// <summary>
         /// 「実行」「やり直し」で行なわれる処理です。
@@ -163,6 +166,12 @@ namespace WinFormsMVC.Request
             {
                 if (NextOperation != null)
                 {
+                    // 初回実行時に値を読み込む
+                    if (Status.ExecutedCount == 0 && InitOperation != null)
+                    {
+                        InitOperation(StoredItem, Status, (TargetForm)form);
+                    }
+
                     NextOperation(StoredItem, Status, (TargetForm)form);
                 }
             }

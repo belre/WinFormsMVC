@@ -63,6 +63,11 @@ namespace WinFormsMVCSample
                 var controller = FacadeCore.GetController<Form3Controller>(this);
                 controller.Launch<Form2>(this);
             }
+
+            private void button2_Click(object sender, EventArgs e)
+            {
+                label1.Text = "Self";
+            }
         }
     }
 

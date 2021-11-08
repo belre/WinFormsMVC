@@ -206,6 +206,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     item.Next = validation_text;
                     return true;
                 },
+                InitOperation = (item, status, form1) =>
+                {
+
+                },
                 NextOperation = ((item, status, form1) =>
                 {
                     if (status.ExecutedCount != status.PreviousExecutedCount)

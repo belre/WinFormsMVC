@@ -57,9 +57,12 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        NextOperation = ( item, status, form3) =>
+                        InitOperation = (item, status, form3) =>
                         {
                             item[form3] = form3.Message;
+                        },
+                        NextOperation = ( item, status, form3) =>
+                        {
                             form3.Message = item.Next;
                         },
                         PrevOperation = ( item, status, form3) =>
@@ -74,9 +77,16 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        NextOperation = ( item, status, form4) =>
+                        InitOperation = (item, status, form4) =>
                         {
                             item[form4] = form4.Message;
+                        },
+                        NextOperation = ( item, status, form4) =>
+                        {
+                            if (status.ExecutedCount == 0)
+                            {
+                                item[form4] = form4.Message;
+                            }
                             form4.Message = item.Next;
                         },
                         PrevOperation = ( item, status, form4) =>
@@ -127,14 +137,17 @@ namespace WinFormsMVCSample
                                 item.Next = (Image)pictureBox1.Image.Clone();
                                 return true;
                             },
-                            NextOperation = ( item, status, form2) =>
+                            InitOperation = (item, status, form2) =>
                             {
                                 item[form2] = (Image)_before_edit_image.Clone();
-                                form2.pictureBox1.Image = item.Next;
+                            },
+                            NextOperation = ( item, status, form2) =>
+                            {
+                                form2.pictureBox1.Image = (Image)item.Next.Clone();
                             },
                             PrevOperation = ( item, status, form2) =>
                             {
-                                form2.pictureBox1.Image = item[form2];
+                                form2.pictureBox1.Image = (Image)item[form2];
                             }
                         }
                     }, IsUndoAndRedoEnable);
@@ -153,6 +166,15 @@ namespace WinFormsMVCSample
                 }
             }
 
+            class Test
+            {
+                public Func<ImageItem, bool> Func
+                {
+                    get;
+                    set;
+                }
+            }
+
             private void button5_Click(object sender, EventArgs e)
             {
                 var controller = FacadeCore.GetController<Form2Controller>(this);
@@ -162,7 +184,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Validation = (item) =>
                         {
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
