@@ -41,11 +41,36 @@ namespace WinFormsMVC.Services.Base
         public void PushCommand(IEnumerable<Request.Command> abstractCommand)
         {
             Mememtoes.Add(abstractCommand);
-            RemovingMememtoes.Clear();
-
             if (Mememtoes.Count > MAX_MEMEMTO_NUMBER)
             {
                 Mememtoes.RemoveRange(0, Mememtoes.Count - MAX_MEMEMTO_NUMBER);
+            }
+
+            RemovingMememtoes.Clear();
+        }
+
+        /// <summary>
+        /// 削除候補に含まれているコマンドを
+        /// 再度コマンドに入れなおします。
+        /// </summary>
+        public IEnumerable<Request.Command> RestoreCommand()
+        {
+            if (RemovingMememtoes.Count() != 0)
+            {
+                var adapt_command = RemovingMememtoes.First();
+                RemovingMememtoes.RemoveAt(0);
+
+                Mememtoes.Add(adapt_command);
+                if (Mememtoes.Count > MAX_MEMEMTO_NUMBER)
+                {
+                    Mememtoes.RemoveRange(0, Mememtoes.Count - MAX_MEMEMTO_NUMBER);
+                }
+
+                return adapt_command;
+            }
+            else
+            {
+                return null;
             }
         }
 

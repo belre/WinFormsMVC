@@ -269,5 +269,15 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             assert(OrderingCommands, ManagedFormList);
         }
 
+        protected virtual void AssertRedo(Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            Assert.AreEqual(ActionMode.MEMORABLE_ACTION, TestActionMode);
+
+            var form_management = UseFormsManagement();
+            form_management.Redo();
+
+            assert(OrderingCommands, ManagedFormList);
+        }
+
     }
 }

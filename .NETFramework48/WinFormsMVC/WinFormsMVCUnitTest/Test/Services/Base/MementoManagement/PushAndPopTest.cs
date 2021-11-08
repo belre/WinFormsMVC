@@ -130,7 +130,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.MementoManagement
         {
             for (int k = 0; k < 5; k++)
             {
-                for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER-1; i++)
+                for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER - 1; i++)
                 {
                     _managed_memento.PushCommand(SingleDefaultCommand);
                 }
@@ -142,12 +142,62 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.MementoManagement
                     _managed_memento.PopLatestCommand();
                 }
             }
+
             Assert.AreEqual(_managed_memento.MAX_MEMEMTO_NUMBER - 1, _managed_memento.RemovingMememtoes.Count);
 
             Assert.IsNull(_managed_memento.PopLatestCommand());
             Assert.AreEqual(_managed_memento.MAX_MEMEMTO_NUMBER - 1, _managed_memento.RemovingMememtoes.Count);
             Assert.IsFalse(_managed_memento.IsAvalableUndo());
         }
+
+
+        [TestMethod]
+        public void RestoreQuery()
+        {
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER; i++)
+            {
+                _managed_memento.PushCommand(SingleDefaultCommand);
+            }
+
+            var last_removed_data = _managed_memento.PopLatestCommand();
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER-2; i++)
+            {
+                _managed_memento.PopLatestCommand();
+            }
+            var first_removed_data = _managed_memento.PopLatestCommand();
+
+            Assert.AreEqual(first_removed_data, _managed_memento.RestoreCommand());
+            Assert.AreEqual(first_removed_data, _managed_memento.Mememtoes.Last());
+            Assert.AreEqual(1, _managed_memento.Mememtoes.Count);
+            Assert.AreEqual(last_removed_data, _managed_memento.RemovingMememtoes.Last());
+        }
+
+        [TestMethod]
+        public void RestoreManyQueries()
+        {
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER; i++)
+            {
+                _managed_memento.PushCommand(SingleDefaultCommand);
+            }
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER; i++)
+            {
+                _managed_memento.PopLatestCommand();
+            }
+
+            for (int i = 0; i < _managed_memento.MAX_MEMEMTO_NUMBER; i++)
+            {
+                Assert.AreEqual(i, _managed_memento.Mememtoes.Count);
+                Assert.AreEqual(_managed_memento.MAX_MEMEMTO_NUMBER - i, _managed_memento.RemovingMememtoes.Count);
+                _managed_memento.RestoreCommand();
+            }
+
+            Assert.AreEqual(_managed_memento.MAX_MEMEMTO_NUMBER, _managed_memento.Mememtoes.Count);
+            Assert.AreEqual(0, _managed_memento.RemovingMememtoes.Count);
+            Assert.IsNull(_managed_memento.RestoreCommand());
+            Assert.AreEqual(_managed_memento.MAX_MEMEMTO_NUMBER, _managed_memento.Mememtoes.Count);
+            Assert.AreEqual(0, _managed_memento.RemovingMememtoes.Count);
+        }
+
 
     }
 }

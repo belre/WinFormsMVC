@@ -107,6 +107,23 @@ namespace WinFormsMVC.Services.Base
         }
 
         /// <summary>
+        /// RemovingMementoの一覧に従って、フォームの戻した結果を再反映させます。
+        /// </summary>
+        public void Redo()
+        {
+
+
+            /*
+            var recent_commands = ManagedMemento.RemovingMememtoes.First();
+
+            if (recent_commands == null)
+            {
+                return;
+            }
+            */
+        }
+
+        /// <summary>
         /// フォームの発行元とコマンドの発行元が一致しているかを返します。
         /// * IsForSelfがtrueの場合は、コマンドは自分自身に送られるので、フォーム自身と一致するかが返される。
         /// * IsRetrievedがtrueの場合は、formがcommand.Invokerの孫フォームであるかが返される。
