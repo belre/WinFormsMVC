@@ -25,15 +25,20 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             public bool WasNext = false;
             public bool WasPrev = false;
             public bool WasRedo = false;
+            private int execution_number = -1;
 
-            public void Clear()
+            public void Clear(int number)
             {
-                WasValidation = false;
-                WasFinalized = false;
-                WasError = false;
-                WasNext = false;
-                WasPrev = false;
-                WasRedo = false;
+                if (execution_number != number)
+                {
+                    WasValidation = false;
+                    WasFinalized = false;
+                    WasError = false;
+                    WasNext = false;
+                    WasPrev = false;
+                    WasRedo = false;
+                    execution_number = number;
+                }
             }
 
             public void AssertNotValidating()
@@ -174,7 +179,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 {
                     if (status.ExecutedCount != status.PreviousExecutedCount)
                     {
-                        CommonCommandStatus.Clear();
+                        CommonCommandStatus.Clear(status.ExecutedCount);
                     }
 
                     if (status.PreviousOperation == ValidationStatus.Operations.NO_VALIDATION || 
@@ -278,7 +283,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         {
             Assert.AreEqual(ActionMode.MEMORABLE_ACTION, TestActionMode);
 
-            CommonCommandStatus.Clear();
+            CommonCommandStatus.Clear(0);
 
             modified(OrderingCommands, ManagedFormList);
 
