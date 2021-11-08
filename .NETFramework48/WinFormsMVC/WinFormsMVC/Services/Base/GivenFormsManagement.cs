@@ -103,7 +103,6 @@ namespace WinFormsMVC.Services.Base
                         command.Prev(form);
                     }
                 }
-                //command.Invalidate();
             }
         }
 
@@ -133,13 +132,7 @@ namespace WinFormsMVC.Services.Base
                 foreach (var target in target_forms)
                 {
                     command.Restore(target);
-                    //command.Next(target);
                 }
-
-                //if (command.Restore())
-                //{
-                //Update(command);
-                //}
             }
         }
 
