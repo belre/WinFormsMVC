@@ -75,16 +75,16 @@ private void button2_Click_1(object sender, EventArgs e)
         new GenericCommand<Form2, TextItem>()
         {
           Invoker = this,
-          Validation = (item, status) =>
+          Validation = (item) =>
           {
               item.Next = "Hello World";
               return true;
           },
-          PrevOperation = ( item, form2) =>
+          PrevOperation = ( item, status, form2) =>
           {
               form3.RootMessage = item[form2];
           },
-          NextOperation = ( item, form2) =>
+          NextOperation = ( item, status, form2) =>
           {
               item[form2] = form2.Message;
               form2.Message = item.Next;
@@ -121,7 +121,7 @@ namespace WinFormsMVCSample
 
 **例３．「元に戻す」を実行する**
 
-SendStoredMessageメソッドが実行された場合、現在のデフォルトで**元に戻す**(Undo)の操作を実行することが出来る。
+SendStoredMessageメソッドが実行された場合、**元に戻す**(Undo), **やり直し(Redo)** の操作を実行することが出来る。
 
 ビュー側(Form2)
 
