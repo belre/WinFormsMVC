@@ -32,7 +32,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
-            base.CalledBySelf();
+            base.CalledBySelf(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -54,7 +54,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
-            base.CalledBy2Invokers();
+            base.CalledBy2Invokers(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -76,7 +76,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
-            base.CalledByExistedInvoker();
+            base.CalledByExistedInvoker(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -98,7 +98,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
-            base.CalledBySelf_NullInvoker();
+            base.CalledBySelf_NullInvoker(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -121,7 +121,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.CalledByNullInvoker();
+            base.CalledByNullInvoker(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -145,7 +145,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.RecursiveFromExistedInvoker();
+            base.RecursiveFromExistedInvoker(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -168,7 +168,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.ValidationError();
+            base.ValidationError(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {
@@ -191,7 +191,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
 
-            base.ValidationNullCheck();
+            base.ValidationNullCheck(modified, assert);
 
             Define(ref assert_undo, (commands, forms) =>
             {

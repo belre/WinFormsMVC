@@ -7,7 +7,7 @@ using WinFormsMVC.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public sealed class SimplyConnectedFormsUndoAndRedoTest : SimplyConnectedFormsTest, IRedoTest
+    public sealed class SimplyConnectedFormsRedoTest : SimplyConnectedFormsTest, IRedoTest
     {
         public bool IsUndoLock
         {
@@ -170,8 +170,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        
-        
         public void ValidationNullCheck()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;

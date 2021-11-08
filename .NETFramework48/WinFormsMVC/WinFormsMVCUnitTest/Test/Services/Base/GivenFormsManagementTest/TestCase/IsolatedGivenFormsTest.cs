@@ -66,12 +66,16 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
 
         [TestMethod, TestCategory("正常系")]
-        public virtual void CalledBySelf()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledBySelf(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
 
-            }, (list, forms) =>
+            });
+
+            Define( ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidated();
                 Assert.IsTrue(list.First().WasThroughValidation);
@@ -87,19 +91,25 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     }
                 }
             });
+
+            AssertAction( modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
-        public virtual void CalledBy2Invokers()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledBy2Invokers(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 list.First().Invoker = forms.First();
                 list.First().IsForSelf = false;
 
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm1>(forms.Last(), "Validation Text - 2"));
                 list.Last().IsForSelf = false;
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (list, forms) =>
             {
 
                 CommonCommandStatus.AssertValidatedButNotTarget();
@@ -110,12 +120,16 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
             });
+
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void ValidationError()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void ValidationError(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 ((CommandValidator<TextItem>)list.First()).Validation = (item, status) =>
                 {
@@ -124,7 +138,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     return false;
                 };
 
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidationError();
 
@@ -134,15 +150,21 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
             });
+
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void ValidationNullCheck()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void ValidationNullCheck(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 ((CommandValidator<TextItem>)list.First()).Validation = null;
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertNotValidating();
                 Assert.IsFalse(list.First().WasThroughValidation);
@@ -151,16 +173,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
             });
+
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void CalledBySelf_NullInvoker()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledBySelf_NullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 list.First().Invoker = null;
 
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
                 Assert.IsTrue(list.First().WasThroughValidation);
@@ -168,19 +196,26 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);        // 該当データがいないのでテキストは同じ
                 }
-       
+
             });
+
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("異常系")]
-        public virtual void CalledByNullInvoker()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledByNullInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+
+            Define(ref modified, (list, forms) =>
             {
                 list.First().Invoker = null;
                 list.First().IsForSelf = false;
- 
-            }, (list, forms) =>
+
+            });
+
+            Define(ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
@@ -190,16 +225,22 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);        // 該当データがいないのでテキストは同じ
                 }
             });
+
+            AssertAction( modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
-        public virtual void CalledByExistedInvoker()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void CalledByExistedInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 list.First().Invoker = forms.Last();
                 list.First().IsForSelf = false;
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
@@ -207,20 +248,26 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
                 foreach (var form in forms)
                 {
-                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);       
+                    Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
             });
+
+            AssertAction(modified, assert);
         }
 
         [TestMethod, TestCategory("正常系")]
-        public virtual void RecursiveFromExistedInvoker()
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void RecursiveFromExistedInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
-            AssertAction((list, forms) =>
+            Define(ref modified, (list, forms) =>
             {
                 list.First().Invoker = forms.Last();
                 list.First().IsForSelf = false;
                 list.First().IsRecursive = true;
-            }, (list, forms) =>
+            });
+
+            Define(ref assert, (list, forms) =>
             {
                 CommonCommandStatus.AssertValidatedButNotTarget();
 
@@ -230,6 +277,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
             });
+
+            AssertAction(modified, assert) ;
 
         }
 

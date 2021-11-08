@@ -8,7 +8,7 @@ using WinFormsMVC.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public sealed class SimplyConnectedGivenFormsUndoAndRedoTest : SimplyConnectedGivenFormsTest, IRedoTest
+    public sealed class SimplyConnectedGivenFormsRedoTest : SimplyConnectedGivenFormsTest, IRedoTest
     {
 
         public bool IsUndoLock

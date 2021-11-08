@@ -9,7 +9,7 @@ using WinFormsMVC.View;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public sealed class SingleGivenFormUndoAndRedoTest : SingleGivenFormTest, IRedoTest
+    public sealed class SingleGivenFormRedoTest : SingleGivenFormTest, IRedoTest
     {
         public bool IsUndoLock
         {
@@ -21,11 +21,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             get;
             set;
-        }
-
-        public SingleGivenFormUndoAndRedoTest()
-        {
-            
         }
 
         /// <summary>
