@@ -35,6 +35,12 @@ namespace WinFormsMVC.Request
             set;
         }
 
+        public object Tag
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// バックアップデータの保存
         /// </summary>

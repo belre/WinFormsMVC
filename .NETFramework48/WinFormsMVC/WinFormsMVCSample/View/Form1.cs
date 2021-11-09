@@ -47,10 +47,9 @@ namespace WinFormsMVCSample
                     {
                         Invoker = this,
                         IsRecursive = true,
-                        Validation = ( item) =>
+                        Preservation = (item, status, form3) =>
                         {
                             item.Next = "Hello World";
-                            return true;
                         },
                         PrevOperation = ( item, status, form3) =>
                         {
@@ -87,10 +86,9 @@ namespace WinFormsMVCSample
                         {
                             Invoker = this,
                             IsRecursive = true,
-                            Validation = ( item) =>
+                            Preservation = (item, status, form3) =>
                             {
                                 item.Next = form.FilePath;
-                                return true;
                             },
                             PrevOperation = ( item, status, form3) =>
                             {

@@ -98,7 +98,8 @@ namespace WinFormsMVC.Request
             {
                 if (Validation == null)
                 {
-                    return false;
+                    CurrentOperations = Operations.VALIDATED;
+                    return true;
                 }
 
                 // Validation状態で処理を変える

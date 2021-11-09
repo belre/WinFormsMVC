@@ -27,9 +27,29 @@ namespace WinFormsMVC.Request.Item
             }
             set
             {
-                _temporary_image = (Image)value;
+                _temporary_image = (Image)value.Clone();
             }
         }
+
+        public override Image this[BaseForm form]
+        {
+            get
+            {
+                if (form != null && PrevItem.Keys.Contains(form))
+                {
+                    return PrevItem[form];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                PrevItem[form] = (Image)value.Clone();
+            }
+        }
+
 
         protected override void Dispose(bool disposing)
         {

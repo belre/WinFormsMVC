@@ -53,14 +53,10 @@ namespace WinFormsMVCSample
                 controller.SendStoredMessage( new Command[] {
                     new GenericCommand<Form3, TextItem> {
                         Invoker=this,
-                        Validation = ( item) =>
-                        {
-                            item.Next = textBox1.Text;
-                            return true;
-                        },
                         Preservation = (item, status, form3) =>
                         {
                             item[form3] = form3.Message;
+                            item.Next = textBox1.Text;
                         },
                         NextOperation = ( item, status, form3) =>
                         {
@@ -73,14 +69,10 @@ namespace WinFormsMVCSample
                     },
                     new GenericCommand<Form4, TextItem>() {
                         Invoker = this,
-                        Validation = ( item) =>
-                        {
-                            item.Next = textBox1.Text;
-                            return true;
-                        },
                         Preservation = (item, status, form4) =>
                         {
                             item[form4] = form4.Message;
+                            item.Next = textBox1.Text;
                         },
                         NextOperation = ( item, status, form4) =>
                         {
@@ -95,14 +87,10 @@ namespace WinFormsMVCSample
                     {
                         Invoker = this,
                         IsForSelf = true,
-                        Validation = ( item) =>
-                        {
-                            item.Next = textBox1.Text;
-                            return true;
-                        },
                         Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.label3.Text;
+                            item.Next = textBox1.Text;
                         },
                         NextOperation = ( item, status, form2) =>
                         {
@@ -153,13 +141,9 @@ namespace WinFormsMVCSample
                         {
                             Invoker = this,
                             IsForSelf = true,
-                            Validation = ( item) =>
-                            {
-                                item.Next = pictureBox1.Image;
-                                return true;
-                            },
                             Preservation = (item, status, form2) =>
                             {
+                                item.Next = pictureBox1.Image;
                                 item[form2] = _before_edit_image;
                             },
                             NextOperation = ( item, status, form2) =>
@@ -205,14 +189,10 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = (item) =>
-                        {
-                            item.Next = (Image)pictureBox1.Image.Clone();
-                            return true;
-                        },
                         Preservation = (item, status, form4) =>
                         {
                             item[form4] = (Image)form4.DisplayedImage.Clone();
+                            item.Next = (Image)pictureBox1.Image.Clone();
                         },
                         NextOperation = ( item, status, form4) =>
                         {
@@ -259,10 +239,9 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Preservation = ( item, status, form4) =>
                         {
-                            item.Next = (Image)pictureBox1.Image.Clone();
-                            return true;
+                            item.Next = (Image)pictureBox1.Image;
                         },
                         NextOperation = ( item, status, form4) =>
                         {
@@ -288,10 +267,9 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form4, ImageItem>()
                     {
                         Invoker = this,
-                        Validation = ( item) =>
+                        Preservation = ( item, status, form4) =>
                         {
                             item.Next = image;
-                            return true;
                         },
                         NextOperation = ( item, status, form4) =>
                         {
@@ -309,14 +287,10 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
                         IsRecursive=true,
-                        Validation = ( item) =>
-                        {
-                            item.Next = textBox1.Text;
-                            return true;
-                        },
                         Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.MessageFromClone;
+                            item.Next = textBox1.Text;
                         },
                         NextOperation = ( item, status, form2) =>
                         {
@@ -338,10 +312,37 @@ namespace WinFormsMVCSample
 
             private void button11_Click(object sender, EventArgs e)
             {
-                Graphics g = Graphics.FromImage(pictureBox1.Image);
-                g.DrawString("Dummy Text", new Font("Arial", 16.0F), Brushes.Blue, 20, 100);
+                var controller = FacadeCore.GetController<Form2Controller>(this);
 
-                pictureBox1.Invalidate();
+  
+
+                controller.SendStoredMessage( new Command[]
+                {
+                    new GenericCommand<Form2, ImageItem>()
+                    {
+                        Invoker = this,
+                        IsForSelf = true,
+                        Preservation = (item, status, form2) =>
+                        {
+                            item[form2] = form2.pictureBox1.Image;
+
+                            Graphics g = Graphics.FromImage(pictureBox1.Image);
+                            g.DrawString("Dummy Text", new Font("Arial", 16.0F), Brushes.Blue, 20, 100);
+
+                            item.Next = pictureBox1.Image;
+                        },
+                        NextOperation = (item, status, form2) =>
+                        {
+                            form2.pictureBox1.Image = item.Next;
+                        },
+                        PrevOperation = (item, status, form2) =>
+                        {
+                            form2.pictureBox1.Image = item[form2];
+                        }
+                    }
+                }, IsUndoAndRedoEnable);
+
+
             }
         }
     }
