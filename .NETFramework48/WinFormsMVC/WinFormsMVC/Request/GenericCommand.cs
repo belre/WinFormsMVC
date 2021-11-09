@@ -215,7 +215,10 @@ namespace WinFormsMVC.Request
 
             if (_disposed)
             {
-                StoredItem.Dispose();
+                if (disposing)
+                {
+                    StoredItem.Dispose();
+                }
             }
         }
     }

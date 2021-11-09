@@ -37,8 +37,11 @@ namespace WinFormsMVC.Request.Item
 
             if (_disposed)
             {
-                _temporary_image.Dispose();
-                _temporary_image = null;
+                if (disposing)
+                {
+                    _temporary_image.Dispose();
+                    _temporary_image = null;
+                }
             }
         }
     }
