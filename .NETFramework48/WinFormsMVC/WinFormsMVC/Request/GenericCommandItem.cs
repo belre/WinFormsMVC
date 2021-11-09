@@ -23,7 +23,7 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// 実行時のデータ
         /// </summary>
-        public T Next
+        public virtual T Next
         {
             get;
             set;
@@ -40,7 +40,7 @@ namespace WinFormsMVC.Request
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public T this[BaseForm form]
+        public virtual T this[BaseForm form]
         {
             get
             {

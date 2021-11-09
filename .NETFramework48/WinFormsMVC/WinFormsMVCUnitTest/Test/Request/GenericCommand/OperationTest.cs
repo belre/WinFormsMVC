@@ -38,8 +38,8 @@ namespace WinFormsMVCUnitTest.Test.Request.GenericCommand
                     form.Text = "Previous Text";
                     _was_done_prev = true;
                 }),
-                FinalOperation = ((item) => { _was_done_finalize = true; }),
-                ErrorOperation = ((item) => { _was_done_error_handling = true; })
+                Finalization = ((item) => { _was_done_finalize = true; }),
+                ErrorHandle = ((item) => { _was_done_error_handling = true; })
             };
         }
 

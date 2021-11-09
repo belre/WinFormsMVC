@@ -20,6 +20,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
         protected class CommandExecutionStatus
         {
             public bool WasValidation  = false;
+            public bool WasInitialized = false;
             public bool WasFinalized = false;
             public bool WasError = false;
             public bool WasNext = false;
@@ -32,6 +33,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 if (execution_number != number)
                 {
                     WasValidation = false;
+                    WasInitialized = false;
                     WasFinalized = false;
                     WasError = false;
                     WasNext = false;
@@ -44,6 +46,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             public void AssertNotValidating()
             {
                 Assert.IsFalse(WasValidation);
+                Assert.IsFalse(WasInitialized);
                 Assert.IsFalse(WasError);
                 Assert.IsFalse(WasFinalized);
                 Assert.IsFalse(WasNext);
@@ -54,6 +57,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             public void AssertValidationError()
             {
                 Assert.IsTrue(WasValidation);
+                Assert.IsFalse(WasInitialized);
                 Assert.IsTrue(WasError);
                 Assert.IsFalse(WasFinalized);
                 Assert.IsFalse(WasNext);
@@ -63,6 +67,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             public void AssertValidated()
             {
                 Assert.IsTrue(WasValidation);
+                Assert.IsTrue(WasInitialized);
                 Assert.IsFalse(WasError);
                 Assert.IsFalse(WasFinalized);
                 Assert.IsTrue(WasNext);
@@ -84,6 +89,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             public void AssertValidatedButNotTarget()
             {
                 Assert.IsTrue(WasValidation);
+                Assert.IsFalse(WasInitialized);
                 Assert.IsFalse(WasError);
                 Assert.IsFalse(WasFinalized);
                 Assert.IsFalse(WasNext);
@@ -184,31 +190,13 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 IsForSelf = true,
                 Validation = (item) =>
                 {
-
-                    /*
-                    if (status.ExecutedCount != status.PreviousExecutedCount)
-                    {
-                        CommonCommandStatus.Clear(status.ExecutedCount);
-                    }
-
-                    if (status.PreviousOperation == ValidationStatus.Operations.NO_VALIDATION || 
-                        status.PreviousOperation == ValidationStatus.Operations.ERROR_WITH_VALIDATING)
-                    {
-                        CommonCommandStatus.WasValidation = true;
-                    } 
-                    else if (status.PreviousOperation == ValidationStatus.Operations.DONE_FINALIZE)
-                    {
-                        CommonCommandStatus.WasValidation = true;
-                        CommonCommandStatus.WasRedo = true;
-                    }
-                    */
                     CommonCommandStatus.WasValidation = true;
                     item.Next = validation_text;
                     return true;
                 },
-                InitOperation = (item, status, form1) =>
+                Preservation = (item, status, form1) =>
                 {
-
+                    CommonCommandStatus.WasInitialized = true;
                 },
                 NextOperation = ((item, status, form1) =>
                 {
@@ -217,6 +205,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                         CommonCommandStatus.Clear(status.ExecutedCount);
                         CommonCommandStatus.WasValidation = true;
                         CommonCommandStatus.WasRedo = true;
+                        CommonCommandStatus.WasInitialized = true;
                     }
 
                     CommonCommandStatus.WasNext = true;
@@ -228,11 +217,11 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                     CommonCommandStatus.WasPrev = true;
                     form1.Text = item[form1];
                 }),
-                FinalOperation = ((item) =>
+                Finalization = ((item) =>
                 {
                     CommonCommandStatus.WasFinalized = true;
                 }),
-                ErrorOperation = ((item) =>
+                ErrorHandle = ((item) =>
                 {
                     CommonCommandStatus.WasError = true;
                 })

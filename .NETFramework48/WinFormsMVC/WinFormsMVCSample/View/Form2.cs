@@ -57,7 +57,7 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        InitOperation = (item, status, form3) =>
+                        Preservation = (item, status, form3) =>
                         {
                             item[form3] = form3.Message;
                         },
@@ -77,7 +77,7 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        InitOperation = (item, status, form4) =>
+                        Preservation = (item, status, form4) =>
                         {
                             item[form4] = form4.Message;
                         },
@@ -134,20 +134,20 @@ namespace WinFormsMVCSample
                             IsForSelf = true,
                             Validation = ( item) =>
                             {
-                                item.Next = (Image)pictureBox1.Image.Clone();
+                                item.Next = pictureBox1.Image;
                                 return true;
                             },
-                            InitOperation = (item, status, form2) =>
+                            Preservation = (item, status, form2) =>
                             {
-                                item[form2] = (Image)_before_edit_image.Clone();
+                                item[form2] = _before_edit_image;
                             },
                             NextOperation = ( item, status, form2) =>
                             {
-                                form2.pictureBox1.Image = (Image)item.Next.Clone();
+                                form2.pictureBox1.Image = item.Next;
                             },
                             PrevOperation = ( item, status, form2) =>
                             {
-                                form2.pictureBox1.Image = (Image)item[form2];
+                                form2.pictureBox1.Image = item[form2];
                             }
                         }
                     }, IsUndoAndRedoEnable);
@@ -189,9 +189,12 @@ namespace WinFormsMVCSample
                             item.Next = (Image)pictureBox1.Image.Clone();
                             return true;
                         },
-                        NextOperation = ( item, status, form4) =>
+                        Preservation = (item, status, form4) =>
                         {
                             item[form4] = (Image)form4.DisplayedImage.Clone();
+                        },
+                        NextOperation = ( item, status, form4) =>
+                        {
                             form4.DisplayedImage = item.Next;
                         },
                         PrevOperation = ( item, status, form4) =>
@@ -290,9 +293,12 @@ namespace WinFormsMVCSample
                             item.Next = textBox1.Text;
                             return true;
                         },
-                        NextOperation = ( item, status, form2) =>
+                        Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.MessageFromClone;
+                        },
+                        NextOperation = ( item, status, form2) =>
+                        {
                             form2.MessageFromClone = item.Next;
                         },
                         PrevOperation = ( item, status, form2) =>
@@ -307,6 +313,14 @@ namespace WinFormsMVCSample
             {
                 var controller = FacadeCore.GetController<Form2Controller>(this);
                 controller.Redo(IsUndoAndRedoEnable);
+            }
+
+            private void button11_Click(object sender, EventArgs e)
+            {
+                Graphics g = Graphics.FromImage(pictureBox1.Image);
+                g.DrawString("Dummy Text", new Font("Arial", 16.0F), Brushes.Blue, 20, 100);
+
+                pictureBox1.Invalidate();
             }
         }
     }

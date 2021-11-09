@@ -75,7 +75,7 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// 初期化で行なわれる処理です。
         /// </summary>
-        public Action<Item, TransitionStatus, TargetForm> InitOperation { get; set; }
+        public Action<Item, TransitionStatus, TargetForm> Preservation { get; set; }
 
         /// <summary>
         /// 「実行」「やり直し」で行なわれる処理です。
@@ -167,9 +167,9 @@ namespace WinFormsMVC.Request
                 if (NextOperation != null)
                 {
                     // 初回実行時に値を読み込む
-                    if (Status.ExecutedCount == 0 && InitOperation != null)
+                    if (Status.ExecutedCount == 0 && Preservation != null)
                     {
-                        InitOperation(StoredItem, Status, (TargetForm)form);
+                        Preservation(StoredItem, Status, (TargetForm)form);
                     }
 
                     NextOperation(StoredItem, Status, (TargetForm)form);
@@ -186,9 +186,9 @@ namespace WinFormsMVC.Request
         {
             if (CurrentOperations == Operations.VALIDATED)
             {
-                if (FinalOperation != null)
+                if (Finalization != null)
                 {
-                    FinalOperation(StoredItem);
+                    Finalization(StoredItem);
                 }
 
                 CurrentOperations = Operations.DONE_FINALIZE;
@@ -202,9 +202,9 @@ namespace WinFormsMVC.Request
         {
             if (CurrentOperations != Operations.NO_VALIDATION)
             {
-                if (ErrorOperation != null)
+                if (ErrorHandle != null)
                 {
-                    ErrorOperation(StoredItem);
+                    ErrorHandle(StoredItem);
                 }
             }
         }
