@@ -70,5 +70,19 @@ namespace WinFormsMVC.Request
         {
             PrevItem = new Dictionary<BaseForm, T>();
         }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (_disposed)
+            {
+                if (disposing)
+                {
+
+                }
+            }
+        }
     }
 }

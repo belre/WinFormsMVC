@@ -46,6 +46,12 @@ namespace WinFormsMVC.Request.Item
             }
             set
             {
+                if (PrevItem.Keys.Contains(form))
+                {
+                    PrevItem[form].Dispose();
+                    PrevItem[form] = null;
+                }
+
                 PrevItem[form] = (Image)value.Clone();
             }
         }
@@ -61,6 +67,12 @@ namespace WinFormsMVC.Request.Item
                 {
                     _temporary_image.Dispose();
                     _temporary_image = null;
+
+                    foreach (var item in PrevItem)
+                    {
+                        item.Value.Dispose();
+                        PrevItem[item.Key] = null;
+                    }
                 }
             }
         }
