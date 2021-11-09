@@ -126,8 +126,6 @@ namespace WinFormsMVCSample
                 }
             }
 
-            private int _counter = 0;
-
             private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
             {
                 if (_is_now_drawing)

@@ -364,9 +364,9 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                CommonCommandStatus.AssertNotValidating();
-                Assert.IsFalse((list.First()).WasThroughValidation);
-                Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
+                CommonCommandStatus.AssertNullValidating();
+                Assert.IsTrue((list.First()).WasThroughValidation);
+                //Assert.AreEqual(DefaultBaseForm.Text, forms.First().Text);
             });
 
 
