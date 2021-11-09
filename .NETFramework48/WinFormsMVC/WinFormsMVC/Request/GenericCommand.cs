@@ -208,5 +208,15 @@ namespace WinFormsMVC.Request
                 }
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (_disposed)
+            {
+                StoredItem.Dispose();
+            }
+        }
     }
 }

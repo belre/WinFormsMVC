@@ -34,6 +34,27 @@ namespace WinFormsMVC.Services.Base
             RemovingMememtoes = new List<IEnumerable<Command>>();
         }
 
+        protected void FreeEnumerable(IEnumerable<Request.Command> mememto)
+        {
+            foreach (var comm in mememto)
+            {
+                comm.Dispose();
+            }
+        }
+
+        protected void ClearAllEnumerable(List<IEnumerable<Request.Command>> mememtoes)
+        {
+            foreach (var mememto in mememtoes)
+            {
+                foreach (var comm in mememto)
+                {
+                    comm.Dispose();
+                }
+            }
+            mememtoes.Clear();
+        }
+
+
         /// <summary>
         /// コマンドを追加します。
         /// </summary>
@@ -43,10 +64,11 @@ namespace WinFormsMVC.Services.Base
             Mememtoes.Add(abstractCommand);
             if (Mememtoes.Count > MAX_MEMEMTO_NUMBER)
             {
-                Mememtoes.RemoveRange(0, Mememtoes.Count - MAX_MEMEMTO_NUMBER);
+                FreeEnumerable(Mememtoes.First());
+                Mememtoes.RemoveAt(0);
             }
 
-            RemovingMememtoes.Clear();
+            ClearAllEnumerable(RemovingMememtoes);
         }
 
         /// <summary>
@@ -63,7 +85,8 @@ namespace WinFormsMVC.Services.Base
                 Mememtoes.Add(adapt_command);
                 if (Mememtoes.Count > MAX_MEMEMTO_NUMBER)
                 {
-                    Mememtoes.RemoveRange(0, Mememtoes.Count - MAX_MEMEMTO_NUMBER);
+                    FreeEnumerable(RemovingMememtoes.First());
+                    Mememtoes.RemoveAt(0);
                 }
 
                 return adapt_command;
@@ -88,6 +111,7 @@ namespace WinFormsMVC.Services.Base
                 RemovingMememtoes.Insert(0, target);
                 if (RemovingMememtoes.Count > MAX_MEMEMTO_NUMBER)
                 {
+                    FreeEnumerable(RemovingMememtoes.Last());
                     RemovingMememtoes.Remove(RemovingMememtoes.Last());
                 }
 

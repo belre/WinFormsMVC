@@ -47,6 +47,7 @@ namespace WinFormsMVCSample
             this.label2 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,10 +198,20 @@ namespace WinFormsMVCSample
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(35, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 12);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "label3";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.ClientSize = new System.Drawing.Size(601, 558);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.label2);
@@ -242,6 +253,7 @@ namespace WinFormsMVCSample
             private System.Windows.Forms.Label label2;
             private System.Windows.Forms.Button button10;
             private System.Windows.Forms.Button button11;
+            private System.Windows.Forms.Label label3;
         }
     }
 

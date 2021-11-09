@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using WinFormsMVC.View;
 using WinFormsMVC.Request;
@@ -83,15 +84,33 @@ namespace WinFormsMVCSample
                         },
                         NextOperation = ( item, status, form4) =>
                         {
-                            if (status.ExecutedCount == 0)
-                            {
-                                item[form4] = form4.Message;
-                            }
                             form4.Message = item.Next;
                         },
                         PrevOperation = ( item, status, form4) =>
                         {
                             form4.Message = item[form4];
+                        }
+                    },
+                    new GenericCommand<Form2, TextItem>()
+                    {
+                        Invoker = this,
+                        IsForSelf = true,
+                        Validation = ( item) =>
+                        {
+                            item.Next = textBox1.Text;
+                            return true;
+                        },
+                        Preservation = (item, status, form2) =>
+                        {
+                            item[form2] = form2.label3.Text;
+                        },
+                        NextOperation = ( item, status, form2) =>
+                        {
+                            form2.label3.Text = item.Next;
+                        },
+                        PrevOperation = ( item, status, form2) =>
+                        {
+                            form2.label3.Text = item[form2];
                         }
                     }
                 }, IsUndoAndRedoEnable);
@@ -118,6 +137,8 @@ namespace WinFormsMVCSample
                     _before_edit_image = (Image)pictureBox1.Image.Clone();
                 }
             }
+
+            private int _counter = 0;
 
             private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
             {
