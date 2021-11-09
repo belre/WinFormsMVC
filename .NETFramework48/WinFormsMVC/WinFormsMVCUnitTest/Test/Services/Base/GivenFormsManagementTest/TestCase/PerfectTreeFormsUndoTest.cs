@@ -414,7 +414,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert_undo, ((commands, forms) =>
             {
-                CommonCommandStatus.AssertNotValidating();
+                CommonCommandStatus.AssertNullValidating();
 
                 foreach (var form in forms)
                 {

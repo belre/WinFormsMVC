@@ -166,12 +166,14 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref assert, (list, forms) =>
             {
-                CommonCommandStatus.AssertNotValidating();
-                Assert.IsFalse(list.First().WasThroughValidation);
+                CommonCommandStatus.AssertNullValidating();
+                Assert.IsTrue(list.First().WasThroughValidation);
+                /*
                 foreach (var form in forms)
                 {
                     Assert.AreEqual(DefaultTextDictionary[form], form.Text);
                 }
+                */
             });
 
             AssertAction(modified, assert);

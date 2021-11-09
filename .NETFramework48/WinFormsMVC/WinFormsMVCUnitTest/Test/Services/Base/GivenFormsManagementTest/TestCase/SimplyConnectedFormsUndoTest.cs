@@ -219,7 +219,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             AssertUndo(((commands, forms) =>
             {
-                CommonCommandStatus.AssertNotValidating();
+                CommonCommandStatus.AssertNullValidating();
 
                 foreach (var form in forms)
                 {

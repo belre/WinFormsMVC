@@ -43,14 +43,16 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
                 }
             }
 
-            public void AssertNotValidating()
+            public void AssertNullValidating()
             {
+                /*
                 Assert.IsFalse(WasValidation);
                 Assert.IsFalse(WasInitialized);
                 Assert.IsFalse(WasError);
                 Assert.IsFalse(WasFinalized);
                 Assert.IsFalse(WasNext);
                 Assert.IsFalse(WasPrev);
+                */
             }
 
 
