@@ -76,7 +76,7 @@ private void button2_Click_1(object sender, EventArgs e)
         new GenericCommand<Form2, TextItem>()
         {
           Invoker = this,
-          Validation = (item) =>
+          Preservation = (item, status, form2) =>
           {
               item.Next = "Hello World";
               return true;
