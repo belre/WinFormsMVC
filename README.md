@@ -3,9 +3,16 @@
 WinForms専用でMVCパターンを実装するときに使用するテンプレートプロジェクトです。
 なお、まだまだ改良を重ねたいと考えていますので、ご意見をください。
 
-＊WinFormsMVC・・・.NET Framework 4.8
+## WinFormsMVC
 
-＊WinFormsMVCDotnet6・・・.NET 6(未テスト)
+- フレームワーク : .NET Framework 4.8
+- 開発環境 : Visual Studio 2019 Professional
+
+## WinFormsMVCDotnet6
+
+- フレームワーク ： .NET 6
+- 開発環境： Visual Studio 2022 Preview (17.0.0)
+- 現在未テスト
 
 ## 導入手順
 
