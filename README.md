@@ -3,7 +3,8 @@
 WinForms専用でMVCパターンを実装するときに使用するテンプレートプロジェクトです。
 なお、まだまだ改良を重ねたいと考えていますので、ご意見をください。
 
-＊案件の都合上、一旦レガシーな環境(.NET Framework 4.8)でのみの設計。.NET 6 Coreへの移行は後日検討
+＊WinFormsMVC・・・.NET Framework 4.8
+＊WinFormsMVCDotnet6・・・.NET 6(未テスト)
 
 ## 導入手順
 
