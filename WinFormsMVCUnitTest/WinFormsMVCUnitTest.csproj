@@ -17,7 +17,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
-    <BaseIntermediateOutputPath>obj\Netframework\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj-netframework\$(AssemblyName)\</BaseIntermediateOutputPath>
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>

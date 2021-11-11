@@ -1,6 +1,6 @@
 <Project>
  <PropertyGroup>
-	<BaseIntermediateOutputPath>obj\Net6\$(AssemblyName)\</BaseIntermediateOutputPath>
-    <MSBuildProjectExtensionsPath>obj\Net6\$(AssemblyName)\</MSBuildProjectExtensionsPath>
+	 <BaseIntermediateOutputPath>obj-net6\$(AssemblyName)\</BaseIntermediateOutputPath>
+	 <MSBuildProjectExtensionsPath>obj-net6\$(AssemblyName)\</MSBuildProjectExtensionsPath>
  </PropertyGroup>
 </Project>
