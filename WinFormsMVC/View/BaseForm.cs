@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using WinFormsMVC.Facade;
-
+using System.Resources;
 
 namespace WinFormsMVC.View
 {
@@ -23,7 +23,11 @@ namespace WinFormsMVC.View
         {
             get
             {
-                return int.Parse(Properties.Resources.MAX_DEPTH_TREEFORM);
+#if NETFRAMEWORK
+                return int.Parse(WinFormsMVC.Properties.Resources.MAX_DEPTH_TREEFORM);
+#else
+                return int.Parse(WinFormsMVCDotnet6.Properties.ConfigDotnet6.MAX_DEPTH_TREEFORM);
+#endif
             }
         }
 

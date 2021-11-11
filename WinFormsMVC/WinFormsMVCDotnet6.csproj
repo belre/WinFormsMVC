@@ -15,4 +15,19 @@
     <DefineConstants>$(DefineConstants)TRACE;NET6</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="Properties\ConfigDotnet6.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConfigDotnet6.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\ConfigDotnet6.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConfigDotnet6.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
