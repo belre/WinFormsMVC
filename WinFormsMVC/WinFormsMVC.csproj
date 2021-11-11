@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <BaseIntermediateOutputPath>obj\Netframework\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj-netframework\$(AssemblyName)\</BaseIntermediateOutputPath>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
