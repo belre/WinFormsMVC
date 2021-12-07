@@ -8,7 +8,7 @@ using WinFormsMVC.Facade;
 using WinFormsMVC.Services;
 using WinFormsMVC.View;
 
-namespace SP8000RasTool
+namespace WinFormsMVC.Init
 {
     public class UserApplicationContext<T> : ApplicationContext where T : BaseForm
     {
