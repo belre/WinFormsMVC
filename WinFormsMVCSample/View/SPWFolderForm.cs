@@ -58,6 +58,10 @@ namespace WinFormsMVCSample.View
                     }
                 }
             }
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
             catch (UnauthorizedAccessException)
             {
                 return;
@@ -66,13 +70,23 @@ namespace WinFormsMVCSample.View
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            var paths = Directory.GetFiles(e.Node.Tag.ToString());
-            listBox1.Items.Clear();
-            foreach (var path in paths)
+            try
             {
-                listBox1.Items.Add(Path.GetFileName(path));
+                var paths = Directory.GetFiles(e.Node.Tag.ToString());
+                listBox1.Items.Clear();
+                foreach (var path in paths)
+                {
+                    listBox1.Items.Add(Path.GetFileName(path));
+                }
             }
-
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

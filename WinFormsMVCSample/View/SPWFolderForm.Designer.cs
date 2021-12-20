@@ -60,8 +60,8 @@ namespace WinFormsMVCSample.View
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "CTKPCMS　連動フォントファイル",
-            "CTKPCMS　連動テーブルファイル"});
+            "File A",
+            "FileB"});
             this.comboBox1.Location = new System.Drawing.Point(12, 210);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(486, 28);
@@ -89,6 +89,7 @@ namespace WinFormsMVCSample.View
             // 
             // SPWFolderForm
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.ClientSize = new System.Drawing.Size(510, 288);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
