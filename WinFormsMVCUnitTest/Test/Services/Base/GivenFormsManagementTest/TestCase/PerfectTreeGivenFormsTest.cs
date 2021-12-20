@@ -121,6 +121,42 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             }), assert);
         }
 
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public override void RecursiveForAncestorFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.RecursiveForAncestorFromLastInvoker(((list, forms) =>
+            {
+                var command = CreateDefaultCommand<BaseFormModel.ChildForm1>(DefaultBaseForm, DefaultValidationText(0));
+                command.IsForSelf = false;
+                command.IsRecursiveForAncestor = true;
+                command.Invoker = forms.Last();
+
+                list.Clear();
+                list.Add(command);
+            }), (list, forms) =>
+            {
+                CommonCommandStatus.AssertValidated();
+
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form == forms.First())
+                    {
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+            } );
+        }
+
+
         // --- SecondRoot Invoker ---//
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]

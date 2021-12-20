@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using WinFormsMVC.Request;
 using WinFormsMVC.Request.Item;
 using WinFormsMVC.View;
@@ -450,10 +451,45 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             AssertAction(modified, assert);
         }
 
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void RecursiveForAncestorFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            Define(ref modified, (list, forms) =>
+            {
+                (list.First()).IsForSelf = false;
+                (list.First()).IsRecursiveForAncestor = true;
+                (list.First()).Invoker = forms.Last();
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                CommonCommandStatus.AssertValidated();
+
+                Assert.IsTrue((list.First()).WasThroughValidation);
+                
+                foreach (var form in forms)
+                {
+                    if (list.Last().Invoker.IsChildOf(form))
+                    {
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+
+            });
+
+            AssertAction(modified, assert);
+        }
 
         // --- First and Last Invokers ---//
 
-        [TestMethod, TestCategory("正常系")]
+            [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
         public virtual void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)

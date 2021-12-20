@@ -160,6 +160,21 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
+
+        [TestMethod, TestCategory("差分")]
+        public void RecursiveForAncestorFromLastInvoker()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.RecursiveForAncestorFromLastInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
+
+            base.RecursiveForAncestorFromLastInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
+        }
+
+
         [TestMethod, TestCategory("差分")]
         
         
