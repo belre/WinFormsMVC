@@ -49,6 +49,10 @@ namespace WinFormsMVC.Request
         /// </summary>
         public bool IsIncludingInheritedType { get; set; }
 
+        /// <summary>
+        /// 全てのクラスを参照するか
+        /// </summary>
+        public bool IsAll { get; set; }
 
 
         /// <summary>

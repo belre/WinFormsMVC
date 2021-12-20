@@ -11,7 +11,7 @@ using WinFormsMVCSample.Controller;
 
 namespace WinFormsMVCSample.View
 {
-    public partial class Form4 : BaseForm
+    public partial class Form4 : BaseForm, IMvcForm1
     {
         public string Message
         {
@@ -36,6 +36,19 @@ namespace WinFormsMVCSample.View
             {
                 pictureBox1.Image = value;
                 pictureBox1.Invalidate();
+            }
+        }
+
+        public string Label2
+        {
+            get
+            {
+                return label2.Text;
+            }
+
+            set
+            {
+                label2.Text = value;
             }
         }
 

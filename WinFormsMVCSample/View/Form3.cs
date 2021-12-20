@@ -105,7 +105,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<IMvcForm1, TextItem>()
                     {
                         Invoker = this,
-                        IsRecursiveForAncestor = true,
+                        IsAll = true,
                         IsIncludingInheritedType = true,
                         Preservation = (item, status, form1) =>
                         {

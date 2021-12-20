@@ -487,9 +487,38 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             AssertAction(modified, assert);
         }
 
+        [TestMethod, TestCategory("正常系")]
+        [DataTestMethod]
+        [DataRow(null, null)]
+        public virtual void AllNodesFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            Define(ref modified, (list, forms) =>
+            {
+                (list.First()).IsForSelf = false;
+                (list.First()).IsAll = true;
+                (list.First()).Invoker = forms.Last();
+            });
+
+            Define(ref assert, (list, forms) =>
+            {
+                CommonCommandStatus.AssertValidated();
+
+                Assert.IsTrue((list.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultValidationText(0), form.Text);
+                }
+
+            });
+
+            AssertAction(modified, assert);
+        }
+
         // --- First and Last Invokers ---//
 
-            [TestMethod, TestCategory("正常系")]
+        [TestMethod, TestCategory("正常系")]
         [DataTestMethod]
         [DataRow(null, null)]
         public virtual void CalledByFirstAndLastInvoker(Action<List<Command>, List<BaseForm>> modified, Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)

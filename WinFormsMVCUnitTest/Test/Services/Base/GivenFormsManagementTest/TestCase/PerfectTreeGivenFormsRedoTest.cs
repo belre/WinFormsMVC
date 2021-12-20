@@ -146,8 +146,6 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         }
 
         [TestMethod, TestCategory("差分")]
-        
-        
         public void RecursiveFromLastInvoker()
         {
             TestActionMode = ActionMode.MEMORABLE_ACTION;
@@ -160,6 +158,19 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
         }
 
+        [TestMethod, TestCategory("差分")]
+        public void AllNodesFromLastInvoker()
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.AllNodesFromLastInvoker(null, null);
+            AssertUndo(((commands, forms) => { }));
+
+            base.AllNodesFromLastInvoker(null, null);
+            AssertRedo((commands, forms) => CommonCommandStatus.AssertWasRedo());
+            ParentAssertion(CommandList.ToList(), BaseFormList.ToList());
+
+        }
 
         [TestMethod, TestCategory("差分")]
         public void RecursiveForAncestorFromLastInvoker()

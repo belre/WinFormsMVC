@@ -201,6 +201,30 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null, null)]
+        public virtual void AllNodesFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)
+        {
+            TestActionMode = ActionMode.MEMORABLE_ACTION;
+
+            base.RecursiveFromLastInvoker(modified, assert);
+
+            Define(ref assert_undo, (commands, forms) =>
+            {
+                CommonCommandStatus.AssertUndoButNotTarget();
+
+                foreach (var form in forms)
+                {
+                    Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                }
+            });
+
+            base.AssertUndo(assert_undo);
+        }
+
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null, null)]
         public virtual void RecursiveForAncestorFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert_undo)

@@ -124,6 +124,41 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         [TestMethod, TestCategory("差分")]
         [DataTestMethod]
         [DataRow(null, null)]
+        public override void AllNodesFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
+            Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
+        {
+            base.RecursiveFromLastInvoker(((list, forms) =>
+            {
+                var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0));
+                command.IsForSelf = false;
+                command.IsAll = true;
+                command.Invoker = forms.Last();
+
+                list.Clear();
+                list.Add(command);
+            }), (commands, forms) =>
+            {
+                CommonCommandStatus.AssertValidated();
+
+                Assert.IsTrue((commands.First()).WasThroughValidation);
+
+                foreach (var form in forms)
+                {
+                    if (form.GetType().Equals(typeof(BaseFormModel.ChildForm5)))
+                    {
+                        Assert.AreEqual(DefaultValidationText(0), form.Text);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(DefaultBaseForm.Text, form.Text);
+                    }
+                }
+            });
+        }
+
+        [TestMethod, TestCategory("差分")]
+        [DataTestMethod]
+        [DataRow(null, null)]
         public override void RecursiveForAncestorFromLastInvoker(Action<List<Command>, List<BaseForm>> modified,
             Action<IEnumerable<Command>, IEnumerable<BaseForm>> assert)
         {
