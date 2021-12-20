@@ -193,7 +193,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRecursive = true;
+                (list.First()).IsRecursiveToChildren = true;
             });
 
             Define(ref assert, (list, forms) =>
@@ -276,7 +276,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 (list.First()).Invoker = forms.First().Children.First();
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRecursive = true;
+                (list.First()).IsRecursiveToChildren = true;
             });
 
             Define(ref assert, (list, forms) =>
@@ -430,7 +430,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 (list.First()).IsForSelf = false;
-                (list.First()).IsRecursive = true;
+                (list.First()).IsRecursiveToChildren = true;
                 (list.First()).Invoker = forms.Last();
             });
 

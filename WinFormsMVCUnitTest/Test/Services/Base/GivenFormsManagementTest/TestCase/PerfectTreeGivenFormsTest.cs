@@ -66,7 +66,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     com.Invoker = forms.First();
                     com.IsForSelf = false;
-                    com.IsRecursive = true;
+                    com.IsRecursiveToChildren = true;
                 }
 
             }, null);
@@ -113,7 +113,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0));
                 command.IsForSelf = false;
-                command.IsRecursive = true;
+                command.IsRecursiveToChildren = true;
                 command.Invoker = forms.Last();
 
                 list.Clear();
@@ -154,7 +154,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 {
                     com.Invoker = forms.First().Children.First();
                     com.IsForSelf = false;
-                    com.IsRecursive = true;
+                    com.IsRecursiveToChildren = true;
                 }
 
             }, assert);

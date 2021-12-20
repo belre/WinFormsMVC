@@ -284,7 +284,7 @@ namespace WinFormsMVCSample
                 controller.SendStoredMessage(new Command[] {
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
-                        IsRecursive=true,
+                        IsRecursiveToChildren=true,
                         Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.MessageFromClone;

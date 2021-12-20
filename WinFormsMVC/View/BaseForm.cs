@@ -39,6 +39,8 @@ namespace WinFormsMVC.View
         /// </summary>
         public ViewFacadeCore FacadeCore { get; set; }
 
+
+
         public IEnumerable<BaseForm> Children
         {
             get
@@ -120,7 +122,7 @@ namespace WinFormsMVC.View
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public bool IsAncestor(BaseForm parent, int count=1)
+        public bool IsChildOf(BaseForm parent, int count=1)
         {
             if (parent == null || Invoker == null || count >= MaxDepthTree)
             {
@@ -132,10 +134,10 @@ namespace WinFormsMVC.View
             }
             else
             {
-                return Invoker.IsAncestor(parent, count+1);
+                return Invoker.IsChildOf(parent, count+1);
             }
         }
 
-        
+
     }
 }

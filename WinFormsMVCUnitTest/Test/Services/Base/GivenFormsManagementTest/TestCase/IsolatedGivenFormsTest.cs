@@ -266,7 +266,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             {
                 list.First().Invoker = forms.Last();
                 list.First().IsForSelf = false;
-                list.First().IsRecursive = true;
+                list.First().IsRecursiveToChildren = true;
             });
 
             Define(ref assert, (list, forms) =>

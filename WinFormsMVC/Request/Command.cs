@@ -27,6 +27,10 @@ namespace WinFormsMVC.Request
             get;
         }
 
+        /// <summary>
+        /// 親に対するコマンドか.
+        /// </summary>
+        public bool IsRecursiveForAncestor { get; set; }
 
         /// <summary>
         /// 自分自身に対するコマンドか.
@@ -37,7 +41,7 @@ namespace WinFormsMVC.Request
         /// 孫に再帰するか.
         /// コマンドはIsForSelfが先に優先されます.
         /// </summary>
-        public bool IsRecursive { get; set; }
+        public bool IsRecursiveToChildren { get; set; }
 
 
         /// <summary>

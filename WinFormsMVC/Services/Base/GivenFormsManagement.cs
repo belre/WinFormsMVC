@@ -151,9 +151,13 @@ namespace WinFormsMVC.Services.Base
             {
                 return form == command.Invoker;
             }
-            else if (command.IsRecursive)
+            else if (command.IsRecursiveToChildren)
             {
-                return form.IsAncestor(command.Invoker);
+                return form.IsChildOf(command.Invoker);
+            }
+            else if (command.IsRecursiveForAncestor)
+            {
+                return command.Invoker.IsChildOf(form);
             }
             else
             {

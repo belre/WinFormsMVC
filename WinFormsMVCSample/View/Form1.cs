@@ -19,6 +19,20 @@ namespace WinFormsMVCSample
     {
         public partial class Form1 : BaseForm
         {
+
+
+            public string Label1
+            {
+                get
+                {
+                    return label1.Text;
+                }
+                set
+                {
+                    label1.Text = value;
+                }
+            }
+
             public Form1()
             {
                 InitializeComponent();
@@ -46,7 +60,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form3, TextItem>()
                     {
                         Invoker = this,
-                        IsRecursive = true,
+                        IsRecursiveToChildren = true,
                         Preservation = (item, status, form3) =>
                         {
                             item.Next = "Hello World";
@@ -85,7 +99,7 @@ namespace WinFormsMVCSample
                         new GenericCommand<Form3, TextItem>()
                         {
                             Invoker = this,
-                            IsRecursive = true,
+                            IsRecursiveToChildren = true,
                             Preservation = (item, status, form3) =>
                             {
                                 item.Next = form.FilePath;

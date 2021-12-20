@@ -57,14 +57,14 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
             {
                 foreach (var child in all_forms_ordered_from_root.Skip(i + 1))
                 {
-                    Assert.IsTrue(child.IsAncestor(all_forms_ordered_from_root[i]));
-                    Assert.IsFalse(all_forms_ordered_from_root[i].IsAncestor(child));
+                    Assert.IsTrue(child.IsChildOf(all_forms_ordered_from_root[i]));
+                    Assert.IsFalse(all_forms_ordered_from_root[i].IsChildOf(child));
                 }
 
                 foreach (var parent in all_forms_ordered_from_root.Take(i))
                 {
-                    Assert.IsFalse(parent.IsAncestor(all_forms_ordered_from_root[i]));
-                    Assert.IsTrue(all_forms_ordered_from_root[i].IsAncestor(parent));
+                    Assert.IsFalse(parent.IsChildOf(all_forms_ordered_from_root[i]));
+                    Assert.IsTrue(all_forms_ordered_from_root[i].IsChildOf(parent));
                 }
 
                 if (i >= 1)
