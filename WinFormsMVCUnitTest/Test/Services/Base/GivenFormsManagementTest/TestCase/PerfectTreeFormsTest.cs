@@ -86,7 +86,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 Text = "Default BaseForm"
             };
 
-            var forms = BaseFormModel.CreatePerfectTreeForms(DefaultBaseForm, BaseForm.MaxDepthTree, false);
+            var forms = (new BaseFormModel()).CreatePerfectTreeForms(DefaultBaseForm, BaseForm.MaxDepthTree, false);
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()

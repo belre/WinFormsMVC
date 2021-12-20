@@ -11,6 +11,8 @@ namespace WinFormsMVCUnitTest.Test.View
 {
     public class BaseFormModel
     {
+
+
         public class ChildForm1 : WinFormsMVC.View.BaseForm
         {
 
@@ -36,7 +38,8 @@ namespace WinFormsMVCUnitTest.Test.View
 
         }
 
-        public static IEnumerable<Type> DefinedChildForms
+
+        public virtual IEnumerable<Type> DefinedChildForms
         {
             get
             {
@@ -48,7 +51,7 @@ namespace WinFormsMVCUnitTest.Test.View
         }
 
 
-        public static WinFormsMVC.View.BaseForm CreateDefaultBaseForm(WinFormsMVC.View.BaseForm original, Type inherited_class) 
+        public WinFormsMVC.View.BaseForm CreateDefaultBaseForm(WinFormsMVC.View.BaseForm original, Type inherited_class) 
         {
             var form = (WinFormsMVC.View.BaseForm)Activator.CreateInstance(inherited_class.Assembly.GetName().Name,
                 inherited_class.FullName, false,
@@ -60,7 +63,7 @@ namespace WinFormsMVCUnitTest.Test.View
             return form;
         }
 
-        public static List<WinFormsMVC.View.BaseForm> CreateSimplyConnectedForms(WinFormsMVC.View.BaseForm original, int number, bool are_child_forms=false)
+        public List<WinFormsMVC.View.BaseForm> CreateSimplyConnectedForms(WinFormsMVC.View.BaseForm original, int number, bool are_child_forms=false)
         {
             var list_form = new List<WinFormsMVC.View.BaseForm>();
 
@@ -86,7 +89,8 @@ namespace WinFormsMVCUnitTest.Test.View
             return list_form;
         }
 
-        public static List<WinFormsMVC.View.BaseForm> CreatePerfectTreeForms(WinFormsMVC.View.BaseForm original, int connected_node_number, bool are_child_forms=false)
+        //public static List<WinFormsMVC.View.BaseForm> Create
+        public List<WinFormsMVC.View.BaseForm> CreatePerfectTreeForms(WinFormsMVC.View.BaseForm original, int connected_node_number, bool are_child_forms=false)
         {
             var list_form = new List<WinFormsMVC.View.BaseForm>();
 
@@ -102,7 +106,8 @@ namespace WinFormsMVCUnitTest.Test.View
             return list_form;
         }
 
-        private static void MakeBinaryTree(WinFormsMVC.View.BaseForm target, WinFormsMVC.View.BaseForm original, List<WinFormsMVC.View.BaseForm> list, int count = 1, bool are_child_forms = false) 
+
+        private void MakeBinaryTree(WinFormsMVC.View.BaseForm target, WinFormsMVC.View.BaseForm original, List<WinFormsMVC.View.BaseForm> list, int count = 1, bool are_child_forms = false) 
         {
 
             if (count < WinFormsMVC.View.BaseForm.MaxDepthTree)
@@ -139,7 +144,7 @@ namespace WinFormsMVCUnitTest.Test.View
 
         }
 
-        public static void AddInitialAttributes(WinFormsMVC.View.BaseForm form, bool is_modal)
+        public void AddInitialAttributes(WinFormsMVC.View.BaseForm form, bool is_modal)
         {
             if (is_modal)
             {

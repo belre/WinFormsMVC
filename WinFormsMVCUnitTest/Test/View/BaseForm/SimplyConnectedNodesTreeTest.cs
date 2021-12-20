@@ -30,7 +30,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
                 Text = "Default BaseForm"
             };
 
-            ListFormsOrderedFromRoot = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, WinFormsMVC.View.BaseForm.MaxDepthTree);
+            ListFormsOrderedFromRoot = (new BaseFormModel()).CreateSimplyConnectedForms(DefaultBaseForm, WinFormsMVC.View.BaseForm.MaxDepthTree);
         }
 
         [TestMethod]
@@ -83,7 +83,7 @@ namespace WinFormsMVCUnitTest.Test.View.BaseForm
 
             Assert.ThrowsException<InvalidOperationException>(() =>
             {
-                BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, WinFormsMVC.View.BaseForm.MaxDepthTree+1);
+                (new BaseFormModel()).CreateSimplyConnectedForms(DefaultBaseForm, WinFormsMVC.View.BaseForm.MaxDepthTree+1);
             });
         }
     }

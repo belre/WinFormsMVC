@@ -14,16 +14,16 @@ using WinFormsMVCUnitTest.Test.View.BaseForm;
 namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCase
 {
     [TestClass]
-    public class PerfectTreeGivenFormsTest : PerfectTreeFormsTest
+    public class PerfectTreeGivenInheritedFormsTest : PerfectTreeFormsTest
     {
-        public PerfectTreeGivenFormsTest()
+        public PerfectTreeGivenInheritedFormsTest()
         {
             DefaultBaseForm = new WinFormsMVC.View.BaseForm()
             {
                 Text = "Default BaseForm"
             };
 
-            var forms = (new BaseFormModel()).CreatePerfectTreeForms(DefaultBaseForm, BaseForm.MaxDepthTree, true);
+            var forms = (new BaseFormInheritanceModel()).CreatePerfectTreeForms(DefaultBaseForm, BaseForm.MaxDepthTree, true);
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()
@@ -61,6 +61,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText(0)));
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText(0)));
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormInheritanceModel.GrandChildForm2>(DefaultBaseForm, DefaultValidationText(0)));
 
                 foreach (var com in list)
                 {
@@ -149,6 +150,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm3>(DefaultBaseForm, DefaultValidationText(0)));
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm4>(DefaultBaseForm, DefaultValidationText(0)));
                 list.Add(CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0)));
+                list.Add(CreateDefaultCommand<BaseFormInheritanceModel.GrandChildForm2>(DefaultBaseForm, DefaultValidationText(0)));
 
                 foreach (var com in list)
                 {
@@ -226,7 +228,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             // 型生成
             foreach (var form in BaseFormList)
             {
-                var objtype = (new BaseFormModel()).DefinedChildForms.Single(type => type == form.GetType());
+                var objtype = (new BaseFormInheritanceModel()).DefinedChildForms.Single(type => type == form.GetType());
                 var type_list = new List<Type>();
 
                 if (objtype != null )
@@ -249,12 +251,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             // 型生成
             foreach (var form in BaseFormList)
             {
-                var obj = (new BaseFormModel()).DefinedChildForms.Single(type => type == form.GetType() );
+                var obj = (new BaseFormInheritanceModel()).DefinedChildForms.Single(type => type == form.GetType() );
                 var type_list = new List<Type>();
                 
                 if (obj != null && obj != BaseFormList.Last().GetType())
                 {
-                    var next = (new BaseFormModel()).DefinedChildForms.SkipWhile(type => type != form.GetType()).Skip(1).First();
+                    var next = (new BaseFormInheritanceModel()).DefinedChildForms.SkipWhile(type => type != form.GetType()).Skip(1).First();
                     type_list.Add(next);
                 }
 
@@ -273,12 +275,12 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             foreach (var form in BaseFormList)
             {
-                var obj = (new BaseFormModel()).DefinedChildForms.Single(type => type == form.GetType());
+                var obj = (new BaseFormInheritanceModel()).DefinedChildForms.Single(type => type == form.GetType());
                 var type_list = new List<Type>();
 
                 if (obj != null && obj != BaseFormList.Last().GetType())
                 {
-                    var next = (new BaseFormModel()).DefinedChildForms.SkipWhile(type => type != form.GetType()).Skip(1).First();
+                    var next = (new BaseFormInheritanceModel()).DefinedChildForms.SkipWhile(type => type != form.GetType()).Skip(1).First();
                     type_list.Add(next);
                 }
 

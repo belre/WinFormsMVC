@@ -21,7 +21,7 @@ namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
                 {
                     Text = "Test Text"
                 };
-                BaseFormModel.AddInitialAttributes(default_form, false);
+                (new BaseFormModel()).AddInitialAttributes(default_form, false);
 
                 return default_form;
             }
@@ -32,7 +32,7 @@ namespace WinFormsMVCUnitTest.Test.Services.FormsManagement
             get
             {
                 var default_form = SingleModelessForm;
-                BaseFormModel.AddInitialAttributes(default_form, true);
+                (new BaseFormModel()).AddInitialAttributes(default_form, true);
                 return default_form;
             }
         }

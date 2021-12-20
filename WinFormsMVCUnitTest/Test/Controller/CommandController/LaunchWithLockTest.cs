@@ -22,12 +22,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void LaunchOneForm()
         {
             var form1 = new Form1();
-            BaseFormModel.AddInitialAttributes(form1, true);
+            (new BaseFormModel()).AddInitialAttributes(form1, true);
 
             var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form1);
             controller.LaunchWithLock<Form2>(form1, form2 =>
             {
-                BaseFormModel.AddInitialAttributes(form2, true);
+                (new BaseFormModel()).AddInitialAttributes(form2, true);
             });
         }
     }

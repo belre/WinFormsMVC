@@ -20,12 +20,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendJustSimpleMessage()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
 
             var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form_initiate);
@@ -53,12 +53,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendNullAsSimpleMessage()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
 
             var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form_initiate);

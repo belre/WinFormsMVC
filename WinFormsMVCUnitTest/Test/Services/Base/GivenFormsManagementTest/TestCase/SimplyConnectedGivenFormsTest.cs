@@ -21,7 +21,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 Text = "Default BaseForm"
             };
 
-            var forms = BaseFormModel.CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree, true);
+            var forms = (new BaseFormModel()).CreateSimplyConnectedForms(DefaultBaseForm, BaseForm.MaxDepthTree, true);
             UpdateForms(forms);
 
             UpdateCommands(new List<Command>()

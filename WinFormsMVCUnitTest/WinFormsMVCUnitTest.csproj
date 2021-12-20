@@ -76,6 +76,10 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\NullListTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeFormsRedoTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenInheritedFormsRedoTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenInheritedFormsTypeInheritedTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenInheritedFormsUndoTest.cs" />
+    <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenInheritedFormsTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsTypeInheritedTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsRedoTest.cs" />
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\PerfectTreeGivenFormsUndoTest.cs" />
@@ -96,6 +100,7 @@
     <Compile Include="Test\Services\Base\GivenFormsManagementTest\TestCase\SingleGivenFormTest.cs" />
     <Compile Include="Test\Services\Base\MementoManagement\PushAndPopTest.cs" />
     <Compile Include="Test\Services\FormsManagement\LaunchAndCloseTest.cs" />
+    <Compile Include="Test\View\BaseFormInheritanceModel.cs" />
     <Compile Include="Test\View\BaseFormModel.cs" />
     <Compile Include="Test\View\BaseForm\SimplyConnectedNodesTreeTest.cs" />
     <Compile Include="Test\View\BaseForm\LoopTreeTest.cs" />

@@ -25,12 +25,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendJustStoredMessage()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
 
             var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form_initiate);
@@ -64,12 +64,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendStoredMessageTwice()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
             form_second.Text = "That's great";
 
@@ -131,12 +131,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void UndoNull()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
 
             var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form_initiate);
@@ -171,12 +171,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendTwoStoredMessageTwice()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
             form_second.Text = "That's great";
 
@@ -236,12 +236,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendStoredMessageMaxTimes()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
             form_second.Text = "That's great";
 
@@ -297,12 +297,12 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
         public void SendNullAsStoredMessage()
         {
             var form_initiate = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_initiate, false);
+            (new BaseFormModel()).AddInitialAttributes(form_initiate, false);
             Manager.LaunchForm(null, form_initiate, false);
             form_initiate.Text = "Hello";
 
             var form_second = new BaseForm();
-            BaseFormModel.AddInitialAttributes(form_second, false);
+            (new BaseFormModel()).AddInitialAttributes(form_second, false);
             Manager.LaunchForm(form_initiate, form_second, false);
 
             var controller = Facade.GetController<WinFormsMVC.Controller.CommandController>(form_initiate);
