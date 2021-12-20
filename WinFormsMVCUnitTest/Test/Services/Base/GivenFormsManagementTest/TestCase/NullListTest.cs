@@ -21,7 +21,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 new GenericCommand<BaseFormModel.ChildForm1, TextItem>()
                 {
                     Invoker = new BaseForm(),
-                    IsForSelf = true,
+                    NodeSearchMode = Command.NodeSearchMethod.Self,
                     Validation = (item) =>
                     {
                         item.Next = "Validation Text - ChildForm1";

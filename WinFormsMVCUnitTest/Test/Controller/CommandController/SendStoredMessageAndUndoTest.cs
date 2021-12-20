@@ -39,6 +39,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
@@ -79,6 +80,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = "Excuse me";
@@ -100,6 +102,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
@@ -145,6 +148,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
@@ -186,6 +190,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = "abcdefg";
@@ -204,6 +209,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;
@@ -253,6 +259,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                     new GenericCommand<BaseForm, TextItem>()
                     {
                         Invoker = form_initiate,
+                        NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                         Validation = (item) =>
                         {
                             item.Next = string.Format("Message {0}", i);

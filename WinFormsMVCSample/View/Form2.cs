@@ -86,7 +86,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form2, TextItem>()
                     {
                         Invoker = this,
-                        IsForSelf = true,
+                        NodeSearchMode = Command.NodeSearchMethod.Self,
                         Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.label3.Text;
@@ -138,7 +138,7 @@ namespace WinFormsMVCSample
                         new GenericCommand<Form2, ImageItem>()
                         {
                             Invoker = this,
-                            IsForSelf = true,
+                            NodeSearchMode = Command.NodeSearchMethod.Self,
                             Preservation = (item, status, form2) =>
                             {
                                 item.Next = pictureBox1.Image;
@@ -284,7 +284,7 @@ namespace WinFormsMVCSample
                 controller.SendStoredMessage(new Command[] {
                     new GenericCommand<Form2, TextItem> {
                         Invoker=this,
-                        IsRecursiveToChildren=true,
+                        NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper,
                         Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.MessageFromClone;
@@ -319,7 +319,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form2, ImageItem>()
                     {
                         Invoker = this,
-                        IsForSelf = true,
+                        NodeSearchMode = Command.NodeSearchMethod.Self,
                         Preservation = (item, status, form2) =>
                         {
                             item[form2] = form2.pictureBox1.Image;

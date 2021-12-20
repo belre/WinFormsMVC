@@ -189,7 +189,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest
             return new GenericCommand<T, TextItem>()
             {
                 Invoker = invoker,
-                IsForSelf = true,
+                NodeSearchMode = Command.NodeSearchMethod.Self,
                 Validation = (item) =>
                 {
                     CommonCommandStatus.WasValidation = true;

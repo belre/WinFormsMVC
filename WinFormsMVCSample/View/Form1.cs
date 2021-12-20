@@ -72,7 +72,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form3, TextItem>()
                     {
                         Invoker = this,
-                        IsRecursiveToChildren = true,
+                        NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper,
                         Preservation = (item, status, form3) =>
                         {
                             item.Next = "Hello World";
@@ -111,7 +111,7 @@ namespace WinFormsMVCSample
                         new GenericCommand<Form3, TextItem>()
                         {
                             Invoker = this,
-                            IsRecursiveToChildren = true,
+                            NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper,
                             Preservation = (item, status, form3) =>
                             {
                                 item.Next = form.FilePath;

@@ -158,7 +158,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                (list.First()).IsForSelf = false;
+                list.First().NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (list, forms) =>
@@ -193,8 +193,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) =>
             {
-                (list.First()).IsForSelf = false;
-                (list.First()).IsRecursiveToChildren = true;
+                list.First().NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper;
             });
 
             Define(ref assert, (list, forms) =>
@@ -233,7 +232,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 (list.First()).Invoker = forms.First().Children.First();
-                (list.First()).IsForSelf = false;
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (list, forms) =>
@@ -276,8 +275,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 (list.First()).Invoker = forms.First().Children.First();
-                (list.First()).IsForSelf = false;
-                (list.First()).IsRecursiveToChildren = true;
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper;
             });
 
             Define(ref assert, (list, forms) =>
@@ -328,7 +326,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 ((CommandValidator<TextItem>)list.First()).Invoker = forms.First().Children.Last();
-                ((CommandValidator<TextItem>)list.First()).IsForSelf = false;
+                ((CommandValidator<TextItem>)list.First()).NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (list, forms) =>
@@ -403,8 +401,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                (list.First()).IsForSelf = false;
                 (list.First()).Invoker = forms.Last();
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (list, forms) =>
@@ -430,9 +428,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
 
             Define(ref modified, (list, forms) =>
             {
-                (list.First()).IsForSelf = false;
-                (list.First()).IsRecursiveToChildren = true;
                 (list.First()).Invoker = forms.Last();
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper;
             });
 
             Define(ref assert, (list, forms) =>
@@ -459,9 +456,8 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) =>
             {
-                (list.First()).IsForSelf = false;
-                (list.First()).IsRecursiveForAncestor = true;
                 (list.First()).Invoker = forms.Last();
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.RecursiveShallower;
             });
 
             Define(ref assert, (list, forms) =>
@@ -495,8 +491,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) =>
             {
-                (list.First()).IsForSelf = false;
-                (list.First()).IsAll = true;
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.All;
                 (list.First()).Invoker = forms.Last();
             });
 
@@ -527,10 +522,10 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 (list.First()).Invoker = forms.First();
-                (list.First()).IsForSelf = false;
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
 
                 list.Add(CreateDefaultCommand<BaseForm>(forms.Last(), "Validation Text - 2"));
-                list.Last().IsForSelf = false;
+                (list.Last()).NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (list, forms) =>
@@ -582,7 +577,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                             var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
                             {
-                                com.IsForSelf = true;
+                                com.NodeSearchMode = Command.NodeSearchMethod.Self;
                                 list.Add(com);
                             }
                             BaseFormAllocateTree[form] = true;
@@ -629,7 +624,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) =>
             {
-                list.First().IsForSelf = false;
+                list.First().NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
                 BaseFormAllocateTree[forms.First()] = true;
 
                 foreach (var form in forms)
@@ -642,7 +637,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                             var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
                             {
-                                com.IsForSelf = false;
+                                com.NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
                                 com.Invoker = form;
                                 list.Add(com);
                             }
@@ -691,7 +686,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) =>
             {
-                list.First().IsForSelf = false;
+                list.First().NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
                 BaseFormAllocateTree[forms.First()] = true;
 
                 foreach (var form in forms)
@@ -704,7 +699,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                             var command_list = CreateDefaultCommandByTypeDictionary(form, DefaultValidationText(0));
                             foreach (var com in command_list)
                             {
-                                com.IsForSelf = false;
+                                com.NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
                                 com.Invoker = form;
                                 list.Add(com);
                             }
@@ -758,7 +753,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             Define(ref modified, (list, forms) =>
             {
                 list.First().Invoker = null;
-                list.First().IsForSelf = false;
+                list.First().NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (list, forms) =>

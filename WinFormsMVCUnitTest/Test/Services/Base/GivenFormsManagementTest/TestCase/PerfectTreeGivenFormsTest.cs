@@ -65,8 +65,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 foreach (var com in list)
                 {
                     com.Invoker = forms.First();
-                    com.IsForSelf = false;
-                    com.IsRecursiveToChildren = true;
+                    com.NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper;
                 }
 
             }, null);
@@ -112,8 +111,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.RecursiveFromLastInvoker(((list, forms) =>
             {
                 var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0));
-                command.IsForSelf = false;
-                command.IsRecursiveToChildren = true;
+                command.NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper;
                 command.Invoker = forms.Last();
 
                 list.Clear();
@@ -130,8 +128,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.RecursiveFromLastInvoker(((list, forms) =>
             {
                 var command = CreateDefaultCommand<BaseFormModel.ChildForm5>(DefaultBaseForm, DefaultValidationText(0));
-                command.IsForSelf = false;
-                command.IsAll = true;
+                command.NodeSearchMode = Command.NodeSearchMethod.All;
                 command.Invoker = forms.Last();
 
                 list.Clear();
@@ -165,8 +162,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.RecursiveForAncestorFromLastInvoker(((list, forms) =>
             {
                 var command = CreateDefaultCommand<BaseFormModel.ChildForm1>(DefaultBaseForm, DefaultValidationText(0));
-                command.IsForSelf = false;
-                command.IsRecursiveForAncestor = true;
+                command.NodeSearchMode = Command.NodeSearchMethod.RecursiveShallower;
                 command.Invoker = forms.Last();
 
                 list.Clear();
@@ -202,7 +198,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.CalledBySecondLeftInvoker((list, forms) =>
             {
                 list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms.First().Children.First(), DefaultValidationText(0));
-                list[0].IsForSelf = false;
+                list[0].NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             }, assert);
         }
 
@@ -224,8 +220,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
                 foreach (var com in list)
                 {
                     com.Invoker = forms.First().Children.First();
-                    com.IsForSelf = false;
-                    com.IsRecursiveToChildren = true;
+                    com.NodeSearchMode = Command.NodeSearchMethod.RecursiveDeeper;
                 }
 
             }, assert);
@@ -268,7 +263,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.CalledBySecondRightInvoker((list, forms) =>
             {
                 list[0] = CreateDefaultCommand<BaseFormModel.ChildForm3>(forms[0].Children.Last(), DefaultValidationText(0));
-                list[0].IsForSelf = false;
+                list[0].NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             }, assert);
         }
 
@@ -284,7 +279,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
             base.CalledBySelf_LastInvoker((list, forms) =>
             {
                 list[0] = CreateDefaultCommand<BaseFormModel.ChildForm5>(forms.Last(), DefaultValidationText(0));
-                list[0].IsForSelf = true;
+                list[0].NodeSearchMode = Command.NodeSearchMethod.Self;
             }, assert);
         }
 

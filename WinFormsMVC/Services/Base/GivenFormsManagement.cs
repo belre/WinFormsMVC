@@ -147,25 +147,29 @@ namespace WinFormsMVC.Services.Base
         /// <returns></returns>
         protected virtual bool IsMatchInvoker(BaseForm form, Command command)
         {
-            if (command.IsForSelf)
+            if (command.NodeSearchMode == Command.NodeSearchMethod.Self)
             {
                 return form == command.Invoker;
             }
-            else if (command.IsAll)
+            else if (command.NodeSearchMode == Command.NodeSearchMethod.All)
             {
                 return true;
             }
-            else if (command.IsRecursiveToChildren)
+            else if (command.NodeSearchMode == Command.NodeSearchMethod.RecursiveDeeper)
             {
                 return form.IsChildOf(command.Invoker);
             }
-            else if (command.IsRecursiveForAncestor)
+            else if (command.NodeSearchMode == Command.NodeSearchMethod.RecursiveShallower)
             {
                 return command.Invoker.IsChildOf(form) && form.Invoker != command.Invoker;
             }
-            else
+            else if(command.NodeSearchMode == Command.NodeSearchMethod.OnlyMyChildren)
             {
                 return command.Invoker != null && form.Invoker == command.Invoker;
+            }
+            else
+            {
+                return false;
             }
         }
 

@@ -79,7 +79,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<Form1, TextItem>()
                     {
                         Invoker = this,
-                        IsRecursiveForAncestor = true,
+                        NodeSearchMode = Command.NodeSearchMethod.RecursiveShallower,
                         Preservation = (item, status, form1) =>
                         {
                             item[form1] = form1.Label1;
@@ -105,7 +105,7 @@ namespace WinFormsMVCSample
                     new GenericCommand<IMvcForm1, TextItem>()
                     {
                         Invoker = this,
-                        IsAll = true,
+                        NodeSearchMode = Command.NodeSearchMethod.All,
                         Preservation = (item, status, form1) =>
                         {
                             item[form1] = form1.Label2;

@@ -76,7 +76,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         {
             Define(ref modified, (list, forms) => {
                 (list.First()).Invoker = null;
-                (list.First()).IsForSelf = false;
+                (list.First()).NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren;
             });
 
             Define(ref assert, (commands, forms) =>

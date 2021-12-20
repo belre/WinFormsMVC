@@ -34,6 +34,7 @@ namespace WinFormsMVCUnitTest.Test.Controller.CommandController
                 new GenericCommand<BaseForm, TextItem>()
                 {
                     Invoker = form_initiate,
+                    NodeSearchMode = Command.NodeSearchMethod.OnlyMyChildren,
                     Validation = (item) =>
                     {
                         item.Next = form_initiate.Text;

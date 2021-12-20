@@ -30,34 +30,26 @@ namespace WinFormsMVC.Request
             get;
         }
 
-        
+        public enum NodeSearchMethod
+        {
+            Self,
+            All,
+            OnlyMyChildren,
+            RecursiveShallower,
+            RecursiveDeeper
+        }
 
-        /// <summary>
-        /// 親に対するコマンドか.
-        /// </summary>
-        public bool IsRecursiveForAncestor { get; set; }
-
-        /// <summary>
-        /// 自分自身に対するコマンドか.
-        /// </summary>
-        public bool IsForSelf { get; set; }
-
-        /// <summary>
-        /// 孫に再帰するか.
-        /// コマンドはIsForSelfが先に優先されます.
-        /// </summary>
-        public bool IsRecursiveToChildren { get; set; }
+        public NodeSearchMethod NodeSearchMode
+        {
+            get;
+            set;
+        }
 
 
         /// <summary>
         /// FormTypeで指定されたクラスが継承されているものも含むかどうかを表します.
         /// </summary>
         public bool IsIncludingInheritedSubclass { get; set; }
-
-        /// <summary>
-        /// 全てのクラスを参照するか
-        /// </summary>
-        public bool IsAll { get; set; }
 
 
         /// <summary>
