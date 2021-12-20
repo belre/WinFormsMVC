@@ -106,7 +106,6 @@ namespace WinFormsMVCSample
                     {
                         Invoker = this,
                         IsAll = true,
-                        IsIncludingInheritedType = true,
                         Preservation = (item, status, form1) =>
                         {
                             item[form1] = form1.Label2;

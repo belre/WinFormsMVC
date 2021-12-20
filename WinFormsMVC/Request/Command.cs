@@ -22,10 +22,15 @@ namespace WinFormsMVC.Request
             get;
         }
 
+        /// <summary>
+        /// Validationが実行されたことを表します。
+        /// </summary>
         public abstract bool WasThroughValidation
         {
             get;
         }
+
+        
 
         /// <summary>
         /// 親に対するコマンドか.
@@ -47,7 +52,7 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// FormTypeで指定されたクラスが継承されているものも含むかどうかを表します.
         /// </summary>
-        public bool IsIncludingInheritedType { get; set; }
+        public bool IsIncludingInheritedSubclass { get; set; }
 
         /// <summary>
         /// 全てのクラスを参照するか

@@ -13,7 +13,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public SimplyConnectedGivenFormsTypeInheritedTest()
         {
             var command = CreateDefaultCommand<BaseForm>(BaseFormList.First(), DefaultValidationText(0));
-            command.IsIncludingInheritedType = true;
+            command.IsIncludingInheritedSubclass = true;
 
             UpdateCommands(new List<Command>()
             {

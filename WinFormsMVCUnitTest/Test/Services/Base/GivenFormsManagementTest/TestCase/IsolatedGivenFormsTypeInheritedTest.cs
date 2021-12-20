@@ -13,7 +13,7 @@ namespace WinFormsMVCUnitTest.Test.Services.Base.GivenFormsManagementTest.TestCa
         public IsolatedGivenFormsTypeInheritedTest()
         {
             var command = CreateDefaultCommand<BaseForm>(BaseFormList.First(), ValidationText);
-            command.IsIncludingInheritedType = true;
+            command.IsIncludingInheritedSubclass = true;
 
             UpdateCommands(new List<Command>()
             {

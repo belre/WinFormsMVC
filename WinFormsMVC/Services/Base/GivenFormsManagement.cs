@@ -171,16 +171,25 @@ namespace WinFormsMVC.Services.Base
 
         protected virtual bool IsMatchType(BaseForm form, Command command)
         {
-            if (command.IsIncludingInheritedType)
+            if (form.GetType().GetInterfaces().Contains(command.FormType))
             {
-                return form.GetType().IsSubclassOf(command.FormType) || 
-                       form.GetType().GetInterfaces().Contains(command.FormType) || 
-                       form.GetType() == command.FormType;
-
+                // インタフェースが定義されている場合は、
+                // 常にtrueを返却する。
+                return true;
             }
             else
             {
-                return form.GetType() == command.FormType;
+                // クラスを指定している場合は型によって判定する
+                if (command.IsIncludingInheritedSubclass)
+                {
+                    return form.GetType().IsSubclassOf(command.FormType) ||
+                           form.GetType() == command.FormType;
+
+                }
+                else
+                {
+                    return form.GetType() == command.FormType;
+                }
             }
         }
     }
