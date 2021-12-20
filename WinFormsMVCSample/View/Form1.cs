@@ -17,7 +17,7 @@ namespace WinFormsMVCSample
 {
     namespace View
     {
-        public partial class Form1 : BaseForm
+        public partial class Form1 : BaseForm, IMvcForm1
         {
 
 
@@ -30,6 +30,18 @@ namespace WinFormsMVCSample
                 set
                 {
                     label1.Text = value;
+                }
+            }
+
+            public string Label2
+            {
+                get
+                {
+                    return label2.Text;
+                }
+                set
+                {
+                    label2.Text = value;
                 }
             }
 

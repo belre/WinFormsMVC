@@ -8,7 +8,7 @@ using System.Resources;
 
 namespace WinFormsMVC.View
 {
-    public partial class BaseForm : Form
+    public partial class BaseForm : Form, IMvcForm
     {
 
         protected enum FormTreeStatus
@@ -118,7 +118,7 @@ namespace WinFormsMVC.View
         }
 
         /// <summary>
-        /// このフォームの先祖にtargetがいるかどうかをチェックします。
+        /// このフォームの先祖にparentがいるかどうかをチェックします。
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>

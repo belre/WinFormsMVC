@@ -15,7 +15,7 @@ namespace WinFormsMVC.Request
         /// <summary>
         /// 以前のデータを記録する
         /// </summary>
-        protected Dictionary<BaseForm, T> PrevItem
+        protected Dictionary<IMvcForm, T> PrevItem
         {
             get;
         }
@@ -46,7 +46,7 @@ namespace WinFormsMVC.Request
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public virtual T this[BaseForm form]
+        public virtual T this[IMvcForm form]
         {
             get
             {
@@ -68,7 +68,7 @@ namespace WinFormsMVC.Request
 
         public GenericCommandItem()
         {
-            PrevItem = new Dictionary<BaseForm, T>();
+            PrevItem = new Dictionary<IMvcForm, T>();
         }
 
 

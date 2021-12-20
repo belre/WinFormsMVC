@@ -90,6 +90,7 @@
     <Compile Include="View\Form5.Designer.cs">
       <DependentUpon>Form5.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\IMvcForm1.cs" />
     <Compile Include="View\SPWFolderForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -31,7 +31,7 @@ namespace WinFormsMVC.Request.Item
             }
         }
 
-        public override Image this[BaseForm form]
+        public override Image this[IMvcForm form]
         {
             get
             {

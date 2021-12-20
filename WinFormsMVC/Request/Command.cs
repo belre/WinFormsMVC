@@ -62,19 +62,19 @@ namespace WinFormsMVC.Request
         /// やり直し実行時のデータ反映
         /// </summary>
         /// <returns></returns>
-        public abstract bool Restore(BaseForm form);
+        public abstract bool Restore(IMvcForm form);
 
         /// <summary>
         /// 元に戻す
         /// </summary>
         /// <param name="form">対象のフォーム</param>
-        public abstract void Prev(BaseForm form);
+        public abstract void Prev(IMvcForm form);
 
         /// <summary>
         /// やり直し＆実行
         /// </summary>
         /// <param name="form">対象のフォーム</param>
-        public abstract void Next(BaseForm form);
+        public abstract void Next(IMvcForm form);
 
         /// <summary>
         /// 元に戻す実行後に行なう処理

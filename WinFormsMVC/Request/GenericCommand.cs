@@ -9,7 +9,7 @@ namespace WinFormsMVC.Request
     /// </summary>
     /// <typeparam name="TargetForm">対象とするフォーム</typeparam>
     /// <typeparam name="Item">何を送信するか(テキスト、画像など)</typeparam>
-    public class GenericCommand<TargetForm, Item> : CommandValidator<Item> where TargetForm : BaseForm where Item : CommandItem
+    public class GenericCommand<TargetForm, Item> : CommandValidator<Item> where TargetForm : IMvcForm where Item : CommandItem
     {
         public enum Operations
         {
@@ -124,7 +124,7 @@ namespace WinFormsMVC.Request
             }
         }
 
-        public override bool Restore(BaseForm form)
+        public override bool Restore(IMvcForm form)
         {
             if (CurrentOperations == Operations.DONE_FINALIZE || 
                 CurrentOperations == Operations.ERROR_WITH_VALIDATING || 
@@ -145,23 +145,18 @@ namespace WinFormsMVC.Request
         /// 元に戻すを実行します。
         /// </summary>
         /// <param name="form"></param>
-        public override void Prev(BaseForm form)
+        public override void Prev(IMvcForm form)
         {
             if (CurrentOperations == Operations.VALIDATED)
             {
                 if (PrevOperation != null)
                 {
-                    PrevOperation(StoredItem, Status, (TargetForm) form); 
-
+                    PrevOperation(StoredItem, Status, (TargetForm)form);
                 }
             }
         }
 
-        /// <summary>
-        /// 実行、やり直しを実行します。
-        /// </summary>
-        /// <param name="form"></param>
-        public override void Next(BaseForm form)
+        public override void Next(IMvcForm form)
         {
             if (CurrentOperations == Operations.VALIDATED)
             {
@@ -177,7 +172,6 @@ namespace WinFormsMVC.Request
                 }
             }
         }
-
 
         /// <summary>
         /// 元に戻すの後の処理を表します。

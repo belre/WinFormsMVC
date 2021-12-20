@@ -96,6 +96,33 @@ namespace WinFormsMVCSample
                     }
                 }, null);
             }
+
+            private void button4_Click(object sender, EventArgs e)
+            {
+                var controller = FacadeCore.GetController<Form3Controller>(this);
+                controller.SendStoredMessage(new Command[]
+                {
+                    new GenericCommand<IMvcForm1, TextItem>()
+                    {
+                        Invoker = this,
+                        IsRecursiveForAncestor = true,
+                        IsIncludingInheritedType = true,
+                        Preservation = (item, status, form1) =>
+                        {
+                            item[form1] = form1.Label2;
+                            item.Next = "Hello";
+                        },
+                        NextOperation = (item, status, form1) =>
+                        {
+                            form1.Label2 = item.Next;
+                        },
+                        PrevOperation = (item, status, form1) =>
+                        {
+                            form1.Label2 = item[form1];
+                        }
+                    }
+                }, null);
+            }
         }
     }
 

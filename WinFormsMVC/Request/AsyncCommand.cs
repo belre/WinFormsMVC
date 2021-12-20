@@ -85,7 +85,7 @@ namespace WinFormsMVC.Request
         }
 
 
-        public override bool Restore(BaseForm form)
+        public override bool Restore(IMvcForm form)
         {
             return Command.Restore(form);
         }
@@ -107,7 +107,7 @@ namespace WinFormsMVC.Request
         /// 元に戻す(Commandと処理同じ)
         /// </summary>
         /// <param name="form"></param>
-        public override void Prev(BaseForm form)
+        public override void Prev(IMvcForm form)
         {
             Command.Prev(form);
         }
@@ -116,7 +116,7 @@ namespace WinFormsMVC.Request
         /// やり直し＆実行（Commandと処理同じ)
         /// </summary>
         /// <param name="form"></param>
-        public override void Next(BaseForm form)
+        public override void Next(IMvcForm form)
         {
             Command.Next(form);
         }
