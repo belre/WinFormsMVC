@@ -13,10 +13,10 @@ namespace WinFormsMVC.Request
     {
         public enum Operations
         {
-            NO_VALIDATION,
-            VALIDATED,
-            ERROR_WITH_VALIDATING,
-            DONE_FINALIZE
+            NoValidation,
+            Validated,
+            ErrorWithValidating,
+            DoneFinalized
         };
 
 
@@ -30,7 +30,7 @@ namespace WinFormsMVC.Request
         {
             get
             {
-                return CurrentOperations != Operations.NO_VALIDATION;
+                return CurrentOperations != Operations.NoValidation;
             }
         }
 
@@ -68,7 +68,7 @@ namespace WinFormsMVC.Request
                 throw new TypeInitializationException(typeof(Item).Name, new Exception("コマンドアイテムが異常です"));
             }
 
-            CurrentOperations = Operations.NO_VALIDATION;
+            CurrentOperations = Operations.NoValidation;
             Status = new TransitionStatus();
         }
 
@@ -94,11 +94,11 @@ namespace WinFormsMVC.Request
         /// <returns></returns>
         public override bool Validate()
         {
-            if (CurrentOperations == Operations.NO_VALIDATION)
+            if (CurrentOperations == Operations.NoValidation)
             {
                 if (Validation == null)
                 {
-                    CurrentOperations = Operations.VALIDATED;
+                    CurrentOperations = Operations.Validated;
                     return true;
                 }
 
@@ -108,11 +108,11 @@ namespace WinFormsMVC.Request
                 // Validateの結果によってStatusを変える
                 if (ret)
                 {
-                    CurrentOperations = Operations.VALIDATED;
+                    CurrentOperations = Operations.Validated;
                 }
                 else
                 {
-                    CurrentOperations = Operations.ERROR_WITH_VALIDATING;
+                    CurrentOperations = Operations.ErrorWithValidating;
                     HandleValidationError();
                 }
 
@@ -126,9 +126,9 @@ namespace WinFormsMVC.Request
 
         public override bool Restore(IMvcForm form)
         {
-            if (CurrentOperations == Operations.DONE_FINALIZE || 
-                CurrentOperations == Operations.ERROR_WITH_VALIDATING || 
-                CurrentOperations == Operations.VALIDATED)
+            if (CurrentOperations == Operations.DoneFinalized || 
+                CurrentOperations == Operations.ErrorWithValidating || 
+                CurrentOperations == Operations.Validated)
             {
                 Status.StageNextValidation();
                 Next(form);
@@ -147,7 +147,7 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Prev(IMvcForm form)
         {
-            if (CurrentOperations == Operations.VALIDATED)
+            if (CurrentOperations == Operations.Validated)
             {
                 if (PrevOperation != null)
                 {
@@ -158,7 +158,7 @@ namespace WinFormsMVC.Request
 
         public override void Next(IMvcForm form)
         {
-            if (CurrentOperations == Operations.VALIDATED)
+            if (CurrentOperations == Operations.Validated)
             {
                 if (NextOperation != null)
                 {
@@ -179,14 +179,14 @@ namespace WinFormsMVC.Request
         /// <param name="form"></param>
         public override void Invalidate()
         {
-            if (CurrentOperations == Operations.VALIDATED)
+            if (CurrentOperations == Operations.Validated)
             {
                 if (Finalization != null)
                 {
                     Finalization(StoredItem);
                 }
 
-                CurrentOperations = Operations.DONE_FINALIZE;
+                CurrentOperations = Operations.DoneFinalized;
             }
         }
 
@@ -195,7 +195,7 @@ namespace WinFormsMVC.Request
         /// </summary>
         protected override void HandleValidationError()
         {
-            if (CurrentOperations != Operations.NO_VALIDATION)
+            if (CurrentOperations != Operations.NoValidation)
             {
                 if (ErrorHandle != null)
                 {
